@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "afrobiomefoods",
+    "name": "Igbo Food Heritage",
     "slug": "afrobiomefoods",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -41,7 +41,7 @@
       ]
     ],
     "experiments": {
-      "typedRoutes": true,
+      "typedRoutes": false,
       "reactCompiler": true
     }
   }
