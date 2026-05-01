@@ -1,4 +1,5 @@
-import { useFocusEffect } from "@react-navigation/native";
+import { HeaderBackButton } from "@react-navigation/elements";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import * as Speech from "expo-speech";
 import { Stack, router, useLocalSearchParams, type Href } from "expo-router";
 import { useCallback } from "react";
@@ -14,9 +15,18 @@ import { getRecipeById } from "@/data/recipes";
 export default function RecipeDetailScreen() {
   const { id: rawId } = useLocalSearchParams<{ id: string | string[] }>();
   const id = Array.isArray(rawId) ? rawId[0] : rawId;
+  const navigation = useNavigation();
   const colors = useThemeColors();
   const { language, scale } = useAppSettings();
   const recipe = id ? getRecipeById(id) : undefined;
+
+  const goBackToRecipes = useCallback(() => {
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    } else {
+      router.replace("/recipes" as Href);
+    }
+  }, [navigation]);
 
   useFocusEffect(
     useCallback(() => {
@@ -66,7 +76,19 @@ export default function RecipeDetailScreen() {
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["bottom", "left", "right"]}>
-      <Stack.Screen options={{ title }} />
+      <Stack.Screen
+        options={{
+          title,
+          headerBackTitle: t(language, "recipes"),
+          headerLeft: (props) => (
+            <HeaderBackButton
+              {...props}
+              onPress={goBackToRecipes}
+              accessibilityLabel={t(language, "back")}
+            />
+          ),
+        }}
+      />
       <ScrollView contentContainerStyle={styles.scroll}>
         <View style={styles.row}>
           <Pressable

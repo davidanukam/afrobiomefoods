@@ -22,7 +22,7 @@ const en: Dict = {
   quickActions: "Quick actions",
   recipes: "Recipes",
   classes: "Cooking classes",
-  comm: "Comm",
+  comm: "Community",
   events: "Events",
   services: "Services",
   nutrition: "Nutrition & health",
