@@ -6,9 +6,9 @@ import { ThemedText } from "@/components/ThemedText";
 import { useAppSettings } from "@/context/AppSettingsContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { t } from "@/lib/i18n";
-import { commPosts } from "@/data/comm";
+import { communityPosts } from "@/data/community";
 
-export default function CommScreen() {
+export default function CommunityScreen() {
   const colors = useThemeColors();
   const { language } = useAppSettings();
 
@@ -27,11 +27,11 @@ export default function CommScreen() {
           <ThemedText variant="label">🍲 {t(language, "recipeSwap")}</ThemedText>
         </View>
 
-        <PrimaryButton title={t(language, "shareStory")} onPress={() => router.push("/comm/share" as Href)} />
+        <PrimaryButton title={t(language, "shareStory")} onPress={() => router.push("/community/share" as Href)} />
       </View>
 
       <FlatList
-        data={commPosts}
+        data={communityPosts}
         keyExtractor={(item) => item.post_id}
         contentContainerStyle={{ padding: 20, paddingTop: 0, gap: 12 }}
         ItemSeparatorComponent={() => <View style={{ height: 12 }} />}

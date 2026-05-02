@@ -88,7 +88,7 @@ export default function HomeScreen() {
         <View style={styles.grid}>
           <QuickTile label={t(language, "recipes")} onPress={() => router.push("/recipes" as Href)} />
           <QuickTile label={t(language, "classes")} onPress={() => router.push("/classes" as Href)} />
-          <QuickTile label={t(language, "comm")} onPress={() => router.push("/comm" as Href)} />
+          <QuickTile label={t(language, "community")} onPress={() => router.push("/community" as Href)} />
           <QuickTile label={t(language, "events")} onPress={() => router.push("/events" as Href)} />
           <QuickTile label={t(language, "nutrition")} onPress={() => router.push("/nutrition" as Href)} />
           <QuickTile label={t(language, "services")} onPress={() => router.push("/services" as Href)} />

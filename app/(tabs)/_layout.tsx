@@ -22,7 +22,7 @@ export default function TabsLayout() {
         headerShown: true,
         tabBarActiveTintColor: colors.forest,
         tabBarInactiveTintColor: colors.textMuted,
-        tabBarLabelStyle: { fontSize: 13, fontWeight: "600" },
+        tabBarLabelStyle: { fontSize: 11, fontWeight: "600" },
         tabBarStyle: {
           minHeight: 58,
           paddingBottom: 8,
@@ -70,9 +70,9 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="comm"
+        name="community"
         options={{
-          title: t(language, "comm"),
+          title: t(language, "community"),
           headerShown: false,
           tabBarIcon: ({ color, size }) => tabIcon("people", color, size),
         }}

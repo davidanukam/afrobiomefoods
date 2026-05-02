@@ -3,7 +3,7 @@ import { useAppSettings } from "@/context/AppSettingsContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { t } from "@/lib/i18n";
 
-export default function CommStackLayout() {
+export default function CommunityStackLayout() {
   const colors = useThemeColors();
   const { language } = useAppSettings();
 
@@ -16,7 +16,7 @@ export default function CommStackLayout() {
         contentStyle: { backgroundColor: colors.cream },
       }}
     >
-      <Stack.Screen name="index" options={{ title: t(language, "comm") }} />
+      <Stack.Screen name="index" options={{ title: t(language, "community") }} />
       <Stack.Screen name="share" options={{ title: t(language, "shareStory") }} />
     </Stack>
   );

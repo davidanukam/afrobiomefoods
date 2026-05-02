@@ -1,4 +1,4 @@
-export type CommPost = {
+export type CommunityPost = {
   post_id: string;
   author: string;
   content_en: string;
@@ -8,7 +8,7 @@ export type CommPost = {
   kind: "memory" | "recipe" | "story";
 };
 
-export const commPosts: CommPost[] = [
+export const communityPosts: CommunityPost[] = [
   {
     post_id: "p1",
     author: "Mama K.",
