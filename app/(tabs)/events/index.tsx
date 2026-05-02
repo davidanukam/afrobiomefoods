@@ -2,13 +2,14 @@ import { ScrollView, View, StyleSheet, Pressable, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ThemedText } from "@/components/ThemedText";
 import { useAppSettings } from "@/context/AppSettingsContext";
+import { useRemoteEvents } from "@/hooks/useRemoteEvents";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { t } from "@/lib/i18n";
-import { events } from "@/data/events";
 
 export default function EventsScreen() {
   const colors = useThemeColors();
   const { language } = useAppSettings();
+  const { events } = useRemoteEvents();
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["bottom", "left", "right"]}>

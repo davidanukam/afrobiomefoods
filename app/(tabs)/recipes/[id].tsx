@@ -8,6 +8,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { ThemedText } from "@/components/ThemedText";
 import { useAppSettings } from "@/context/AppSettingsContext";
+import { useRemoteRecipes } from "@/hooks/useRemoteRecipes";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { t } from "@/lib/i18n";
 import { getRecipeById } from "@/data/recipes";
@@ -18,7 +19,8 @@ export default function RecipeDetailScreen() {
   const navigation = useNavigation();
   const colors = useThemeColors();
   const { language, scale } = useAppSettings();
-  const recipe = id ? getRecipeById(id) : undefined;
+  const { getById } = useRemoteRecipes();
+  const recipe = id ? getById(id) ?? getRecipeById(id) : undefined;
 
   const goBackToRecipes = useCallback(() => {
     if (navigation.canGoBack()) {

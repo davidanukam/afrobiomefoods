@@ -5,10 +5,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Card } from "@/components/Card";
 import { ThemedText } from "@/components/ThemedText";
 import { useAppSettings } from "@/context/AppSettingsContext";
+import { useRemoteEvents } from "@/hooks/useRemoteEvents";
+import { useRemoteRecipes } from "@/hooks/useRemoteRecipes";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { t } from "@/lib/i18n";
-import { events } from "@/data/events";
-import { recipes } from "@/data/recipes";
+import { events as fallbackEvents } from "@/data/events";
+import { recipes as fallbackRecipes } from "@/data/recipes";
 
 const heroUri =
   "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=1200&q=80&auto=format&fit=crop";
@@ -16,8 +18,10 @@ const heroUri =
 export default function HomeScreen() {
   const colors = useThemeColors();
   const { language } = useAppSettings();
-  const featured = recipes[0];
-  const nextEvent = events[0];
+  const { recipes } = useRemoteRecipes();
+  const { events } = useRemoteEvents();
+  const featured = recipes[0] ?? fallbackRecipes[0];
+  const nextEvent = events[0] ?? fallbackEvents[0];
 
   const name =
     language === "ig"

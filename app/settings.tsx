@@ -5,6 +5,7 @@ import { PrimaryButton } from "@/components/PrimaryButton";
 import { ThemedText } from "@/components/ThemedText";
 import type { FontScaleKey } from "@/constants/theme";
 import { minTouchTarget } from "@/constants/theme";
+import { useAuth } from "@/context/AuthContext";
 import { useAppSettings } from "@/context/AppSettingsContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { t, type Lang } from "@/lib/i18n";
@@ -29,6 +30,7 @@ export default function SettingsScreen() {
     resetOnboarding,
     triggerHaptic,
   } = useAppSettings();
+  const { user, isAdmin, supabaseEnabled, signOutUser, refreshClaims } = useAuth();
 
   const cycleLang = () => {
     triggerHaptic();
@@ -39,6 +41,40 @@ export default function SettingsScreen() {
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["bottom", "left", "right"]}>
       <Stack.Screen options={{ title: t(language, "settings") }} />
       <View style={styles.inner}>
+        {supabaseEnabled ? (
+          <View style={{ gap: 8, marginBottom: 8 }}>
+            <ThemedText variant="subtitle">
+              {language === "ig" ? "Akaụntụ" : "Account"}
+            </ThemedText>
+            {user ? (
+              <>
+                <ThemedText variant="body" color="muted">
+                  {user.email ?? user.id}
+                </ThemedText>
+                {isAdmin ? (
+                  <ThemedText variant="label" color="accent">
+                    {language === "ig" ? "Admin" : "Admin"}
+                  </ThemedText>
+                ) : null}
+                <PrimaryButton
+                  title={language === "ig" ? "Melite ikike" : "Refresh permissions"}
+                  variant="outline"
+                  onPress={() => void refreshClaims()}
+                />
+                <PrimaryButton
+                  title={language === "ig" ? "Pụọ" : "Sign out"}
+                  variant="outline"
+                  onPress={() => void signOutUser()}
+                />
+              </>
+            ) : (
+              <ThemedText variant="body" color="muted">
+                {language === "ig" ? "Ọbịa / agaghị abanye" : "Guest or not signed in"}
+              </ThemedText>
+            )}
+          </View>
+        ) : null}
+
         <ThemedText variant="subtitle">{t(language, "language")}</ThemedText>
         <View style={styles.row}>
           {(["en", "ig"] as Lang[]).map((lang) => (

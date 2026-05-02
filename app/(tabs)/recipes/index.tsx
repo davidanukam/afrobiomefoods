@@ -3,9 +3,10 @@ import { FlatList, Pressable, View, StyleSheet, TextInput } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ThemedText } from "@/components/ThemedText";
 import { useAppSettings } from "@/context/AppSettingsContext";
+import { useRemoteRecipes } from "@/hooks/useRemoteRecipes";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { t } from "@/lib/i18n";
-import { recipeCategories, recipes, type RecipeCategory } from "@/data/recipes";
+import { recipeCategories, type RecipeCategory } from "@/data/recipes";
 import { useMemo, useState } from "react";
 
 const chips: { id: RecipeCategory | "all"; label_en: string; label_ig: string }[] = [
@@ -16,6 +17,7 @@ const chips: { id: RecipeCategory | "all"; label_en: string; label_ig: string }[
 export default function RecipeCategoriesScreen() {
   const colors = useThemeColors();
   const { language } = useAppSettings();
+  const { recipes } = useRemoteRecipes();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<RecipeCategory | "all">("all");
 
@@ -30,7 +32,7 @@ export default function RecipeCategoriesScreen() {
         r.health_tags.some((h) => h.toLowerCase().includes(q));
       return matchesCat && matchesQuery;
     });
-  }, [category, query]);
+  }, [category, query, recipes]);
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["bottom", "left", "right"]}>

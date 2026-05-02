@@ -4,13 +4,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { ThemedText } from "@/components/ThemedText";
 import { useAppSettings } from "@/context/AppSettingsContext";
+import { useRemoteCommunity } from "@/hooks/useRemoteCommunity";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { t } from "@/lib/i18n";
-import { communityPosts } from "@/data/community";
 
 export default function CommunityScreen() {
   const colors = useThemeColors();
   const { language } = useAppSettings();
+  const { posts: communityPosts } = useRemoteCommunity();
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["bottom", "left", "right"]}>

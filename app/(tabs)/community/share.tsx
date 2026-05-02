@@ -1,32 +1,80 @@
 import { Stack, router } from "expo-router";
 import { useState } from "react";
-import { View, StyleSheet, TextInput, Alert, Pressable } from "react-native";
+import { View, StyleSheet, TextInput, Alert, Pressable, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { ThemedText } from "@/components/ThemedText";
+import { useAuth } from "@/context/AuthContext";
 import { useAppSettings } from "@/context/AppSettingsContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { t } from "@/lib/i18n";
+import { getSupabaseClient, isSupabaseConfigured } from "@/lib/supabase/client";
 
 export default function ShareStoryScreen() {
   const colors = useThemeColors();
   const { language } = useAppSettings();
+  const { user } = useAuth();
   const [text, setText] = useState("");
   const [audience, setAudience] = useState<"community" | "family">("community");
+  const [submitting, setSubmitting] = useState(false);
 
-  const post = () => {
-    if (!text.trim()) {
+  const displayName =
+    (typeof user?.user_metadata?.full_name === "string" ? user.user_metadata.full_name : null) ??
+    user?.email?.split("@")[0] ??
+    "Member";
+
+  const post = async () => {
+    const body = text.trim();
+    if (!body) {
       Alert.alert(
         language === "ig" ? "Nkọwa" : "Heads up",
         language === "ig" ? "Biko dee ihe obere." : "Add a short story before posting.",
       );
       return;
     }
+
+    if (isSupabaseConfigured()) {
+      if (!user) {
+        Alert.alert(
+          language === "ig" ? "Banye" : "Sign in required",
+          language === "ig"
+            ? "Biko banye ka ị bipụta na obodo."
+            : "Sign in with email or Google to post to the community wall.",
+        );
+        return;
+      }
+      setSubmitting(true);
+      try {
+        const title = body.length > 120 ? `${body.slice(0, 117)}…` : body;
+        const { error } = await getSupabaseClient().from("community_posts").insert({
+          title,
+          content: body,
+          author_uid: user.id,
+          author_name: displayName,
+          language: language === "ig" ? "ig" : "en",
+          kind: "story",
+          audience,
+        });
+        if (error) {
+          throw error;
+        }
+        router.back();
+      } catch (e) {
+        Alert.alert(
+          language === "ig" ? "Njehie" : "Could not post",
+          e instanceof Error ? e.message : String(e),
+        );
+      } finally {
+        setSubmitting(false);
+      }
+      return;
+    }
+
     Alert.alert(
       language === "ig" ? "E bipụtala" : "Posted (demo)",
       language === "ig"
-        ? "Nke a bụ nhọpụta demo; backend ga-echekwa moderation."
-        : "Demo only—backend moderation ships with Supabase/Firebase.",
+        ? "Supabase adịghị—nke a bụ nhọpụta demo."
+        : "Supabase is not configured—this is a local demo only.",
       [{ text: "OK", onPress: () => router.back() }],
     );
   };
@@ -95,7 +143,8 @@ export default function ShareStoryScreen() {
           </Pressable>
         </View>
 
-        <PrimaryButton title={t(language, "post")} onPress={post} />
+        <PrimaryButton title={t(language, "post")} onPress={() => void post()} disabled={submitting} />
+        {submitting ? <ActivityIndicator accessibilityLabel={language === "ig" ? "Na-eziga" : "Posting"} /> : null}
       </View>
     </SafeAreaView>
   );

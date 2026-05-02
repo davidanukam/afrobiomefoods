@@ -7,9 +7,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { ServiceMap } from "@/components/ServiceMap";
 import { ThemedText } from "@/components/ThemedText";
 import { useAppSettings } from "@/context/AppSettingsContext";
+import { useRemoteServices } from "@/hooks/useRemoteServices";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { t } from "@/lib/i18n";
-import { services, type ServiceItem } from "@/data/services";
+import type { ServiceItem } from "@/data/services";
 
 const regionFrom = (items: ServiceItem[]) => {
   const lat = items.reduce((a, b) => a + b.lat, 0) / items.length;
@@ -20,8 +21,9 @@ const regionFrom = (items: ServiceItem[]) => {
 export default function ServicesScreen() {
   const colors = useThemeColors();
   const { language } = useAppSettings();
+  const { services } = useRemoteServices();
   const [mode, setMode] = useState<"list" | "map">("list");
-  const region = useMemo(() => regionFrom(services), []);
+  const region = useMemo(() => regionFrom(services), [services]);
 
   const call = (phone: string) => {
     void Linking.openURL(`tel:${phone.replace(/[^\d+]/g, "")}`);
