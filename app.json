@@ -4,7 +4,7 @@
     "slug": "afrobiomefoods",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/cover.png",
     "scheme": "afrobiomefoods",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,

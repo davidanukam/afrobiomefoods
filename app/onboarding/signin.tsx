@@ -209,12 +209,6 @@ export default function SignInScreen() {
           <View style={styles.divider} />
 
           <PrimaryButton title={t(language, "guestContinue")} variant="outline" onPress={finishGuest} />
-
-          <ThemedText variant="caption" color="muted" style={[styles.center, { marginTop: 12 }]}>
-            {language === "ig"
-              ? "Ndị ọrụ admin: tinye app_metadata admin na Dashboard (Auth → Users), wee melite ike."
-              : "Admins: set app_metadata admin in the Supabase Dashboard (Auth → Users), then use Refresh permissions if needed."}
-          </ThemedText>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
