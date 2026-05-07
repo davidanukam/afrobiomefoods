@@ -18,7 +18,7 @@ function GoogleSignInWeb({ label, onError }: Props) {
 
   const onPress = async () => {
     if (!isSupabaseConfigured()) {
-      Alert.alert("Supabase", "Add EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_ANON_KEY.");
+      Alert.alert("Supabase", "Add EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_KEY.");
       return;
     }
     try {

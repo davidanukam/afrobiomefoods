@@ -53,7 +53,7 @@ export default function SignInScreen() {
         "Supabase",
         language === "ig"
           ? "Tinye ntọala Supabase na .env.local"
-          : "Add EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_ANON_KEY to .env.local.",
+          : "Add EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_KEY to .env.local.",
       );
       return;
     }

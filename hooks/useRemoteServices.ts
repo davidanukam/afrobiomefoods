@@ -34,8 +34,9 @@ export function useRemoteServices() {
 
     void load();
 
+    const channelName = `public:services:${Math.random().toString(36).slice(2)}`;
     const channel = supabase
-      .channel("public:services")
+      .channel(channelName)
       .on("postgres_changes", { event: "*", schema: "public", table: "services" }, () => {
         void load();
       })

@@ -36,8 +36,9 @@ export function useRemoteCommunity() {
 
     void load();
 
+    const channelName = `public:community_posts:${Math.random().toString(36).slice(2)}`;
     const channel = supabase
-      .channel("public:community_posts")
+      .channel(channelName)
       .on("postgres_changes", { event: "*", schema: "public", table: "community_posts" }, () => {
         void load();
       })

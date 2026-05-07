@@ -61,6 +61,13 @@ export default function SettingsScreen() {
                   variant="outline"
                   onPress={() => void refreshClaims()}
                 />
+                {isAdmin ? (
+                  <PrimaryButton
+                    title={language === "ig" ? "Dezie recipes (Admin)" : "Edit recipes (Admin)"}
+                    variant="outline"
+                    onPress={() => router.push("/admin/recipes" as Href)}
+                  />
+                ) : null}
                 <PrimaryButton
                   title={language === "ig" ? "Pụọ" : "Sign out"}
                   variant="outline"

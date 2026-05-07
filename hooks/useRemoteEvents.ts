@@ -36,8 +36,9 @@ export function useRemoteEvents() {
 
     void load();
 
+    const channelName = `public:events:${Math.random().toString(36).slice(2)}`;
     const channel = supabase
-      .channel("public:events")
+      .channel(channelName)
       .on("postgres_changes", { event: "*", schema: "public", table: "events" }, () => {
         void load();
       })
