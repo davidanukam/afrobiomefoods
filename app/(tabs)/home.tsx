@@ -31,10 +31,10 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["left", "right"]}>
       <ScrollView contentContainerStyle={styles.scroll}>
-        <ThemedText variant="title">{name}</ThemedText>
-        <ThemedText variant="body" color="muted" style={{ marginTop: 4 }}>
+        {/* <ThemedText variant="title">{name}</ThemedText> */}
+        {/* <ThemedText variant="body" color="muted" style={{ marginTop: 4 }}>
           {t(language, "appSubtitle")}
-        </ThemedText>
+        </ThemedText> */}
 
         <Card style={styles.featured}>
           <ThemedText variant="subtitle">{t(language, "featuredRecipe")}</ThemedText>
