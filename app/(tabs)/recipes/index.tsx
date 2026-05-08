@@ -22,17 +22,23 @@ export default function RecipeCategoriesScreen() {
   const [category, setCategory] = useState<RecipeCategory | "all">("all");
 
   const filtered = useMemo(() => {
-    return recipes.filter((r) => {
-      const matchesCat = category === "all" || r.category === category;
-      const q = query.trim().toLowerCase();
-      const matchesQuery =
-        !q ||
-        r.name_en.toLowerCase().includes(q) ||
-        r.name_ig.toLowerCase().includes(q) ||
-        r.health_tags.some((h) => h.toLowerCase().includes(q));
-      return matchesCat && matchesQuery;
-    });
-  }, [category, query, recipes]);
+    const q = query.trim().toLowerCase();
+    return recipes
+      .filter((r) => {
+        const matchesCat = category === "all" || r.category === category;
+        const matchesQuery =
+          !q ||
+          r.name_en.toLowerCase().includes(q) ||
+          r.name_ig.toLowerCase().includes(q) ||
+          r.health_tags.some((h) => h.toLowerCase().includes(q));
+        return matchesCat && matchesQuery;
+      })
+      .sort((a, b) => {
+        const aName = language === "ig" ? a.name_ig : a.name_en;
+        const bName = language === "ig" ? b.name_ig : b.name_en;
+        return aName.localeCompare(bName);
+      });
+  }, [category, language, query, recipes]);
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["bottom", "left", "right"]}>
