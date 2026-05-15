@@ -1,3 +1,4 @@
+import { Image } from "expo-image";
 import { router, type Href } from "expo-router";
 import { FlatList, Pressable, View, StyleSheet, TextInput } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -93,10 +94,20 @@ export default function RecipeCategoriesScreen() {
             onPress={() => router.push(`/recipes/${item.recipe_id}` as Href)}
             style={[styles.card, { borderColor: colors.border, backgroundColor: colors.card }]}
           >
-            <ThemedText variant="subtitle">{language === "ig" ? item.name_ig : item.name_en}</ThemedText>
-            <ThemedText variant="caption" color="muted" style={{ marginTop: 6 }}>
-              ⏱ {item.cook_minutes} min · {item.health_tags[0] ?? ""}
-            </ThemedText>
+            <View style={styles.cardRow}>
+              <Image
+                source={item.final_image}
+                style={[styles.thumb, { borderColor: colors.border }]}
+                contentFit="cover"
+                accessibilityLabel={language === "ig" ? item.name_ig : item.name_en}
+              />
+              <View style={styles.cardText}>
+                <ThemedText variant="subtitle">{language === "ig" ? item.name_ig : item.name_en}</ThemedText>
+                <ThemedText variant="caption" color="muted" style={{ marginTop: 6 }}>
+                  ⏱ {item.cook_minutes} min · {item.health_tags[0] ?? ""}
+                </ThemedText>
+              </View>
+            </View>
           </Pressable>
         )}
         ListEmptyComponent={
@@ -130,4 +141,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 16,
   },
+  cardRow: { flexDirection: "row", gap: 14, alignItems: "center" },
+  thumb: { width: 72, height: 72, borderRadius: 12, borderWidth: 1 },
+  cardText: { flex: 1, minWidth: 0 },
 });

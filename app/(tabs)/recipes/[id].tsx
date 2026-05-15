@@ -1,6 +1,7 @@
 import { HeaderBackButton } from "@react-navigation/elements";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import * as Speech from "expo-speech";
+import { Image } from "expo-image";
 import { Stack, router, useLocalSearchParams, type Href } from "expo-router";
 import { useCallback } from "react";
 import { ScrollView, View, StyleSheet, Pressable, Alert, Share } from "react-native";
@@ -92,6 +93,13 @@ export default function RecipeDetailScreen() {
         }}
       />
       <ScrollView contentContainerStyle={styles.scroll}>
+        <Image
+          source={recipe.final_image}
+          style={[styles.dishPhoto, { borderColor: colors.border }]}
+          contentFit="cover"
+          accessibilityLabel={language === "ig" ? `Foto: ${recipe.name_ig}` : `Photo: ${recipe.name_en}`}
+        />
+
         <View style={styles.row}>
           <Pressable
             style={[styles.audioBtn, { backgroundColor: colors.forest }]}
@@ -182,6 +190,13 @@ export default function RecipeDetailScreen() {
 const styles = StyleSheet.create({
   safe: { flex: 1 },
   scroll: { padding: 20 },
+  dishPhoto: {
+    width: "100%",
+    aspectRatio: 4 / 3,
+    borderRadius: 14,
+    borderWidth: 1,
+    marginBottom: 16,
+  },
   row: { flexDirection: "row", gap: 12, flexWrap: "wrap" },
   audioBtn: { flex: 1, minHeight: 52, borderRadius: 12, alignItems: "center", justifyContent: "center", paddingHorizontal: 8 },
   actions: { marginTop: 24, gap: 12 },

@@ -23,11 +23,6 @@ export default function HomeScreen() {
   const featured = recipes[0] ?? fallbackRecipes[0];
   const nextEvent = events[0] ?? fallbackEvents[0];
 
-  const name =
-    language === "ig"
-      ? `${t(language, "welcomeHome")}, Nna / Nne`
-      : `${t(language, "welcomeHome")}, friend`;
-
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["left", "right"]}>
       <ScrollView contentContainerStyle={styles.scroll}>

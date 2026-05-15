@@ -1,3 +1,8 @@
+import type { ImageSourcePropType } from "react-native";
+import { recipeFinalImage } from "./recipeFinalImages";
+
+export { RECIPE_FINAL_IMAGE_PLACEHOLDER, recipeFinalImage } from "./recipeFinalImages";
+
 export type RecipeCategory = "soups" | "swallows" | "porridges" | "snacks" | "delicacies" | "pepper_soups";
 
 export type Recipe = {
@@ -19,6 +24,8 @@ export type Recipe = {
   audio_en?: string;
   audio_ig?: string;
   image_hint: string;
+  /** Resolved via `recipeFinalImage(recipe_id)` in `recipeFinalImages.ts`. */
+  final_image: ImageSourcePropType;
 };
 
 export const recipeCategories: { id: RecipeCategory; label_en: string; label_ig: string }[] = [
@@ -93,6 +100,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 340, protein: 26, fiber: 6 },
     health_tags: ["High protein", "Use moderate salt and oil"],
     image_hint: "owerri",
+    final_image: recipeFinalImage("ofe-owerri"),
   },
 
   {
@@ -149,6 +157,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 380, protein: 28, fiber: 5 },
     health_tags: ["Protein-rich", "Mind sodium in cubes and fish"],
     image_hint: "egusi",
+    final_image: recipeFinalImage("ofe-egusi"),
   },
 
   {
@@ -205,6 +214,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 300, protein: 22, fiber: 7 },
     health_tags: ["Digestive tradition", "Portion oil and salt"],
     image_hint: "onugbu",
+    final_image: recipeFinalImage("ofe-onugbu"),
   },
 
   {
@@ -259,6 +269,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 290, protein: 24, fiber: 6 },
     health_tags: ["Okra soluble fiber", "Gentle fish if lowering fat"],
     image_hint: "okra",
+    final_image: recipeFinalImage("ofe-okra"),
   },
 
   {
@@ -320,6 +331,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 320, protein: 28, fiber: 5 },
     health_tags: ["Hearty protein", "Hydrate if very thick"],
     image_hint: "ogbono",
+    final_image: recipeFinalImage("ofe-ogbono"),
   },
 
   {
@@ -368,6 +380,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 350, protein: 24, fiber: 5 },
     health_tags: ["Labor-intensive", "Balanced portions"],
     image_hint: "achara",
+    final_image: recipeFinalImage("ofe-achara"),
   },
 
   {
@@ -424,6 +437,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 360, protein: 22, fiber: 4 },
     health_tags: ["Rich soup", "Saturates from palm—portion aware"],
     image_hint: "banga",
+    final_image: recipeFinalImage("ofe-akwu"),
   },
 
   {
@@ -484,6 +498,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 310, protein: 26, fiber: 5 },
     health_tags: ["Wild green nutrients", "Long cook for stockfish"],
     image_hint: "okazi",
+    final_image: recipeFinalImage("ofe-okazi"),
   },
 
   {
@@ -540,6 +555,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 300, protein: 24, fiber: 4 },
     health_tags: ["Distinctive thickener", "Watch salt with stockfish"],
     image_hint: "ukpo",
+    final_image: recipeFinalImage("ofe-ukpo"),
   },
 
   {
@@ -596,6 +612,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 310, protein: 26, fiber: 6 },
     health_tags: ["Leafy iron", "Okra soluble fiber"],
     image_hint: "molokhia",
+    final_image: recipeFinalImage("ofe-ahihara"),
   },
 
   {
@@ -650,6 +667,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 330, protein: 20, fiber: 5 },
     health_tags: ["Fermented protein", "Sodium awareness"],
     image_hint: "ugba",
+    final_image: recipeFinalImage("ofe-ugba"),
   },
 
   {
@@ -708,6 +726,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 330, protein: 24, fiber: 6 },
     health_tags: ["Heritage greens", "Moderate oil"],
     image_hint: "oha",
+    final_image: recipeFinalImage("ofe-oha"),
   },
 
   {
@@ -756,6 +775,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 310, protein: 28, fiber: 4 },
     health_tags: ["No palm oil in base", "Fresh fish and yam paste"],
     image_hint: "nsala",
+    final_image: recipeFinalImage("ofe-nsala"),
   },
 
   {
@@ -812,6 +832,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 280, protein: 24, fiber: 4 },
     health_tags: ["Aromatic spices", "Protein from fish and snail"],
     image_hint: "uziza",
+    final_image: recipeFinalImage("ofe-uziza"),
   },
 
   {
@@ -868,6 +889,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 300, protein: 26, fiber: 7 },
     health_tags: ["Iron from greens", "Vibrant quick finish"],
     image_hint: "amaranth",
+    final_image: recipeFinalImage("ofe-green"),
   },
 
   {
@@ -926,6 +948,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 290, protein: 24, fiber: 5 },
     health_tags: ["Forest seed fiber", "Long stockfish simmer"],
     image_hint: "achi",
+    final_image: recipeFinalImage("ofe-achi"),
   },
 
   {
@@ -988,6 +1011,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 350, protein: 24, fiber: 8 },
     health_tags: ["Herb-rich", "Medicinal tradition", "Saturates from palm—portion aware"],
     image_hint: "black-soup",
+    final_image: recipeFinalImage("ofe-ojii"),
   },
 
   {
@@ -1048,6 +1072,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 370, protein: 28, fiber: 6 },
     health_tags: ["Plant protein from peanuts", "Portion-conscious oil"],
     image_hint: "groundnut-soup",
+    final_image: recipeFinalImage("ofe-groundnut"),
   },
 
   // ─── PEPPER SOUPS ────────────────────────────────────────────────────────────
@@ -1104,6 +1129,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 280, protein: 32, fiber: 2 },
     health_tags: ["Lean goat protein", "Aromatic spices", "No palm oil"],
     image_hint: "goat-pepper-soup",
+    final_image: recipeFinalImage("goat-pepper-soup"),
   },
 
   {
@@ -1152,6 +1178,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 220, protein: 30, fiber: 2 },
     health_tags: ["No palm oil", "High fish protein", "Postpartum tradition"],
     image_hint: "fish-pepper-soup",
+    final_image: recipeFinalImage("fish-pepper-soup"),
   },
 
   {
@@ -1202,6 +1229,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 300, protein: 22, fiber: 4 },
     health_tags: ["Yam energy", "Postpartum tradition", "No palm oil"],
     image_hint: "yam-pepper-soup",
+    final_image: recipeFinalImage("yam-pepper-soup"),
   },
 
   // ─── PORRIDGES ───────────────────────────────────────────────────────────────
@@ -1252,6 +1280,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 310, protein: 14, fiber: 8 },
     health_tags: ["Whole grain", "Plant protein", "Use potash sparingly"],
     image_hint: "corn-porridge",
+    final_image: recipeFinalImage("corn-porridge"),
   },
 
   {
@@ -1302,6 +1331,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 350, protein: 10, fiber: 6 },
     health_tags: ["Yam energy", "Leafy vitamins", "One-pot meal"],
     image_hint: "yam-porridge",
+    final_image: recipeFinalImage("yam-porridge"),
   },
 
   {
@@ -1352,6 +1382,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 320, protein: 12, fiber: 5 },
     health_tags: ["Lower glycemic unripe plantain", "Iron-rich"],
     image_hint: "plantain-porridge",
+    final_image: recipeFinalImage("plantain-porridge"),
   },
 
   {
@@ -1402,6 +1433,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 300, protein: 18, fiber: 9 },
     health_tags: ["High plant protein", "High fiber", "Use potash sparingly"],
     image_hint: "akidi",
+    final_image: recipeFinalImage("akidi-porridge"),
   },
 
   {
@@ -1450,6 +1482,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 290, protein: 8, fiber: 5 },
     health_tags: ["Complex carbs", "Aromatic herbs for digestion"],
     image_hint: "cocoyam-porridge",
+    final_image: recipeFinalImage("cocoyam-porridge"),
   },
 
   {
@@ -1504,6 +1537,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 340, protein: 20, fiber: 10 },
     health_tags: ["High plant protein", "High fiber", "Digestive herbs"],
     image_hint: "beans-porridge",
+    final_image: recipeFinalImage("beans-porridge"),
   },
 
   {
@@ -1560,6 +1594,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 370, protein: 22, fiber: 12 },
     health_tags: ["High protein + fiber", "Lower glycemic", "Sustaining energy"],
     image_hint: "beans-plantain",
+    final_image: recipeFinalImage("beans-plantain"),
   },
 
   {
@@ -1614,6 +1649,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 360, protein: 22, fiber: 11 },
     health_tags: ["High plant protein", "Long simmering", "Patience required"],
     image_hint: "fio-fio",
+    final_image: recipeFinalImage("foi-foi"),
   },
 
   // ─── DELICACIES ──────────────────────────────────────────────────────────────
@@ -1672,6 +1708,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 380, protein: 20, fiber: 7 },
     health_tags: ["Plant protein", "Dense energy", "Gluten-free"],
     image_hint: "okpa",
+    final_image: recipeFinalImage("okpa"),
   },
 
   {
@@ -1724,6 +1761,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 360, protein: 22, fiber: 8 },
     health_tags: ["High fiber breadfruit", "Fermented ugba protein"],
     image_hint: "ukwa",
+    final_image: recipeFinalImage("ukwa"),
   },
 
   {
@@ -1778,6 +1816,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 380, protein: 14, fiber: 6 },
     health_tags: ["Fermented ugba", "Use potash sparingly"],
     image_hint: "abacha",
+    final_image: recipeFinalImage("abacha"),
   },
 
   {
@@ -1832,6 +1871,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 420, protein: 28, fiber: 2 },
     health_tags: ["Collagen from cow foot", "Portion-conscious oil"],
     image_hint: "nkwobi",
+    final_image: recipeFinalImage("nkwobi"),
   },
 
   {
@@ -1882,6 +1922,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 440, protein: 30, fiber: 1 },
     health_tags: ["Celebratory dish", "Portion-conscious oil"],
     image_hint: "isi-ewu",
+    final_image: recipeFinalImage("isi-ewu"),
   },
 
   {
@@ -1936,6 +1977,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 390, protein: 8, fiber: 3 },
     health_tags: ["Celebration dish", "Pair with vegetables for balance"],
     image_hint: "jollof-rice",
+    final_image: recipeFinalImage("jollof-rice"),
   },
 
   {
@@ -1986,6 +2028,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 320, protein: 12, fiber: 6 },
     health_tags: ["Yam energy", "Leafy vitamins"],
     image_hint: "yam-vegetable",
+    final_image: recipeFinalImage("ji-akwukwo-nri"),
   },
 
   // ─── SNACKS & STREET FOOD ─────────────────────────────────────────────────────
@@ -2042,6 +2085,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 290, protein: 18, fiber: 7 },
     health_tags: ["Plant protein", "Egg-optional filling"],
     image_hint: "moi-moi",
+    final_image: recipeFinalImage("moi-moi"),
   },
 
   {
@@ -2090,6 +2134,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 260, protein: 14, fiber: 6 },
     health_tags: ["Plant protein", "Fried—portion aware"],
     image_hint: "akara",
+    final_image: recipeFinalImage("akara"),
   },
 
   {
@@ -2130,6 +2175,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 190, protein: 4, fiber: 2 },
     health_tags: ["Fermented grain", "Gentle on digestion"],
     image_hint: "agidi",
+    final_image: recipeFinalImage("agidi"),
   },
 
   {
@@ -2176,6 +2222,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 280, protein: 6, fiber: 5 },
     health_tags: ["Whole grain", "Portable field meal"],
     image_hint: "mkporoshi-oka",
+    final_image: recipeFinalImage("mkporoshi-oka"),
   },
 
   {
@@ -2216,6 +2263,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 140, protein: 3, fiber: 1 },
     health_tags: ["Fermented grain", "Gentle on digestion", "Infant-friendly"],
     image_hint: "akamu",
+    final_image: recipeFinalImage("akamu"),
   },
 
   {
@@ -2262,6 +2310,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 280, protein: 5, fiber: 1 },
     health_tags: ["Fried—portion aware", "Celebration snack"],
     image_hint: "puff-puff",
+    final_image: recipeFinalImage("puff-puff"),
   },
 
   {
@@ -2310,6 +2359,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 340, protein: 7, fiber: 1 },
     health_tags: ["Long shelf life", "Fried—portion aware"],
     image_hint: "chin-chin",
+    final_image: recipeFinalImage("chin-chin"),
   },
 
   {
@@ -2357,6 +2407,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 290, protein: 6, fiber: 1 },
     health_tags: ["Fried—portion aware", "Street food staple"],
     image_hint: "buns",
+    final_image: recipeFinalImage("buns"),
   },
 
   {
@@ -2406,6 +2457,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 300, protein: 6, fiber: 1 },
     health_tags: ["Celebration snack", "Fried—portion aware"],
     image_hint: "doughnuts",
+    final_image: recipeFinalImage("doughnuts"),
   },
 
   {
@@ -2456,6 +2508,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 310, protein: 14, fiber: 2 },
     health_tags: ["Baked option available", "Portion-conscious"],
     image_hint: "fish-pie",
+    final_image: recipeFinalImage("fish-pie"),
   },
 
   {
@@ -2516,6 +2569,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 380, protein: 18, fiber: 2 },
     health_tags: ["Baked—not fried", "Celebration small chops"],
     image_hint: "meat-pie",
+    final_image: recipeFinalImage("meat-pie"),
   },
 
   {
@@ -2566,6 +2620,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 320, protein: 12, fiber: 1 },
     health_tags: ["Protein from egg", "Fried—portion aware"],
     image_hint: "egg-roll",
+    final_image: recipeFinalImage("egg-roll"),
   },
 
   {
@@ -2619,6 +2674,7 @@ export const recipes: Recipe[] = [
     nutrition: { calories: 330, protein: 10, fiber: 4 },
     health_tags: ["Whole grain + plantain", "Portable wrapped meal"],
     image_hint: "epiti",
+    final_image: recipeFinalImage("ikpo-oka"),
   },
 ];
 

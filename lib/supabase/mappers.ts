@@ -1,4 +1,5 @@
 import type { Recipe, RecipeCategory } from "@/data/recipes";
+import { RECIPE_FINAL_IMAGE_PLACEHOLDER } from "@/data/recipeFinalImages";
 import type { EventItem } from "@/data/events";
 import type { ServiceItem, ServiceCategory } from "@/data/services";
 import type { CommunityPost } from "@/data/community";
@@ -53,7 +54,11 @@ export function mapRecipeDoc(id: string, data: LooseDoc): Recipe {
     cultural_notes_en: asString(data.cultural_notes_en) || asString(data.description),
     cultural_notes_ig: asString(data.cultural_notes_ig) || asString(data.descriptionIg) || asString(data.description),
     cook_minutes: typeof data.cook_minutes === "number" ? data.cook_minutes : 45,
-    difficulty: data.difficulty === "easy" || data.difficulty === "medium" ? data.difficulty : "medium",
+    servings: typeof data.servings === "number" ? data.servings : 4,
+    difficulty:
+      data.difficulty === "easy" || data.difficulty === "medium" || data.difficulty === "hard"
+        ? data.difficulty
+        : "medium",
     nutrition: {
       calories: nutrition?.calories ?? 200,
       protein: nutrition?.protein ?? 10,
@@ -63,6 +68,7 @@ export function mapRecipeDoc(id: string, data: LooseDoc): Recipe {
     audio_en: asString(data.audio_en) || undefined,
     audio_ig: asString(data.audio_ig) || undefined,
     image_hint: asString(data.image_hint) || "recipe",
+    final_image: RECIPE_FINAL_IMAGE_PLACEHOLDER,
   };
 }
 
