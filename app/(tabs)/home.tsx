@@ -9,19 +9,31 @@ import { useRemoteEvents } from "@/hooks/useRemoteEvents";
 import { useRemoteRecipes } from "@/hooks/useRemoteRecipes";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { t } from "@/lib/i18n";
+import type { Recipe } from "@/data/recipes";
 import { events as fallbackEvents } from "@/data/events";
 import { recipes as fallbackRecipes } from "@/data/recipes";
 
-const heroUri =
-  "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=1200&q=80&auto=format&fit=crop";
+/** One random featured recipe index per app launch (JS session); not reshuffled when revisiting Home. */
+let homeSessionFeaturedRecipeIndex: number | null = null;
+
+function getSessionFeaturedRecipe(recipes: Recipe[], fallback: Recipe): Recipe {
+  const n = recipes.length;
+  if (n === 0) return fallback;
+  if (homeSessionFeaturedRecipeIndex === null) {
+    homeSessionFeaturedRecipeIndex = Math.floor(Math.random() * n);
+  }
+  const idx = Math.min(homeSessionFeaturedRecipeIndex, n - 1);
+  return recipes[idx]!;
+}
 
 export default function HomeScreen() {
   const colors = useThemeColors();
   const { language } = useAppSettings();
   const { recipes } = useRemoteRecipes();
   const { events } = useRemoteEvents();
-  const featured = recipes[0] ?? fallbackRecipes[0];
+  const featured = getSessionFeaturedRecipe(recipes, fallbackRecipes[0]);
   const nextEvent = events[0] ?? fallbackEvents[0];
+  const featuredTitle = language === "ig" ? featured.name_ig : featured.name_en;
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["left", "right"]}>
@@ -32,13 +44,18 @@ export default function HomeScreen() {
         </ThemedText> */}
 
         <Card style={styles.featured}>
-          <ThemedText variant="subtitle">{t(language, "featuredRecipe")}</ThemedText>
-          <Image source={{ uri: heroUri }} style={styles.featuredImg} contentFit="cover" accessibilityLabel={featured.name_en} />
+          {/* <ThemedText variant="subtitle">{t(language, "featuredRecipe")}</ThemedText> */}
+          <Image
+            source={featured.final_image}
+            style={styles.featuredImg}
+            contentFit="cover"
+            accessibilityLabel={featuredTitle}
+          />
           <ThemedText variant="subtitle" style={{ marginTop: 8 }}>
-            {language === "ig" ? featured.name_ig : featured.name_en}
+            {featuredTitle}
           </ThemedText>
           <ThemedText variant="caption" color="muted">
-            {language === "ig" ? "Nri oge a" : "Food of the season"}
+            {language === "ig" ? "Nri a họpụrụ maka ọgbọ a" : "Random pick for this app session"}
           </ThemedText>
           <Pressable
             accessibilityRole="button"
