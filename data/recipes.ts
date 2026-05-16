@@ -2,8 +2,14 @@ import type { ImageSourcePropType } from "react-native";
 import type { Lang } from "@/lib/i18n";
 import { localized, localizedList } from "@/lib/localized";
 import { recipeFinalImage } from "./recipeFinalImages";
+import { recipeIngredientImage } from "./recipeIngredientImages";
 
 export { RECIPE_FINAL_IMAGE_PLACEHOLDER, recipeFinalImage } from "./recipeFinalImages";
+export {
+  RECIPE_INGREDIENT_IMAGE_PLACEHOLDER,
+  recipeIngredientImage,
+  RECIPE_IDS_MISSING_INGREDIENT_IMAGE,
+} from "./recipeIngredientImages";
 
 export type RecipeCategory = "soups" | "swallows" | "porridges" | "snacks" | "delicacies" | "pepper_soups";
 
@@ -28,6 +34,8 @@ export type Recipe = {
   image_hint: string;
   /** Resolved via `recipeFinalImage(recipe_id)` in `recipeFinalImages.ts`. */
   final_image: ImageSourcePropType;
+  /** Ingredient / before-state photo from `recipeIngredientImages.ts`. */
+  ingredient_image: ImageSourcePropType;
 };
 
 export const recipeCategories: {
@@ -43,7 +51,7 @@ export const recipeCategories: {
   { id: "snacks", label_en: "Snacks & Street Food", label_ig: "Nri ụzọ", label_fr: "Collations & rue" },
 ];
 
-export const recipes: Recipe[] = [
+const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
 
   // ─── SOUPS ───────────────────────────────────────────────────────────────────
 
@@ -2684,6 +2692,11 @@ export const recipes: Recipe[] = [
     final_image: recipeFinalImage("ikpo-oka"),
   },
 ];
+
+export const recipes: Recipe[] = recipeEntries.map((r) => ({
+  ...r,
+  ingredient_image: recipeIngredientImage(r.recipe_id),
+}));
 
 // ─── Helper functions ─────────────────────────────────────────────────────────
 
