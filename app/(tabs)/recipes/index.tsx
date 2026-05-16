@@ -7,11 +7,22 @@ import { useAppSettings } from "@/context/AppSettingsContext";
 import { useRemoteRecipes } from "@/hooks/useRemoteRecipes";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { t } from "@/lib/i18n";
-import { recipeCategories, type RecipeCategory } from "@/data/recipes";
+import { localized } from "@/lib/localized";
+import {
+  recipeCategories,
+  recipeCategoryLabel,
+  recipeDisplayName,
+  type RecipeCategory,
+} from "@/data/recipes";
 import { useMemo, useState } from "react";
 
-const chips: { id: RecipeCategory | "all"; label_en: string; label_ig: string }[] = [
-  { id: "all", label_en: "All", label_ig: "Ha niile" },
+const chips: {
+  id: RecipeCategory | "all";
+  label_en: string;
+  label_ig: string;
+  label_fr: string;
+}[] = [
+  { id: "all", label_en: "All", label_ig: "Ha niile", label_fr: "Tout" },
   ...recipeCategories,
 ];
 
@@ -34,11 +45,9 @@ export default function RecipeCategoriesScreen() {
           r.health_tags.some((h) => h.toLowerCase().includes(q));
         return matchesCat && matchesQuery;
       })
-      .sort((a, b) => {
-        const aName = language === "ig" ? a.name_ig : a.name_en;
-        const bName = language === "ig" ? b.name_ig : b.name_en;
-        return aName.localeCompare(bName);
-      });
+      .sort((a, b) =>
+        recipeDisplayName(a, language).localeCompare(recipeDisplayName(b, language)),
+      );
   }, [category, language, query, recipes]);
 
   return (
@@ -61,7 +70,13 @@ export default function RecipeCategoriesScreen() {
           contentContainerStyle={{ gap: 8, paddingVertical: 12 }}
           renderItem={({ item }) => {
             const active = category === item.id;
-            const label = language === "ig" ? item.label_ig : item.label_en;
+            let label: string;
+            if (item.id === "all") {
+              label = localized(language, { en: item.label_en, ig: item.label_ig, fr: item.label_fr });
+            } else {
+              const cat = recipeCategories.find((c) => c.id === item.id)!;
+              label = recipeCategoryLabel(cat, language);
+            }
             return (
               <Pressable
                 onPress={() => setCategory(item.id)}
@@ -89,30 +104,33 @@ export default function RecipeCategoriesScreen() {
         keyExtractor={(item) => item.recipe_id}
         contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 24, gap: 12 }}
         ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
-        renderItem={({ item }) => (
-          <Pressable
-            onPress={() => router.push(`/recipes/${item.recipe_id}` as Href)}
-            style={[styles.card, { borderColor: colors.border, backgroundColor: colors.card }]}
-          >
-            <View style={styles.cardRow}>
-              <Image
-                source={item.final_image}
-                style={[styles.thumb, { borderColor: colors.border }]}
-                contentFit="cover"
-                accessibilityLabel={language === "ig" ? item.name_ig : item.name_en}
-              />
-              <View style={styles.cardText}>
-                <ThemedText variant="subtitle">{language === "ig" ? item.name_ig : item.name_en}</ThemedText>
-                <ThemedText variant="caption" color="muted" style={{ marginTop: 6 }}>
-                  ⏱ {item.cook_minutes} min · {item.health_tags[0] ?? ""}
-                </ThemedText>
+        renderItem={({ item }) => {
+          const name = recipeDisplayName(item, language);
+          return (
+            <Pressable
+              onPress={() => router.push(`/recipes/${item.recipe_id}` as Href)}
+              style={[styles.card, { borderColor: colors.border, backgroundColor: colors.card }]}
+            >
+              <View style={styles.cardRow}>
+                <Image
+                  source={item.final_image}
+                  style={[styles.thumb, { borderColor: colors.border }]}
+                  contentFit="cover"
+                  accessibilityLabel={name}
+                />
+                <View style={styles.cardText}>
+                  <ThemedText variant="subtitle">{name}</ThemedText>
+                  <ThemedText variant="caption" color="muted" style={{ marginTop: 6 }}>
+                    ⏱ {item.cook_minutes} min · {item.health_tags[0] ?? ""}
+                  </ThemedText>
+                </View>
               </View>
-            </View>
-          </Pressable>
-        )}
+            </Pressable>
+          );
+        }}
         ListEmptyComponent={
           <ThemedText variant="body" color="muted" style={{ textAlign: "center", marginTop: 24 }}>
-            {language === "ig" ? "Enweghị nri dabara na nhọrọ a." : "No recipes match your filters."}
+            {t(language, "recipesEmpty")}
           </ThemedText>
         }
       />

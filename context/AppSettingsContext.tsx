@@ -5,6 +5,12 @@ import type { FontScaleKey } from "@/constants/theme";
 import { fontScaleMultipliers } from "@/constants/theme";
 import type { Lang } from "@/lib/i18n";
 
+const VALID_LANGS: Lang[] = ["en", "ig", "fr"];
+
+function normalizeLang(value: unknown): Lang {
+  return VALID_LANGS.includes(value as Lang) ? (value as Lang) : "en";
+}
+
 const STORAGE_KEY = "@afrobiome/app-settings-v1";
 
 export type AppSettings = {
@@ -52,7 +58,11 @@ export function AppSettingsProvider({ children }: { children: React.ReactNode })
         const raw = await AsyncStorage.getItem(STORAGE_KEY);
         if (raw && !cancelled) {
           const parsed = JSON.parse(raw) as Partial<AppSettings>;
-          setSettings({ ...defaultSettings, ...parsed });
+          setSettings({
+            ...defaultSettings,
+            ...parsed,
+            language: normalizeLang(parsed.language),
+          });
         }
       } catch {
         /* keep defaults */

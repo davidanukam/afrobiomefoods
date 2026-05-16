@@ -74,16 +74,22 @@ export function mapRecipeDoc(id: string, data: LooseDoc): Recipe {
 
 export function mapEventDoc(id: string, data: LooseDoc): EventItem {
   const title = asString(data.title);
+  const titleEn = asString(data.title_en) || title;
+  const locationEn = asString(data.location_en) || asString(data.location);
+  const summaryEn = asString(data.summary_en) || asString(data.description);
   return {
     event_id: id,
-    title_en: asString(data.title_en) || title,
+    title_en: titleEn,
     title_ig: asString(data.title_ig) || title,
+    title_fr: asString(data.title_fr) || titleEn,
     date: tsToIso(data.date),
     isVirtual: Boolean(data.isVirtual),
-    location_en: asString(data.location_en) || asString(data.location),
+    location_en: locationEn,
     location_ig: asString(data.location_ig) || asString(data.location),
-    summary_en: asString(data.summary_en) || asString(data.description),
+    location_fr: asString(data.location_fr) || locationEn,
+    summary_en: summaryEn,
     summary_ig: asString(data.summary_ig) || asString(data.description),
+    summary_fr: asString(data.summary_fr) || summaryEn,
   };
 }
 
@@ -108,7 +114,7 @@ export function mapCommunityRow(id: string, data: LooseDoc): CommunityPost {
     author: asString(data.authorName) || asString(data.author_name) || asString(data.author) || "Member",
     content_en: asString(data.content_en) || content,
     content_ig: asString(data.content_ig) || content,
-    language: data.language === "ig" ? "ig" : "en",
+    language: data.language === "ig" ? "ig" : data.language === "fr" ? "fr" : "en",
     timestamp: tsToIso(data.timestamp ?? data.created_at),
     kind: data.kind === "memory" || data.kind === "recipe" || data.kind === "story" ? data.kind : "story",
   };

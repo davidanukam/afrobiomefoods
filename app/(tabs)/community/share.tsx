@@ -26,21 +26,13 @@ export default function ShareStoryScreen() {
   const post = async () => {
     const body = text.trim();
     if (!body) {
-      Alert.alert(
-        language === "ig" ? "Nkọwa" : "Heads up",
-        language === "ig" ? "Biko dee ihe obere." : "Add a short story before posting.",
-      );
+      Alert.alert(t(language, "headsUp"), t(language, "storyTooShort"));
       return;
     }
 
     if (isSupabaseConfigured()) {
       if (!user) {
-        Alert.alert(
-          language === "ig" ? "Banye" : "Sign in required",
-          language === "ig"
-            ? "Biko banye ka ị bipụta na obodo."
-            : "Sign in with email or Google to post to the community wall.",
-        );
+        Alert.alert(t(language, "signInRequired"), t(language, "signInToPost"));
         return;
       }
       setSubmitting(true);
@@ -51,7 +43,7 @@ export default function ShareStoryScreen() {
           content: body,
           author_uid: user.id,
           author_name: displayName,
-          language: language === "ig" ? "ig" : "en",
+          language,
           kind: "story",
           audience,
         });
@@ -60,23 +52,16 @@ export default function ShareStoryScreen() {
         }
         router.back();
       } catch (e) {
-        Alert.alert(
-          language === "ig" ? "Njehie" : "Could not post",
-          e instanceof Error ? e.message : String(e),
-        );
+        Alert.alert(t(language, "errorPost"), e instanceof Error ? e.message : String(e));
       } finally {
         setSubmitting(false);
       }
       return;
     }
 
-    Alert.alert(
-      language === "ig" ? "E bipụtala" : "Posted (demo)",
-      language === "ig"
-        ? "Supabase adịghị—nke a bụ nhọpụta demo."
-        : "Supabase is not configured—this is a local demo only.",
-      [{ text: "OK", onPress: () => router.back() }],
-    );
+    Alert.alert(t(language, "postedDemo"), t(language, "demoPostNoSupabase"), [
+      { text: "OK", onPress: () => router.back() },
+    ]);
   };
 
   return (
@@ -90,28 +75,23 @@ export default function ShareStoryScreen() {
         <Pressable
           accessibilityRole="button"
           style={[styles.record, { borderColor: colors.forest, backgroundColor: colors.card }]}
-          onPress={() =>
-            Alert.alert(
-              language === "ig" ? "Ọdịyo" : "Recording",
-              language === "ig" ? "Voice capture na-abịa na mbipụta ọzọ." : "Voice capture arrives in Phase 2 with consent flows.",
-            )
-          }
+          onPress={() => Alert.alert(t(language, "recording"), t(language, "voicePhase2"))}
         >
           <ThemedText variant="subtitle">🎙</ThemedText>
           <ThemedText variant="label" style={{ marginTop: 8 }}>
-            {language === "ig" ? "Jide ka edebaa" : "Hold to record"}
+            {t(language, "holdToRecord")}
           </ThemedText>
         </Pressable>
 
         <ThemedText variant="subtitle" style={{ marginTop: 12 }}>
-          {language === "ig" ? "Ma dee ederede" : "Or type a short memory"}
+          {t(language, "typeMemory")}
         </ThemedText>
         <TextInput
           value={text}
           onChangeText={setText}
           multiline
           textAlignVertical="top"
-          placeholder={language === "ig" ? "Akụkọ gị..." : "Your story..."}
+          placeholder={t(language, "storyPlaceholder")}
           placeholderTextColor={colors.textMuted}
           style={[
             styles.input,
@@ -120,7 +100,7 @@ export default function ShareStoryScreen() {
         />
 
         <ThemedText variant="caption" color="muted">
-          {language === "ig" ? "Họrọ ndị ị ga-ekekọrịta ya" : "Choose who can see this first draft"}
+          {t(language, "chooseAudience")}
         </ThemedText>
         <View style={styles.row}>
           <Pressable
@@ -130,7 +110,7 @@ export default function ShareStoryScreen() {
               { borderColor: audience === "community" ? colors.forest : colors.border, backgroundColor: colors.card },
             ]}
           >
-            <ThemedText variant="label">{language === "ig" ? "Obodo" : "Community"}</ThemedText>
+            <ThemedText variant="label">{t(language, "community")}</ThemedText>
           </Pressable>
           <Pressable
             onPress={() => setAudience("family")}
@@ -139,12 +119,12 @@ export default function ShareStoryScreen() {
               { borderColor: audience === "family" ? colors.forest : colors.border, backgroundColor: colors.card },
             ]}
           >
-            <ThemedText variant="label">{language === "ig" ? "Ezinaụlọ" : "Family only"}</ThemedText>
+            <ThemedText variant="label">{t(language, "familyOnly")}</ThemedText>
           </Pressable>
         </View>
 
         <PrimaryButton title={t(language, "post")} onPress={() => void post()} disabled={submitting} />
-        {submitting ? <ActivityIndicator accessibilityLabel={language === "ig" ? "Na-eziga" : "Posting"} /> : null}
+        {submitting ? <ActivityIndicator accessibilityLabel={t(language, "posting")} /> : null}
       </View>
     </SafeAreaView>
   );

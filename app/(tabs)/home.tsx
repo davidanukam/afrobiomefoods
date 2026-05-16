@@ -8,10 +8,13 @@ import { useAppSettings } from "@/context/AppSettingsContext";
 import { useRemoteEvents } from "@/hooks/useRemoteEvents";
 import { useRemoteRecipes } from "@/hooks/useRemoteRecipes";
 import { useThemeColors } from "@/hooks/useThemeColors";
-import { t } from "@/lib/i18n";
-import type { Recipe } from "@/data/recipes";
 import { events as fallbackEvents } from "@/data/events";
+import { localized } from "@/lib/localized";
+import { localeTag } from "@/lib/locale";
+import { t } from "@/lib/i18n";
+import { recipeDisplayName } from "@/data/recipes";
 import { recipes as fallbackRecipes } from "@/data/recipes";
+import type { Recipe } from "@/data/recipes";
 
 /** One random featured recipe index per app launch (JS session); not reshuffled when revisiting Home. */
 let homeSessionFeaturedRecipeIndex: number | null = null;
@@ -33,18 +36,13 @@ export default function HomeScreen() {
   const { events } = useRemoteEvents();
   const featured = getSessionFeaturedRecipe(recipes, fallbackRecipes[0]);
   const nextEvent = events[0] ?? fallbackEvents[0];
-  const featuredTitle = language === "ig" ? featured.name_ig : featured.name_en;
+  const featuredTitle = recipeDisplayName(featured, language);
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["left", "right"]}>
       <ScrollView contentContainerStyle={styles.scroll}>
-        {/* <ThemedText variant="title">{name}</ThemedText> */}
-        {/* <ThemedText variant="body" color="muted" style={{ marginTop: 4 }}>
-          {t(language, "appSubtitle")}
-        </ThemedText> */}
-
         <Card style={styles.featured}>
-          {/* <ThemedText variant="subtitle">{t(language, "featuredRecipe")}</ThemedText> */}
+          <ThemedText variant="subtitle">{t(language, "featuredRecipe")}</ThemedText>
           <Image
             source={featured.final_image}
             style={styles.featuredImg}
@@ -55,7 +53,7 @@ export default function HomeScreen() {
             {featuredTitle}
           </ThemedText>
           <ThemedText variant="caption" color="muted">
-            {language === "ig" ? "Nri a họpụrụ maka ọgbọ a" : "Random pick for this app session"}
+            {t(language, "randomPickSession")}
           </ThemedText>
           <Pressable
             accessibilityRole="button"
@@ -71,21 +69,23 @@ export default function HomeScreen() {
         <Card>
           <ThemedText variant="subtitle">{t(language, "healthTipToday")}</ThemedText>
           <ThemedText variant="body" style={{ marginTop: 8 }}>
-            {language === "ig"
-              ? "Utazi na-enyere nri ịgba ma jiri ya belata nnuofe."
-              : "Utazi adds aroma and can help you use less salt—wash bitter leaves well."}
+            {t(language, "healthTipUtazi")}
           </ThemedText>
         </Card>
 
         <Card>
           <ThemedText variant="subtitle">{t(language, "upcoming")}</ThemedText>
           <ThemedText variant="body" style={{ marginTop: 8 }}>
-            {new Date(nextEvent.date).toLocaleDateString(language === "ig" ? "ig-NG" : "en-US", {
+            {new Date(nextEvent.date).toLocaleDateString(localeTag(language), {
               month: "long",
               day: "numeric",
             })}
             {" · "}
-            {language === "ig" ? nextEvent.title_ig : nextEvent.title_en}
+            {localized(language, {
+              en: nextEvent.title_en,
+              ig: nextEvent.title_ig,
+              fr: nextEvent.title_fr,
+            })}
           </ThemedText>
           <Pressable
             accessibilityRole="button"

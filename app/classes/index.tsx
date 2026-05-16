@@ -5,28 +5,35 @@ import { ThemedText } from "@/components/ThemedText";
 import { useAppSettings } from "@/context/AppSettingsContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { t } from "@/lib/i18n";
+import { localized } from "@/lib/localized";
 
 const lessons = [
   {
     id: "l1",
     title_en: "Steaming vs frying: ofe adaptations",
     title_ig: "Isee vs ide: mgbanwe ofe",
+    title_fr: "Vapeur ou friture : adapter les ofe",
     level_en: "Beginner",
     level_ig: "Mbido",
+    level_fr: "Débutant",
   },
   {
     id: "l2",
     title_en: "Cooking for one or two",
     title_ig: "Isee nri maka otu ma ọ bụ abụọ",
+    title_fr: "Cuisiner pour une ou deux personnes",
     level_en: "Short tips",
     level_ig: "Ndụmọdụ",
+    level_fr: "Conseils rapides",
   },
   {
     id: "l3",
     title_en: "Texture-soft yam for dental comfort",
     title_ig: "Ji dị nro maka eze",
+    title_fr: "Igname tendre pour le confort dentaire",
     level_en: "Senior-friendly",
     level_ig: "Maka okenye",
+    level_fr: "Adapté aux aînés",
   },
 ];
 
@@ -39,30 +46,23 @@ export default function ClassesScreen() {
       <Stack.Screen options={{ title: t(language, "classes") }} />
       <ScrollView contentContainerStyle={styles.scroll}>
         <ThemedText variant="body" color="muted">
-          {language === "ig"
-            ? "Vidiyo ndị a bụ ihe atụ; njikọ Zoom/WebRTC na-abịa."
-            : "Placeholder lessons—wire Zoom/WebRTC or hosted video when backend is ready."}
+          {t(language, "classesPlaceholder")}
         </ThemedText>
 
         {lessons.map((lesson) => (
           <View key={lesson.id} style={[styles.card, { borderColor: colors.border, backgroundColor: colors.card }]}>
-            <ThemedText variant="subtitle">{language === "ig" ? lesson.title_ig : lesson.title_en}</ThemedText>
+            <ThemedText variant="subtitle">
+              {localized(language, { en: lesson.title_en, ig: lesson.title_ig, fr: lesson.title_fr })}
+            </ThemedText>
             <ThemedText variant="caption" color="muted" style={{ marginTop: 6 }}>
-              {language === "ig" ? lesson.level_ig : lesson.level_en}
+              {localized(language, { en: lesson.level_en, ig: lesson.level_ig, fr: lesson.level_fr })}
             </ThemedText>
             <Pressable
               style={[styles.btn, { borderColor: colors.forest }]}
-              onPress={() =>
-                Alert.alert(
-                  language === "ig" ? "Ọmụmụ" : "Lesson",
-                  language === "ig"
-                    ? "Vidiyo na-akwado maka mbipụta ọzọ."
-                    : "Playback, subtitles EN/IG, and reminders ship with media CDN + push.",
-                )
-              }
+              onPress={() => Alert.alert(t(language, "lesson"), t(language, "lessonPlaybackMsg"))}
             >
               <ThemedText variant="label" color="accent">
-                {language === "ig" ? "Kwuo vidiyo" : "Play preview"}
+                {t(language, "playPreview")}
               </ThemedText>
             </Pressable>
           </View>

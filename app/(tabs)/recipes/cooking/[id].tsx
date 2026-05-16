@@ -7,8 +7,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { ThemedText } from "@/components/ThemedText";
 import { useAppSettings } from "@/context/AppSettingsContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
+import { getRecipeById, recipeCopy, recipeDisplayName } from "@/data/recipes";
+import { speechLang } from "@/lib/locale";
 import { t } from "@/lib/i18n";
-import { getRecipeById } from "@/data/recipes";
 
 export default function CookingModeScreen() {
   const { id: rawId } = useLocalSearchParams<{ id: string | string[] }>();
@@ -18,7 +19,7 @@ export default function CookingModeScreen() {
   const recipe = id ? getRecipeById(id) : undefined;
   const steps = useMemo(() => {
     if (!recipe) return [];
-    return language === "ig" ? recipe.instructions_ig : recipe.instructions_en;
+    return recipeCopy(recipe, language).instructions;
   }, [recipe, language]);
 
   const [index, setIndex] = useState(0);
@@ -34,17 +35,17 @@ export default function CookingModeScreen() {
   if (!recipe || steps.length === 0) {
     return (
       <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]}>
-        <ThemedText variant="body">{language === "ig" ? "Achọtaghị nzọụkwụ." : "No steps found."}</ThemedText>
+        <ThemedText variant="body">{t(language, "noStepsFound")}</ThemedText>
       </SafeAreaView>
     );
   }
 
-  const title = language === "ig" ? recipe.name_ig : recipe.name_en;
+  const title = recipeDisplayName(recipe, language);
   const current = steps[Math.min(index, steps.length - 1)];
 
   const speakStep = (text: string) => {
     Speech.stop();
-    Speech.speak(text, { language: language === "ig" ? "ig-NG" : "en-US", rate: 0.92 });
+    Speech.speak(text, { language: speechLang(language), rate: 0.92 });
   };
 
   return (
@@ -82,20 +83,16 @@ export default function CookingModeScreen() {
               {t(language, "replay")}
             </ThemedText>
           </Pressable>
+          <Pressable
+            style={[styles.btn, { backgroundColor: colors.forest }]}
+            onPress={() => setIndex((i) => Math.min(i + 1, steps.length - 1))}
+            disabled={index >= steps.length - 1}
+          >
+            <ThemedText variant="label" color="inverse">
+              {t(language, "nextStep")}
+            </ThemedText>
+          </Pressable>
         </View>
-
-        <Pressable
-          style={[styles.next, { backgroundColor: colors.gold }]}
-          onPress={() => {
-            const next = Math.min(index + 1, steps.length - 1);
-            setIndex(next);
-            speakStep(steps[next]);
-          }}
-        >
-          <ThemedText variant="label" color="primary">
-            {t(language, "nextStep")}
-          </ThemedText>
-        </Pressable>
       </View>
     </SafeAreaView>
   );
@@ -103,9 +100,8 @@ export default function CookingModeScreen() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1 },
-  inner: { flex: 1, padding: 20, gap: 12 },
-  stepCard: { marginTop: 12, padding: 16, borderRadius: 16, borderWidth: 1, minHeight: 140 },
-  controls: { flexDirection: "row", gap: 12, marginTop: 16 },
-  btn: { flex: 1, minHeight: 52, borderRadius: 12, alignItems: "center", justifyContent: "center" },
-  next: { marginTop: 12, minHeight: 56, borderRadius: 14, alignItems: "center", justifyContent: "center" },
+  inner: { flex: 1, padding: 20 },
+  stepCard: { marginTop: 16, borderRadius: 16, borderWidth: 1, padding: 16 },
+  controls: { marginTop: 24, gap: 12 },
+  btn: { minHeight: 52, borderRadius: 12, alignItems: "center", justifyContent: "center" },
 });

@@ -7,6 +7,7 @@ import { useAppSettings } from "@/context/AppSettingsContext";
 import { useRemoteCommunity } from "@/hooks/useRemoteCommunity";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { t } from "@/lib/i18n";
+import { localized } from "@/lib/localized";
 
 export default function CommunityScreen() {
   const colors = useThemeColors();
@@ -17,9 +18,7 @@ export default function CommunityScreen() {
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["bottom", "left", "right"]}>
       <View style={styles.pad}>
         <ThemedText variant="body" color="muted">
-          {language === "ig"
-            ? "Ogbako: akụkọ, ncheta, na nhọrọ nri."
-            : "Story wall, recipe swaps, and gentle community prompts."}
+          {t(language, "communityIntro")}
         </ThemedText>
 
         <View style={styles.pills}>
@@ -42,7 +41,7 @@ export default function CommunityScreen() {
               {item.author} · {item.kind}
             </ThemedText>
             <ThemedText variant="body" style={{ marginTop: 8 }}>
-              {language === "ig" ? item.content_ig : item.content_en}
+              {localized(language, { en: item.content_en, ig: item.content_ig })}
             </ThemedText>
           </View>
         )}

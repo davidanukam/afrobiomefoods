@@ -5,6 +5,8 @@ import { useAppSettings } from "@/context/AppSettingsContext";
 import { useRemoteEvents } from "@/hooks/useRemoteEvents";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { t } from "@/lib/i18n";
+import { localized } from "@/lib/localized";
+import { localeTag } from "@/lib/locale";
 
 export default function EventsScreen() {
   const colors = useThemeColors();
@@ -15,20 +17,18 @@ export default function EventsScreen() {
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["bottom", "left", "right"]}>
       <ScrollView contentContainerStyle={styles.scroll}>
         <ThemedText variant="body" color="muted">
-          {language === "ig"
-            ? "Ihe omume: ịntanetị na nzụụ."
-            : "Workshops, festivals, and gentle reminders for seniors."}
+          {t(language, "eventsIntro")}
         </ThemedText>
 
         {events.map((ev) => {
           const when = new Date(ev.date);
-          const title = language === "ig" ? ev.title_ig : ev.title_en;
-          const loc = language === "ig" ? ev.location_ig : ev.location_en;
-          const summary = language === "ig" ? ev.summary_ig : ev.summary_en;
+          const title = localized(language, { en: ev.title_en, ig: ev.title_ig, fr: ev.title_fr });
+          const loc = localized(language, { en: ev.location_en, ig: ev.location_ig, fr: ev.location_fr });
+          const summary = localized(language, { en: ev.summary_en, ig: ev.summary_ig, fr: ev.summary_fr });
           return (
             <View key={ev.event_id} style={[styles.card, { borderColor: colors.border, backgroundColor: colors.card }]}>
               <ThemedText variant="caption" color="muted">
-                {when.toLocaleDateString(language === "ig" ? "ig-NG" : "en-US", {
+                {when.toLocaleDateString(localeTag(language), {
                   weekday: "short",
                   month: "long",
                   day: "numeric",
@@ -40,8 +40,7 @@ export default function EventsScreen() {
                 {title}
               </ThemedText>
               <ThemedText variant="caption" color="accent" style={{ marginTop: 4 }}>
-                {ev.isVirtual ? (language === "ig" ? "N'ịntanetị" : "Virtual") : (language === "ig" ? "N'ebe" : "In person")}{" "}
-                · {loc}
+                {ev.isVirtual ? t(language, "virtual") : t(language, "inPerson")} · {loc}
               </ThemedText>
               <ThemedText variant="body" style={{ marginTop: 8 }}>
                 {summary}
@@ -49,14 +48,7 @@ export default function EventsScreen() {
               <View style={styles.row}>
                 <Pressable
                   style={[styles.btn, { borderColor: colors.forest }]}
-                  onPress={() =>
-                    Alert.alert(
-                      t(language, "register"),
-                      language === "ig"
-                        ? "Debanye aha ga-ejikọta na kalenda na ọkwa."
-                        : "Registration will connect to calendar sync & push in Phase 2.",
-                    )
-                  }
+                  onPress={() => Alert.alert(t(language, "register"), t(language, "eventRegPhase2"))}
                 >
                   <ThemedText variant="label" color="accent">
                     {t(language, "register")}
@@ -64,12 +56,7 @@ export default function EventsScreen() {
                 </Pressable>
                 <Pressable
                   style={[styles.btn, { borderColor: colors.border }]}
-                  onPress={() =>
-                    Alert.alert(
-                      t(language, "details"),
-                      language === "ig" ? "Nkọwa zuru oke na-abịa." : "Full detail sheets ship with CMS content.",
-                    )
-                  }
+                  onPress={() => Alert.alert(t(language, "details"), t(language, "eventDetailCMS"))}
                 >
                   <ThemedText variant="label">{t(language, "details")}</ThemedText>
                 </Pressable>

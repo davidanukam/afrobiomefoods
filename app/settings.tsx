@@ -8,6 +8,7 @@ import { minTouchTarget } from "@/constants/theme";
 import { useAuth } from "@/context/AuthContext";
 import { useAppSettings } from "@/context/AppSettingsContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
+import { LANG_OPTIONS } from "@/lib/locale";
 import { t, type Lang } from "@/lib/i18n";
 
 const sizes: { key: FontScaleKey; labelKey: "normal" | "large" | "extraLarge" }[] = [
@@ -34,7 +35,8 @@ export default function SettingsScreen() {
 
   const cycleLang = () => {
     triggerHaptic();
-    setLanguage(language === "en" ? "ig" : "en");
+    const next: Lang = language === "en" ? "ig" : language === "ig" ? "fr" : "en";
+    setLanguage(next);
   };
 
   return (
@@ -43,9 +45,7 @@ export default function SettingsScreen() {
       <View style={styles.inner}>
         {supabaseEnabled ? (
           <View style={{ gap: 8, marginBottom: 8 }}>
-            <ThemedText variant="subtitle">
-              {language === "ig" ? "Akaụntụ" : "Account"}
-            </ThemedText>
+            <ThemedText variant="subtitle">{t(language, "account")}</ThemedText>
             {user ? (
               <>
                 <ThemedText variant="body" color="muted">
@@ -53,30 +53,30 @@ export default function SettingsScreen() {
                 </ThemedText>
                 {isAdmin ? (
                   <ThemedText variant="label" color="accent">
-                    {language === "ig" ? "Admin" : "Admin"}
+                    {t(language, "admin")}
                   </ThemedText>
                 ) : null}
                 <PrimaryButton
-                  title={language === "ig" ? "Melite ikike" : "Refresh permissions"}
+                  title={t(language, "refreshPermissions")}
                   variant="outline"
                   onPress={() => void refreshClaims()}
                 />
                 {isAdmin ? (
                   <PrimaryButton
-                    title={language === "ig" ? "Dezie recipes (Admin)" : "Edit recipes (Admin)"}
+                    title={t(language, "editRecipesAdmin")}
                     variant="outline"
                     onPress={() => router.push("/admin/recipes" as Href)}
                   />
                 ) : null}
                 <PrimaryButton
-                  title={language === "ig" ? "Pụọ" : "Sign out"}
+                  title={t(language, "signOut")}
                   variant="outline"
                   onPress={() => void signOutUser()}
                 />
               </>
             ) : (
               <ThemedText variant="body" color="muted">
-                {language === "ig" ? "Ọbịa / agaghị abanye" : "Guest or not signed in"}
+                {t(language, "guestNotSignedIn")}
               </ThemedText>
             )}
           </View>
@@ -84,23 +84,23 @@ export default function SettingsScreen() {
 
         <ThemedText variant="subtitle">{t(language, "language")}</ThemedText>
         <View style={styles.row}>
-          {(["en", "ig"] as Lang[]).map((lang) => (
+          {LANG_OPTIONS.map(({ id, label }) => (
             <Pressable
-              key={lang}
-              onPress={() => setLanguage(lang)}
+              key={id}
+              onPress={() => setLanguage(id)}
               style={[
                 styles.chip,
                 {
-                  borderColor: language === lang ? colors.forest : colors.border,
-                  backgroundColor: language === lang ? colors.gold + "44" : colors.card,
+                  borderColor: language === id ? colors.forest : colors.border,
+                  backgroundColor: language === id ? colors.gold + "44" : colors.card,
                 },
               ]}
             >
-              <ThemedText variant="label">{lang === "en" ? "English" : "Igbo"}</ThemedText>
+              <ThemedText variant="label">{label}</ThemedText>
             </Pressable>
           ))}
           <Pressable onPress={cycleLang} style={[styles.chip, { borderColor: colors.border, backgroundColor: colors.card }]}>
-            <ThemedText variant="caption">{language === "ig" ? "Gbanwee" : "Toggle"}</ThemedText>
+            <ThemedText variant="caption">{t(language, "toggle")}</ThemedText>
           </Pressable>
         </View>
 
@@ -149,7 +149,7 @@ export default function SettingsScreen() {
         <View style={styles.spacer} />
 
         <PrimaryButton
-          title={language === "ig" ? "Laghachi onboarding" : "Replay onboarding"}
+          title={t(language, "replayOnboarding")}
           variant="outline"
           onPress={() => {
             resetOnboarding();

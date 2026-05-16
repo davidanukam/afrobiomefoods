@@ -1,4 +1,6 @@
 import type { ImageSourcePropType } from "react-native";
+import type { Lang } from "@/lib/i18n";
+import { localized, localizedList } from "@/lib/localized";
 import { recipeFinalImage } from "./recipeFinalImages";
 
 export { RECIPE_FINAL_IMAGE_PLACEHOLDER, recipeFinalImage } from "./recipeFinalImages";
@@ -28,12 +30,17 @@ export type Recipe = {
   final_image: ImageSourcePropType;
 };
 
-export const recipeCategories: { id: RecipeCategory; label_en: string; label_ig: string }[] = [
-  { id: "soups",         label_en: "Soups",            label_ig: "Ofe" },
-  { id: "pepper_soups",  label_en: "Pepper Soups",     label_ig: "Nni Mmiri Ọkụ" },
-  { id: "porridges",     label_en: "Porridges",        label_ig: "Nri e siri ọcha" },
-  { id: "delicacies",    label_en: "Delicacies",       label_ig: "Nri pụrụ iche" },
-  { id: "snacks",        label_en: "Snacks & Street Food", label_ig: "Nri ụzọ" },
+export const recipeCategories: {
+  id: RecipeCategory;
+  label_en: string;
+  label_ig: string;
+  label_fr: string;
+}[] = [
+  { id: "soups", label_en: "Soups", label_ig: "Ofe", label_fr: "Soupes" },
+  { id: "pepper_soups", label_en: "Pepper Soups", label_ig: "Nni Mmiri Ọkụ", label_fr: "Soupes au piment" },
+  { id: "porridges", label_en: "Porridges", label_ig: "Nri e siri ọcha", label_fr: "Bouillies" },
+  { id: "delicacies", label_en: "Delicacies", label_ig: "Nri pụrụ iche", label_fr: "Spécialités" },
+  { id: "snacks", label_en: "Snacks & Street Food", label_ig: "Nri ụzọ", label_fr: "Collations & rue" },
 ];
 
 export const recipes: Recipe[] = [
@@ -2703,4 +2710,27 @@ export function getRecipesByHealthTag(tag: string): Recipe[] {
   return recipes.filter((r) =>
     r.health_tags.some((t) => t.toLowerCase().includes(tag.toLowerCase()))
   );
+}
+
+export function recipeDisplayName(recipe: Recipe, lang: Lang): string {
+  return localized(lang, { en: recipe.name_en, ig: recipe.name_ig });
+}
+
+export function recipeCategoryLabel(
+  cat: (typeof recipeCategories)[number],
+  lang: Lang,
+): string {
+  return localized(lang, { en: cat.label_en, ig: cat.label_ig, fr: cat.label_fr });
+}
+
+export function recipeCopy(recipe: Recipe, lang: Lang) {
+  return {
+    name: recipeDisplayName(recipe, lang),
+    ingredients: localizedList(lang, { en: recipe.ingredients_en, ig: recipe.ingredients_ig }),
+    instructions: localizedList(lang, { en: recipe.instructions_en, ig: recipe.instructions_ig }),
+    cultural: localized(lang, {
+      en: recipe.cultural_notes_en,
+      ig: recipe.cultural_notes_ig,
+    }),
+  };
 }

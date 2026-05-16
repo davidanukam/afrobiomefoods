@@ -3,7 +3,7 @@ export type CommunityPost = {
   author: string;
   content_en: string;
   content_ig: string;
-  language: "en" | "ig";
+  language: "en" | "ig" | "fr";
   timestamp: string;
   kind: "memory" | "recipe" | "story";
 };

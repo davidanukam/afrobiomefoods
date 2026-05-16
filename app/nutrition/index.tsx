@@ -7,6 +7,8 @@ import { ThemedText } from "@/components/ThemedText";
 import { useAppSettings } from "@/context/AppSettingsContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { t } from "@/lib/i18n";
+import { localized, localizedList } from "@/lib/localized";
+import { speechLang } from "@/lib/locale";
 import { conditionTopics, ingredients, mythFacts } from "@/data/nutrition";
 
 export default function NutritionHubScreen() {
@@ -16,7 +18,7 @@ export default function NutritionHubScreen() {
   const summarize = useCallback(
     (text: string) => {
       Speech.stop();
-      Speech.speak(text, { language: language === "ig" ? "ig-NG" : "en-US", rate: 0.95 });
+      Speech.speak(text, { language: speechLang(language), rate: 0.95 });
     },
     [language],
   );
@@ -27,9 +29,21 @@ export default function NutritionHubScreen() {
       <ScrollView contentContainerStyle={styles.scroll}>
         <ThemedText variant="subtitle">{t(language, "conditionGuides")}</ThemedText>
         {conditionTopics.map((topic) => {
-          const title = language === "ig" ? topic.title_ig : topic.title_en;
-          const summary = language === "ig" ? topic.summary_ig : topic.summary_en;
-          const tips = language === "ig" ? topic.tips_ig : topic.tips_en;
+          const title = localized(language, {
+            en: topic.title_en,
+            ig: topic.title_ig,
+            fr: topic.title_fr,
+          });
+          const summary = localized(language, {
+            en: topic.summary_en,
+            ig: topic.summary_ig,
+            fr: topic.summary_fr,
+          });
+          const tips = localizedList(language, {
+            en: topic.tips_en,
+            ig: topic.tips_ig,
+            fr: topic.tips_fr,
+          });
           return (
             <View key={topic.id} style={[styles.card, { borderColor: colors.border, backgroundColor: colors.card }]}>
               <ThemedText variant="subtitle">{title}</ThemedText>
@@ -46,7 +60,7 @@ export default function NutritionHubScreen() {
                 onPress={() => summarize(`${title}. ${summary}`)}
               >
                 <ThemedText variant="label" color="inverse">
-                  {t(language, "listen")} (TTS)
+                  {t(language, "listenTTS")}
                 </ThemedText>
               </Pressable>
             </View>
@@ -57,9 +71,9 @@ export default function NutritionHubScreen() {
           {t(language, "ingredientSpotlight")}
         </ThemedText>
         {ingredients.map((ing) => {
-          const title = language === "ig" ? ing.name_ig : ing.name_en;
-          const uses = language === "ig" ? ing.uses_ig : ing.uses_en;
-          const sci = language === "ig" ? ing.science_ig : ing.science_en;
+          const title = localized(language, { en: ing.name_en, ig: ing.name_ig, fr: ing.name_fr });
+          const uses = localized(language, { en: ing.uses_en, ig: ing.uses_ig, fr: ing.uses_fr });
+          const sci = localized(language, { en: ing.science_en, ig: ing.science_ig, fr: ing.science_fr });
           return (
             <View key={ing.id} style={[styles.card, { borderColor: colors.border, backgroundColor: colors.card }]}>
               <ThemedText variant="subtitle">{title}</ThemedText>
@@ -79,16 +93,16 @@ export default function NutritionHubScreen() {
         {mythFacts.map((mf, idx) => (
           <View key={idx} style={[styles.card, { borderColor: colors.border, backgroundColor: colors.card }]}>
             <ThemedText variant="caption" color="muted">
-              {language === "ig" ? "Ekwensu" : "Myth"}
+              {t(language, "myth")}
             </ThemedText>
             <ThemedText variant="body" style={{ marginTop: 4 }}>
-              {language === "ig" ? mf.myth_ig : mf.myth_en}
+              {localized(language, { en: mf.myth_en, ig: mf.myth_ig, fr: mf.myth_fr })}
             </ThemedText>
             <ThemedText variant="caption" color="accent" style={{ marginTop: 10 }}>
-              {language === "ig" ? "Eziokwu" : "Fact"}
+              {t(language, "fact")}
             </ThemedText>
             <ThemedText variant="body" style={{ marginTop: 4 }}>
-              {language === "ig" ? mf.fact_ig : mf.fact_en}
+              {localized(language, { en: mf.fact_en, ig: mf.fact_ig, fr: mf.fact_fr })}
             </ThemedText>
           </View>
         ))}

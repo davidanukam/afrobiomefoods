@@ -29,10 +29,7 @@ export default function ServicesScreen() {
     void Linking.openURL(`tel:${phone.replace(/[^\d+]/g, "")}`);
   };
 
-  const webMapMessage =
-    language === "ig"
-      ? "Maapụ kachasị mma na ngwa iOS/Android."
-      : "Interactive maps are best on the iOS/Android builds.";
+  const webMapMessage = t(language, "mapWebHint");
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["bottom", "left", "right"]}>
@@ -91,7 +88,7 @@ export default function ServicesScreen() {
               accessibilityRole="button"
             >
               <ThemedText variant="label" color="inverse">
-                {language === "ig" ? "Kpọ" : "Call"} {item.contact}
+                {t(language, "call")} {item.contact}
               </ThemedText>
             </Pressable>
           </View>

@@ -3,7 +3,7 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import * as Speech from "expo-speech";
 import { Image } from "expo-image";
 import { Stack, router, useLocalSearchParams, type Href } from "expo-router";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { ScrollView, View, StyleSheet, Pressable, Alert, Share } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { PrimaryButton } from "@/components/PrimaryButton";
@@ -11,8 +11,9 @@ import { ThemedText } from "@/components/ThemedText";
 import { useAppSettings } from "@/context/AppSettingsContext";
 import { useRemoteRecipes } from "@/hooks/useRemoteRecipes";
 import { useThemeColors } from "@/hooks/useThemeColors";
-import { t } from "@/lib/i18n";
-import { getRecipeById } from "@/data/recipes";
+import { getRecipeById, recipeCopy } from "@/data/recipes";
+import { speechLang } from "@/lib/locale";
+import { t, type Lang } from "@/lib/i18n";
 
 export default function RecipeDetailScreen() {
   const { id: rawId } = useLocalSearchParams<{ id: string | string[] }>();
@@ -22,6 +23,11 @@ export default function RecipeDetailScreen() {
   const { language, scale } = useAppSettings();
   const { getById } = useRemoteRecipes();
   const recipe = id ? getById(id) ?? getRecipeById(id) : undefined;
+
+  const copy = useMemo(
+    () => (recipe ? recipeCopy(recipe, language) : null),
+    [recipe, language],
+  );
 
   const goBackToRecipes = useCallback(() => {
     if (navigation.canGoBack()) {
@@ -39,31 +45,29 @@ export default function RecipeDetailScreen() {
     }, []),
   );
 
-  if (!recipe) {
+  if (!recipe || !copy) {
     return (
       <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]}>
-        <ThemedText variant="body">{language === "ig" ? "Achọtaghị nri a." : "Recipe not found."}</ThemedText>
+        <ThemedText variant="body">{t(language, "recipeNotFound")}</ThemedText>
       </SafeAreaView>
     );
   }
 
-  const title = language === "ig" ? recipe.name_ig : recipe.name_en;
-  const ingredients = language === "ig" ? recipe.ingredients_ig : recipe.ingredients_en;
-  const instructions = language === "ig" ? recipe.instructions_ig : recipe.instructions_en;
-  const cultural = language === "ig" ? recipe.cultural_notes_ig : recipe.cultural_notes_en;
+  const { name: title, ingredients, instructions, cultural } = copy;
 
-  const speak = (text: string, langCode: string) => {
+  const speak = (text: string, lang: Lang) => {
     Speech.stop();
-    Speech.speak(text, { language: langCode, rate: 0.95 });
+    Speech.speak(text, { language: speechLang(lang), rate: 0.95 });
   };
 
-  const readAll = (langCode: "en-US" | "ig-NG") => {
+  const readAll = (readLang: Lang) => {
+    const c = recipeCopy(recipe, readLang);
     const body = [
-      ...ingredients.map((i) => i),
+      ...c.ingredients,
       "",
-      ...instructions.map((s, idx) => `Step ${idx + 1}. ${s}`),
+      ...c.instructions.map((s, idx) => `Step ${idx + 1}. ${s}`),
     ].join(". ");
-    speak(body, langCode);
+    speak(body, readLang);
   };
 
   const onShare = async () => {
@@ -93,17 +97,20 @@ export default function RecipeDetailScreen() {
         }}
       />
       <ScrollView contentContainerStyle={styles.scroll}>
+        <ThemedText variant="caption" color="muted" style={{ marginBottom: 6 }}>
+          {t(language, "finishedDishPhoto")}
+        </ThemedText>
         <Image
           source={recipe.final_image}
           style={[styles.dishPhoto, { borderColor: colors.border }]}
           contentFit="cover"
-          accessibilityLabel={language === "ig" ? `Foto: ${recipe.name_ig}` : `Photo: ${recipe.name_en}`}
+          accessibilityLabel={title}
         />
 
         <View style={styles.row}>
           <Pressable
             style={[styles.audioBtn, { backgroundColor: colors.forest }]}
-            onPress={() => readAll("en-US")}
+            onPress={() => readAll("en")}
           >
             <ThemedText variant="label" color="inverse">
               {t(language, "listenEn")}
@@ -111,10 +118,18 @@ export default function RecipeDetailScreen() {
           </Pressable>
           <Pressable
             style={[styles.audioBtn, { backgroundColor: colors.forestLight }]}
-            onPress={() => readAll("ig-NG")}
+            onPress={() => readAll("ig")}
           >
             <ThemedText variant="label" color="inverse">
               {t(language, "listenIg")}
+            </ThemedText>
+          </Pressable>
+          <Pressable
+            style={[styles.audioBtn, { backgroundColor: colors.forestLight }]}
+            onPress={() => readAll("fr")}
+          >
+            <ThemedText variant="label" color="inverse">
+              {t(language, "listenFr")}
             </ThemedText>
           </Pressable>
         </View>
@@ -138,7 +153,7 @@ export default function RecipeDetailScreen() {
         ))}
 
         <ThemedText variant="subtitle" style={{ marginTop: 16 }}>
-          {language === "ig" ? "Akụkọ omenala" : "Cultural notes"}
+          {t(language, "culturalNotes")}
         </ThemedText>
         <ThemedText variant="body" style={{ marginTop: 6 }}>
           {cultural}
@@ -165,7 +180,7 @@ export default function RecipeDetailScreen() {
           <View style={styles.row}>
             <Pressable
               style={[styles.secondary, { borderColor: colors.forest }]}
-              onPress={() => Alert.alert(t(language, "save"), language === "ig" ? "Na-abịa n'ọrụ" : "Saved recipes ship in Phase 2.")}
+              onPress={() => Alert.alert(t(language, "save"), t(language, "savedRecipesPhase2"))}
             >
               <ThemedText variant="label" color="accent">
                 {t(language, "save")}
@@ -198,7 +213,15 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   row: { flexDirection: "row", gap: 12, flexWrap: "wrap" },
-  audioBtn: { flex: 1, minHeight: 52, borderRadius: 12, alignItems: "center", justifyContent: "center", paddingHorizontal: 8 },
+  audioBtn: {
+    flexGrow: 1,
+    flexBasis: "30%",
+    minHeight: 52,
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 8,
+  },
   actions: { marginTop: 24, gap: 12 },
   secondary: {
     flex: 1,

@@ -5,6 +5,7 @@ import { PrimaryButton } from "@/components/PrimaryButton";
 import { ThemedText } from "@/components/ThemedText";
 import { useAppSettings } from "@/context/AppSettingsContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
+import { LANG_OPTIONS } from "@/lib/locale";
 import { t, type Lang } from "@/lib/i18n";
 
 export default function LanguageScreen() {
@@ -31,26 +32,24 @@ export default function LanguageScreen() {
         </ThemedText>
 
         <View style={styles.row}>
-          <Pressable
-            accessibilityRole="button"
-            onPress={() => pick("en")}
-            style={[
-              styles.langCard,
-              { borderColor: language === "en" ? colors.forest : colors.border, backgroundColor: colors.card },
-            ]}
-          >
-            <ThemedText variant="subtitle">English</ThemedText>
-          </Pressable>
-          <Pressable
-            accessibilityRole="button"
-            onPress={() => pick("ig")}
-            style={[
-              styles.langCard,
-              { borderColor: language === "ig" ? colors.forest : colors.border, backgroundColor: colors.card },
-            ]}
-          >
-            <ThemedText variant="subtitle">Asụsụ Igbo</ThemedText>
-          </Pressable>
+          {LANG_OPTIONS.map(({ id, label }) => (
+            <Pressable
+              key={id}
+              accessibilityRole="button"
+              onPress={() => pick(id)}
+              style={[
+                styles.langCard,
+                {
+                  borderColor: language === id ? colors.forest : colors.border,
+                  backgroundColor: colors.card,
+                },
+              ]}
+            >
+              <ThemedText variant="label" style={{ textAlign: "center" }}>
+                {label}
+              </ThemedText>
+            </Pressable>
+          ))}
         </View>
 
         <ThemedText variant="caption" color="muted" style={styles.center}>
@@ -71,14 +70,17 @@ const styles = StyleSheet.create({
   center: { textAlign: "center" },
   sub: { marginTop: 4 },
   section: { marginTop: 16 },
-  row: { flexDirection: "row", gap: 12 },
+  row: { flexDirection: "row", flexWrap: "wrap", gap: 12 },
   langCard: {
-    flex: 1,
+    flexGrow: 1,
+    flexBasis: "30%",
+    minWidth: 96,
     minHeight: 72,
     borderWidth: 2,
     borderRadius: 14,
     alignItems: "center",
     justifyContent: "center",
+    paddingHorizontal: 8,
   },
   spacer: { flex: 1 },
 });

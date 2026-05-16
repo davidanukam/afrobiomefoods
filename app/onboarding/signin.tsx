@@ -49,29 +49,16 @@ export default function SignInScreen() {
 
   const submitEmailAuth = async () => {
     if (!supabaseEnabled || !isSupabaseConfigured()) {
-      Alert.alert(
-        "Supabase",
-        language === "ig"
-          ? "Tinye ntọala Supabase na .env.local"
-          : "Add EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_KEY to .env.local.",
-      );
+      Alert.alert("Supabase", t(language, "supabaseEnvSetup"));
       return;
     }
     const em = email.trim();
     if (!em.includes("@") || password.length < 6) {
-      Alert.alert(
-        language === "ig" ? "Nkọwa" : "Check input",
-        language === "ig"
-          ? "Email kwesịrị ịdị mma; paswọọd opekata nhọrọ 6."
-          : "Use a valid email and password (at least 6 characters).",
-      );
+      Alert.alert(t(language, "checkInput"), t(language, "invalidEmailPassword"));
       return;
     }
     if (mode === "register" && password !== confirm) {
-      Alert.alert(
-        language === "ig" ? "Paswọọd" : "Password",
-        language === "ig" ? "Paswọọd abụọ adabaghị." : "Passwords do not match.",
-      );
+      Alert.alert(t(language, "password"), t(language, "passwordsMismatch"));
       return;
     }
 
@@ -84,7 +71,7 @@ export default function SignInScreen() {
       }
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : String(e);
-      Alert.alert(language === "ig" ? "Njehie" : "Auth error", msg);
+      Alert.alert(t(language, "authError"), msg);
     } finally {
       setBusy(false);
     }
@@ -92,23 +79,19 @@ export default function SignInScreen() {
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]}>
-      <Stack.Screen options={{ headerShown: true, title: language === "ig" ? "Banye" : "Sign in" }} />
+      <Stack.Screen options={{ headerShown: true, title: t(language, "signIn") }} />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
         style={{ flex: 1 }}
       >
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
           <ThemedText variant="body" color="muted" style={styles.center}>
-            {language === "ig"
-              ? "Jị Supabase wee banye (ịmeelu ma ọ bụ Google), ma ọ bụ gaa dị ka ọbịa."
-              : "Sign in with email or Google (Supabase), or continue as a guest."}
+            {t(language, "signInSubtitle")}
           </ThemedText>
 
           {!supabaseEnabled ? (
             <ThemedText variant="caption" color="muted" style={styles.center}>
-              {language === "ig"
-                ? "Supabase adịghị na nhọrọ a — ọbịa ka ọ na-arụ ọrụ."
-                : "Supabase env vars missing — guest mode still works."}
+              {t(language, "supabaseMissingGuest")}
             </ThemedText>
           ) : null}
 
@@ -124,7 +107,7 @@ export default function SignInScreen() {
                 },
               ]}
             >
-              <ThemedText variant="label">{language === "ig" ? "Banye" : "Sign in"}</ThemedText>
+              <ThemedText variant="label">{t(language, "signIn")}</ThemedText>
             </Pressable>
             <Pressable
               accessibilityRole="button"
@@ -137,7 +120,7 @@ export default function SignInScreen() {
                 },
               ]}
             >
-              <ThemedText variant="label">{language === "ig" ? "Debanye aha" : "Register"}</ThemedText>
+              <ThemedText variant="label">{t(language, "register")}</ThemedText>
             </Pressable>
           </View>
 
@@ -156,7 +139,7 @@ export default function SignInScreen() {
           />
 
           <ThemedText variant="caption" color="muted">
-            {language === "ig" ? "Paswọọd" : "Password"}
+            {t(language, "password")}
           </ThemedText>
           <TextInput
             value={password}
@@ -170,7 +153,7 @@ export default function SignInScreen() {
           {mode === "register" ? (
             <>
               <ThemedText variant="caption" color="muted">
-                {language === "ig" ? "Kwado paswọọd" : "Confirm password"}
+                {t(language, "confirmPassword")}
               </ThemedText>
               <TextInput
                 value={confirm}
@@ -186,12 +169,12 @@ export default function SignInScreen() {
           <PrimaryButton
             title={
               mode === "login"
-                ? language === "ig"
-                  ? "Banye"
-                  : "Sign in"
-                : language === "ig"
-                  ? "Meelu akaụntụ"
-                  : "Create account"
+                ? busy
+                  ? t(language, "signingIn")
+                  : t(language, "signIn")
+                : busy
+                  ? t(language, "creatingAccount")
+                  : t(language, "createAccount")
             }
             onPress={() => void submitEmailAuth()}
             disabled={busy}
@@ -200,7 +183,7 @@ export default function SignInScreen() {
           {supabaseEnabled ? (
             <>
               <ThemedText variant="caption" color="muted" style={[styles.center, { marginTop: 8 }]}>
-                {language === "ig" ? "Maọ bụ" : "Or"}
+                {t(language, "orWord")}
               </ThemedText>
               <GoogleSignInButton />
             </>
