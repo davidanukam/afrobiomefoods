@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "Afro Biome Foods",
-    "slug": "afrobiomefoods",
+    "name": "Igbo Food Heritage",
+    "slug": "igbo-food-heritage",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/cover.png",
-    "scheme": "afrobiomefoods",
+    "scheme": "igbo-food-heritage",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
