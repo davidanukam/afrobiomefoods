@@ -36,7 +36,7 @@ const RECIPE_INGREDIENT_IMAGE_SOURCES: Record<string, ImageSourcePropType> = {
   "foi-foi": require("../assets/images/porridgesrecipepictures/Fio-fio.jpg"),
   "okpa": require("../assets/images/delicaciesrecipepictures/Okpa nut.png"),
   "ukwa": require("../assets/images/delicaciesrecipepictures/Ukwa-African-Breadfruit.png"),
-  "abacha": require("../assets/images/delicaciesrecipepictures/African salad -Abacha.png"),
+  "abacha": require("../assets/images/delicaciesrecipepictures/abacha-ingredient.png"),
   "nkwobi": require("../assets/images/delicaciesrecipepictures/Nkwobi cow foot.jpg"),
   "isi-ewu": require("../assets/images/delicaciesrecipepictures/Isi ewu (head).jpg"),
   "jollof-rice": require("../assets/images/delicaciesrecipepictures/Rice.jpg"),

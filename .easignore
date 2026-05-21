@@ -1,0 +1,6 @@
+android/
+ios/
+dist/
+build-log*.txt
+build-log*.bin
+.expo/
