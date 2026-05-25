@@ -2,7 +2,7 @@
   "expo": {
     "name": "Igbo Food Heritage",
     "slug": "igbo-food-heritage",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/cover.png",
     "scheme": "igbo-food-heritage",
@@ -13,7 +13,7 @@
     },
     "android": {
       "package": "com.afrobiomefoods.igbofoodheritage",
-      "versionCode": 2,
+      "versionCode": 3,
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
