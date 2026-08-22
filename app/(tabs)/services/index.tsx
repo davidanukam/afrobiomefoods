@@ -53,10 +53,6 @@ export default function ServicesScreen() {
         <Chip flex label={t(language, "mapView")} active={mode === "map"} onPress={() => setMode("map")} />
       </View>
 
-      <ThemedText variant="subtitle" style={{ paddingHorizontal: 20, marginBottom: 8 }}>
-        {t(language, "servicesNearYou")}
-      </ThemedText>
-
       {mode === "map" ? (
         <ServiceMap
           region={region}

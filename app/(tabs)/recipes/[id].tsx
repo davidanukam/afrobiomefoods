@@ -14,12 +14,16 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Stack, router, useLocalSearchParams, type Href } from "expo-router";
 import * as Speech from "expo-speech";
 import { useCallback, useMemo } from "react";
-import { Alert, Pressable, ScrollView, Share, StyleSheet, View } from "react-native";
+import { Alert, BackHandler, Pressable, ScrollView, Share, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function RecipeDetailScreen() {
-    const { id: rawId } = useLocalSearchParams<{ id: string | string[] }>();
+    const { id: rawId, from: rawFrom } = useLocalSearchParams<{
+        id: string | string[];
+        from?: string | string[];
+    }>();
     const id = Array.isArray(rawId) ? rawId[0] : rawId;
+    const openedFromHome = (Array.isArray(rawFrom) ? rawFrom[0] : rawFrom) === "home";
     const navigation = useNavigation();
     const colors = useThemeColors();
     const { language, scale, highContrast } = useAppSettings();
@@ -31,20 +35,37 @@ export default function RecipeDetailScreen() {
         [recipe, language],
     );
 
-    const goBackToRecipes = useCallback(() => {
+    const goBack = useCallback(() => {
+        if (openedFromHome) {
+            router.navigate("/home" as Href);
+            navigation.reset({
+                index: 0,
+                routes: [{ name: "index" }],
+            });
+            return;
+        }
         if (navigation.canGoBack()) {
             navigation.goBack();
         } else {
             router.replace("/recipes" as Href);
         }
-    }, [navigation]);
+    }, [navigation, openedFromHome]);
 
     useFocusEffect(
         useCallback(() => {
+            const onHardwareBack = () => {
+                if (openedFromHome) {
+                    goBack();
+                    return true;
+                }
+                return false;
+            };
+            const sub = BackHandler.addEventListener("hardwareBackPress", onHardwareBack);
             return () => {
+                sub.remove();
                 Speech.stop();
             };
-        }, []),
+        }, [goBack, openedFromHome]),
     );
 
     if (!recipe || !copy) {
@@ -93,7 +114,7 @@ export default function RecipeDetailScreen() {
                     headerBackTitle: t(language, "recipes"),
                     headerLeft: () => (
                         <HeaderBackButton
-                            onPress={goBackToRecipes}
+                            onPress={goBack}
                             accessibilityLabel={t(language, "back")}
                         />
                     ),

@@ -1,5 +1,6 @@
 import { Card } from "@/components/Card";
 import { ThemedText } from "@/components/ThemedText";
+import { radii } from "@/constants/theme";
 import { useAppSettings } from "@/context/AppSettingsContext";
 import { events as fallbackEvents } from "@/data/events";
 import type { Recipe } from "@/data/recipes";
@@ -15,7 +16,6 @@ import { router, type Href } from "expo-router";
 import type { ComponentProps } from "react";
 import { Image, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { radii } from "@/constants/theme";
 
 /** One random featured recipe index per app launch (JS session); not reshuffled when revisiting Home. */
 let homeSessionFeaturedRecipeIndex: number | null = null;
@@ -43,20 +43,52 @@ export default function HomeScreen() {
   const eventDate = new Date(nextEvent.date);
 
   const tiles: { label: string; href: Href; icon: IconName }[] = [
-    { label: t(language, "recipes"), href: "/recipes" as Href, icon: "book-outline" },
-    { label: t(language, "classes"), href: "/classes" as Href, icon: "school-outline" },
-    { label: t(language, "community"), href: "/community" as Href, icon: "people-outline" },
-    { label: t(language, "events"), href: "/events" as Href, icon: "calendar-outline" },
-    { label: t(language, "nutrition"), href: "/nutrition" as Href, icon: "leaf-outline" },
-    { label: t(language, "services"), href: "/services" as Href, icon: "location-outline" },
+    {
+      label: t(language, "nutrition"),
+      href: "/nutrition" as Href,
+      icon: "leaf-outline",
+    },
+    {
+      label: t(language, "classes"),
+      href: "/classes" as Href,
+      icon: "school-outline",
+    },
+    {
+      label: t(language, "recipes"),
+      href: "/recipes" as Href,
+      icon: "book-outline",
+    },
+    {
+      label: t(language, "community"),
+      href: "/community" as Href,
+      icon: "people-outline",
+    },
+    {
+      label: t(language, "events"),
+      href: "/events" as Href,
+      icon: "calendar-outline",
+    },
+    {
+      label: t(language, "services"),
+      href: "/services" as Href,
+      icon: "location-outline",
+    },
   ];
 
   return (
-    <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["left", "right"]}>
-      <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
+    <SafeAreaView
+      style={[styles.safe, { backgroundColor: colors.cream }]}
+      edges={["left", "right"]}
+    >
+      <ScrollView
+        contentContainerStyle={styles.scroll}
+        showsVerticalScrollIndicator={false}
+      >
         <Pressable
           accessibilityRole="button"
-          onPress={() => router.push(`/recipes/${featured.recipe_id}` as Href)}
+          onPress={() =>
+            router.push(`/recipes/${featured.recipe_id}?from=home` as Href)
+          }
           style={styles.heroWrap}
         >
           <Image
@@ -66,12 +98,18 @@ export default function HomeScreen() {
             fadeDuration={0}
             accessibilityLabel={featuredTitle}
           />
-          <View style={[styles.heroScrim, { backgroundColor: colors.overlay }]} />
+          <View
+            style={[styles.heroScrim, { backgroundColor: colors.overlay }]}
+          />
           <View style={styles.heroCopy}>
             <ThemedText variant="eyebrow" color="inverse">
               {t(language, "featuredRecipe")}
             </ThemedText>
-            <ThemedText variant="subtitle" color="inverse" style={{ marginTop: 6 }}>
+            <ThemedText
+              variant="subtitle"
+              color="inverse"
+              style={{ marginTop: 6 }}
+            >
               {featuredTitle}
             </ThemedText>
           </View>
@@ -86,11 +124,18 @@ export default function HomeScreen() {
           </ThemedText>
         </Card>
 
-        <Pressable onPress={() => router.push("/events" as Href)} accessibilityRole="button">
+        <Pressable
+          onPress={() => router.push("/events" as Href)}
+          accessibilityRole="button"
+        >
           <Card style={styles.eventCard}>
-            <View style={[styles.dateBadge, { backgroundColor: colors.forest }]}>
+            <View
+              style={[styles.dateBadge, { backgroundColor: colors.forest }]}
+            >
               <ThemedText variant="caption" color="inverse">
-                {eventDate.toLocaleDateString(localeTag(language), { month: "short" }).toUpperCase()}
+                {eventDate
+                  .toLocaleDateString(localeTag(language), { month: "short" })
+                  .toUpperCase()}
               </ThemedText>
               <ThemedText variant="subtitle" color="inverse">
                 {eventDate.getDate()}
@@ -107,7 +152,11 @@ export default function HomeScreen() {
                   fr: nextEvent.title_fr,
                 })}
               </ThemedText>
-              <ThemedText variant="caption" color="accent" style={{ marginTop: 6 }}>
+              <ThemedText
+                variant="caption"
+                color="accent"
+                style={{ marginTop: 6 }}
+              >
                 {t(language, "events")}
               </ThemedText>
             </View>
@@ -119,7 +168,11 @@ export default function HomeScreen() {
         </ThemedText>
         <View style={styles.grid}>
           {tiles.map((tile) => (
-            <QuickTile key={tile.label} {...tile} onPress={() => router.push(tile.href)} />
+            <QuickTile
+              key={tile.label}
+              {...tile}
+              onPress={() => router.push(tile.href)}
+            />
           ))}
         </View>
       </ScrollView>
@@ -170,7 +223,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   grid: { flexDirection: "row", flexWrap: "wrap", gap: 12 },
-  tile: { minHeight: 108, width: "100%", alignItems: "center", gap: 10, paddingVertical: 16 },
+  tile: {
+    minHeight: 108,
+    width: "100%",
+    alignItems: "center",
+    gap: 10,
+    paddingVertical: 16,
+  },
   tileIcon: {
     width: 44,
     height: 44,
