@@ -12,9 +12,21 @@ import { useThemeColors } from "@/hooks/useThemeColors";
 import { t } from "@/lib/i18n";
 import type { ServiceItem } from "@/data/services";
 
+const DEFAULT_REGION = {
+  latitude: 6.45,
+  longitude: 7.5,
+  latitudeDelta: 0.08,
+  longitudeDelta: 0.08,
+};
+
 const regionFrom = (items: ServiceItem[]) => {
-  const lat = items.reduce((a, b) => a + b.lat, 0) / items.length;
-  const lng = items.reduce((a, b) => a + b.lng, 0) / items.length;
+  const valid = items.filter(
+    (s) => Number.isFinite(s.lat) && Number.isFinite(s.lng) && Math.abs(s.lat) <= 90 && Math.abs(s.lng) <= 180,
+  );
+  if (valid.length === 0) return DEFAULT_REGION;
+  const lat = valid.reduce((a, b) => a + b.lat, 0) / valid.length;
+  const lng = valid.reduce((a, b) => a + b.lng, 0) / valid.length;
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) return DEFAULT_REGION;
   return { latitude: lat, longitude: lng, latitudeDelta: 0.08, longitudeDelta: 0.08 };
 };
 
@@ -65,6 +77,7 @@ export default function ServicesScreen() {
           accessibilityLabel={t(language, "mapView")}
           webMessage={webMapMessage}
           webBorderColor={colors.border}
+          openInMapsLabel={t(language, "openInMaps")}
         />
       ) : null}
 

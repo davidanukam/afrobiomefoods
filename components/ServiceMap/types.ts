@@ -11,4 +11,5 @@ export type ServiceMapProps = {
   accessibilityLabel: string;
   webMessage: string;
   webBorderColor: string;
+  openInMapsLabel?: string;
 };
