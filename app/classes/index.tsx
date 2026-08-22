@@ -1,10 +1,12 @@
 import { Stack } from "expo-router";
 import { ScrollView, StyleSheet, Pressable, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { AppRefreshControl } from "@/components/AppRefreshControl";
 import { ThemedText } from "@/components/ThemedText";
 import { Card } from "@/components/Card";
 import { radii } from "@/constants/theme";
 import { useAppSettings } from "@/context/AppSettingsContext";
+import { usePullToRefresh } from "@/hooks/usePullToRefresh";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { t } from "@/lib/i18n";
 import { localized } from "@/lib/localized";
@@ -42,11 +44,15 @@ const lessons = [
 export default function ClassesScreen() {
   const colors = useThemeColors();
   const { language } = useAppSettings();
+  const { refreshing, onRefresh } = usePullToRefresh();
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["bottom", "left", "right"]}>
       <Stack.Screen options={{ title: "" }} />
-      <ScrollView contentContainerStyle={styles.scroll}>
+      <ScrollView
+        contentContainerStyle={styles.scroll}
+        refreshControl={<AppRefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+      >
         <ThemedText variant="body" color="muted">
           {t(language, "classesPlaceholder")}
         </ThemedText>

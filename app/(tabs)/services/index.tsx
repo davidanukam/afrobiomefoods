@@ -4,12 +4,16 @@ import { FlatList, Pressable, View, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 // Platform entry: ServiceMap/index.web.tsx | index.native.tsx (see service-map.d.ts for TS)
 // eslint-disable-next-line import/no-unresolved -- folder uses platform-specific index.*.tsx
+import { AppRefreshControl } from "@/components/AppRefreshControl";
+// Platform entry: ServiceMap/index.web.tsx | index.native.tsx (see service-map.d.ts for TS)
+// eslint-disable-next-line import/no-unresolved -- folder uses platform-specific index.*.tsx
 import { ServiceMap } from "@/components/ServiceMap";
 import { Card } from "@/components/Card";
 import { Chip } from "@/components/Chip";
 import { ThemedText } from "@/components/ThemedText";
 import { radii } from "@/constants/theme";
 import { useAppSettings } from "@/context/AppSettingsContext";
+import { usePullToRefresh } from "@/hooks/usePullToRefresh";
 import { useRemoteServices } from "@/hooks/useRemoteServices";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { t } from "@/lib/i18n";
@@ -36,7 +40,8 @@ const regionFrom = (items: ServiceItem[]) => {
 export default function ServicesScreen() {
   const colors = useThemeColors();
   const { language } = useAppSettings();
-  const { services } = useRemoteServices();
+  const { services, refresh } = useRemoteServices();
+  const { refreshing, onRefresh } = usePullToRefresh(refresh);
   const [mode, setMode] = useState<"list" | "map">("list");
   const region = useMemo(() => regionFrom(services), [services]);
 
@@ -48,27 +53,30 @@ export default function ServicesScreen() {
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["top", "bottom", "left", "right"]}>
-      <View style={styles.toggleRow}>
-        <Chip flex label={t(language, "listView")} active={mode === "list"} onPress={() => setMode("list")} />
-        <Chip flex label={t(language, "mapView")} active={mode === "map"} onPress={() => setMode("map")} />
-      </View>
-
-      {mode === "map" ? (
-        <ServiceMap
-          region={region}
-          items={services}
-          accessibilityLabel={t(language, "mapView")}
-          webMessage={webMapMessage}
-          webBorderColor={colors.border}
-          openInMapsLabel={t(language, "openInMaps")}
-        />
-      ) : null}
-
       <FlatList
         data={services}
         keyExtractor={(item) => item.service_id}
-        contentContainerStyle={{ padding: 20, paddingTop: mode === "list" ? 0 : 12, gap: 12, paddingBottom: 32 }}
+        refreshControl={<AppRefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+        contentContainerStyle={{ padding: 20, paddingTop: 0, gap: 12, paddingBottom: 32 }}
         ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
+        ListHeaderComponent={
+          <View>
+            <View style={styles.toggleRow}>
+              <Chip flex label={t(language, "listView")} active={mode === "list"} onPress={() => setMode("list")} />
+              <Chip flex label={t(language, "mapView")} active={mode === "map"} onPress={() => setMode("map")} />
+            </View>
+            {mode === "map" ? (
+              <ServiceMap
+                region={region}
+                items={services}
+                accessibilityLabel={t(language, "mapView")}
+                webMessage={webMapMessage}
+                webBorderColor={colors.border}
+                openInMapsLabel={t(language, "openInMaps")}
+              />
+            ) : null}
+          </View>
+        }
         renderItem={({ item }) => (
           <Card>
             <ThemedText variant="subtitle">{item.name}</ThemedText>
@@ -96,6 +104,6 @@ export default function ServicesScreen() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1 },
-  toggleRow: { flexDirection: "row", gap: 10, paddingHorizontal: 20, paddingVertical: 12 },
+  toggleRow: { flexDirection: "row", gap: 10, marginHorizontal: -20, paddingHorizontal: 20, paddingVertical: 12 },
   call: { marginTop: 14, minHeight: 48, borderRadius: radii.pill, alignItems: "center", justifyContent: "center" },
 });

@@ -1,9 +1,11 @@
 import { ScrollView, View, StyleSheet, Pressable, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { AppRefreshControl } from "@/components/AppRefreshControl";
 import { Card } from "@/components/Card";
 import { ThemedText } from "@/components/ThemedText";
 import { radii } from "@/constants/theme";
 import { useAppSettings } from "@/context/AppSettingsContext";
+import { usePullToRefresh } from "@/hooks/usePullToRefresh";
 import { useRemoteEvents } from "@/hooks/useRemoteEvents";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { t } from "@/lib/i18n";
@@ -13,11 +15,16 @@ import { localeTag } from "@/lib/locale";
 export default function EventsScreen() {
   const colors = useThemeColors();
   const { language } = useAppSettings();
-  const { events } = useRemoteEvents();
+  const { events, refresh } = useRemoteEvents();
+  const { refreshing, onRefresh } = usePullToRefresh(refresh);
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["top", "bottom", "left", "right"]}>
-      <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        contentContainerStyle={styles.scroll}
+        showsVerticalScrollIndicator={false}
+        refreshControl={<AppRefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+      >
         <ThemedText variant="body" color="muted">
           {t(language, "eventsIntro")}
         </ThemedText>

@@ -1,13 +1,15 @@
 import { Stack, router } from "expo-router";
 import { useState } from "react";
-import { View, StyleSheet, TextInput, Alert, Pressable, ActivityIndicator } from "react-native";
+import { View, StyleSheet, TextInput, Alert, Pressable, ActivityIndicator, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { AppRefreshControl } from "@/components/AppRefreshControl";
 import { Chip } from "@/components/Chip";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { ThemedText } from "@/components/ThemedText";
 import { radii } from "@/constants/theme";
 import { useAuth } from "@/context/AuthContext";
 import { useAppSettings } from "@/context/AppSettingsContext";
+import { usePullToRefresh } from "@/hooks/usePullToRefresh";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { t } from "@/lib/i18n";
 import { getSupabaseClient, isSupabaseConfigured } from "@/lib/supabase/client";
@@ -16,6 +18,7 @@ export default function ShareStoryScreen() {
   const colors = useThemeColors();
   const { language } = useAppSettings();
   const { user } = useAuth();
+  const { refreshing, onRefresh } = usePullToRefresh();
   const [text, setText] = useState("");
   const [audience, setAudience] = useState<"community" | "family">("community");
   const [submitting, setSubmitting] = useState(false);
@@ -69,7 +72,12 @@ export default function ShareStoryScreen() {
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["bottom", "left", "right"]}>
       <Stack.Screen options={{ title: "" }} />
-      <View style={styles.inner}>
+      <ScrollView
+        contentContainerStyle={styles.inner}
+        keyboardShouldPersistTaps="handled"
+        alwaysBounceVertical
+        refreshControl={<AppRefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+      >
         <ThemedText variant="body" color="muted">
           {t(language, "holdToRecord")}
         </ThemedText>
@@ -111,14 +119,14 @@ export default function ShareStoryScreen() {
 
         <PrimaryButton title={t(language, "post")} onPress={() => void post()} disabled={submitting} />
         {submitting ? <ActivityIndicator accessibilityLabel={t(language, "posting")} /> : null}
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   safe: { flex: 1 },
-  inner: { flex: 1, padding: 20, gap: 12 },
+  inner: { padding: 20, gap: 12, paddingBottom: 36 },
   record: {
     marginTop: 8,
     borderWidth: 0,

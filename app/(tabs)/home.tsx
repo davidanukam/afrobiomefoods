@@ -1,3 +1,4 @@
+import { AppRefreshControl } from "@/components/AppRefreshControl";
 import { Card } from "@/components/Card";
 import { ThemedText } from "@/components/ThemedText";
 import { radii } from "@/constants/theme";
@@ -5,6 +6,7 @@ import { useAppSettings } from "@/context/AppSettingsContext";
 import { events as fallbackEvents } from "@/data/events";
 import type { Recipe } from "@/data/recipes";
 import { recipes as fallbackRecipes, recipeDisplayName } from "@/data/recipes";
+import { usePullToRefresh } from "@/hooks/usePullToRefresh";
 import { useRemoteEvents } from "@/hooks/useRemoteEvents";
 import { useRemoteRecipes } from "@/hooks/useRemoteRecipes";
 import { useThemeColors } from "@/hooks/useThemeColors";
@@ -35,8 +37,11 @@ type IconName = ComponentProps<typeof Ionicons>["name"];
 export default function HomeScreen() {
   const colors = useThemeColors();
   const { language } = useAppSettings();
-  const { recipes } = useRemoteRecipes();
-  const { events } = useRemoteEvents();
+  const { recipes, refresh: refreshRecipes } = useRemoteRecipes();
+  const { events, refresh: refreshEvents } = useRemoteEvents();
+  const { refreshing, onRefresh } = usePullToRefresh(async () => {
+    await Promise.all([refreshRecipes(), refreshEvents()]);
+  });
   const featured = getSessionFeaturedRecipe(recipes, fallbackRecipes[0]);
   const nextEvent = events[0] ?? fallbackEvents[0];
   const featuredTitle = recipeDisplayName(featured, language);
@@ -83,6 +88,7 @@ export default function HomeScreen() {
       <ScrollView
         contentContainerStyle={styles.scroll}
         showsVerticalScrollIndicator={false}
+        refreshControl={<AppRefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       >
         <Pressable
           accessibilityRole="button"
