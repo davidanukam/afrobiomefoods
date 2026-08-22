@@ -2,8 +2,10 @@ import { Stack, router } from "expo-router";
 import { useState } from "react";
 import { View, StyleSheet, TextInput, Alert, Pressable, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Chip } from "@/components/Chip";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { ThemedText } from "@/components/ThemedText";
+import { radii } from "@/constants/theme";
 import { useAuth } from "@/context/AuthContext";
 import { useAppSettings } from "@/context/AppSettingsContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
@@ -95,7 +97,7 @@ export default function ShareStoryScreen() {
           placeholderTextColor={colors.textMuted}
           style={[
             styles.input,
-            { borderColor: colors.border, color: colors.text, backgroundColor: colors.card, fontSize: 18 },
+            { color: colors.text, backgroundColor: colors.card, fontSize: 18 },
           ]}
         />
 
@@ -103,24 +105,8 @@ export default function ShareStoryScreen() {
           {t(language, "chooseAudience")}
         </ThemedText>
         <View style={styles.row}>
-          <Pressable
-            onPress={() => setAudience("community")}
-            style={[
-              styles.choice,
-              { borderColor: audience === "community" ? colors.forest : colors.border, backgroundColor: colors.card },
-            ]}
-          >
-            <ThemedText variant="label">{t(language, "community")}</ThemedText>
-          </Pressable>
-          <Pressable
-            onPress={() => setAudience("family")}
-            style={[
-              styles.choice,
-              { borderColor: audience === "family" ? colors.forest : colors.border, backgroundColor: colors.card },
-            ]}
-          >
-            <ThemedText variant="label">{t(language, "familyOnly")}</ThemedText>
-          </Pressable>
+          <Chip flex label={t(language, "community")} active={audience === "community"} onPress={() => setAudience("community")} />
+          <Chip flex label={t(language, "familyOnly")} active={audience === "family"} onPress={() => setAudience("family")} />
         </View>
 
         <PrimaryButton title={t(language, "post")} onPress={() => void post()} disabled={submitting} />
@@ -135,17 +121,17 @@ const styles = StyleSheet.create({
   inner: { flex: 1, padding: 20, gap: 12 },
   record: {
     marginTop: 8,
-    borderWidth: 2,
-    borderRadius: 16,
+    borderWidth: 0,
+    borderRadius: radii.lg,
     padding: 24,
     alignItems: "center",
+    backgroundColor: "#FFFCF8",
   },
   input: {
     minHeight: 140,
-    borderWidth: 2,
-    borderRadius: 14,
+    borderWidth: 0,
+    borderRadius: radii.lg,
     padding: 14,
   },
   row: { flexDirection: "row", gap: 12 },
-  choice: { flex: 1, minHeight: 52, borderRadius: 12, borderWidth: 2, alignItems: "center", justifyContent: "center" },
 });

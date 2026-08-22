@@ -1,12 +1,24 @@
 import type { ViewProps } from "react-native";
 import { View, StyleSheet } from "react-native";
+import { cardShadow, radii } from "@/constants/theme";
+import { useAppSettings } from "@/context/AppSettingsContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
 
 export function Card({ style, ...rest }: ViewProps) {
   const colors = useThemeColors();
+  const { highContrast } = useAppSettings();
   return (
     <View
-      style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }, style]}
+      style={[
+        styles.card,
+        {
+          backgroundColor: colors.card,
+          borderColor: colors.border,
+          borderWidth: highContrast ? 2 : 0,
+        },
+        !highContrast && cardShadow,
+        style,
+      ]}
       {...rest}
     />
   );
@@ -14,8 +26,7 @@ export function Card({ style, ...rest }: ViewProps) {
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 16,
-    borderWidth: 1,
-    padding: 16,
+    borderRadius: radii.lg,
+    padding: 18,
   },
 });

@@ -338,7 +338,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
       "Tinye onugbu. Nye ya ọkụ na fufu ma ọ bụ garri.",
     ],
     cultural_notes_en:
-      "Made from African bush mango (Irvingia gabonensis) seeds; prized for its mucilaginous draw texture and long communal history—grinding the seeds was a social gathering.",
+      "Made from African bush mango (Irvingia gabonensis) seeds; prized for its mucilaginous draw texture and long communal history. Grinding the seeds was a social gathering.",
     cultural_notes_ig: "E ji mkpụrụ ogbono mee ya; ọ na-adọrọ mmiri.",
     cook_minutes: 70,
     servings: 10,
@@ -450,7 +450,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
     servings: 10,
     difficulty: "hard",
     nutrition: { calories: 360, protein: 22, fiber: 4 },
-    health_tags: ["Rich soup", "Saturates from palm—portion aware"],
+    health_tags: ["Rich soup", "Saturates from palm (portion aware)"],
     image_hint: "banga",
     final_image: recipeFinalImage("ofe-akwu"),
   },
@@ -490,7 +490,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
     ],
     instructions_en: [
       "Boil cocoyam, peel while hot, and pound to a lump-free paste.",
-      "Shred okazi as finely as possible—microscopic shreds are the goal.",
+      "Shred okazi as finely as possible. Microscopic shreds are the goal.",
       "Boil stockfish and dry fish in 4 L water for at least 30 minutes; add snails and cook ~5 minutes.",
       "Add palm oil, then cocoyam paste in small lumps, stirring to dissolve until soup coats a spoon.",
       "Season with crayfish, pepper, and cubes; dissolve ogiri in a spoonful of hot broth before adding; adjust salt.",
@@ -562,7 +562,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
       "Tinye ogiri na oha.",
     ],
     cultural_notes_en:
-      "A celebration and ceremonial soup—centerpiece at traditional weddings, burial ceremonies, and the New Yam Festival. Skills for preparing ukpo are passed down through families.",
+      "A celebration and ceremonial soup. Centerpiece at traditional weddings, burial ceremonies, and the New Yam Festival. Skills for preparing ukpo are passed down through families.",
     cultural_notes_ig: "Ukpo bụ mkpụrụ siri ike; a na-ahụ maka ya n'emume na ọchịchọ n'ofe a.",
     cook_minutes: 100,
     servings: 8,
@@ -664,7 +664,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
       "Add smoked fish and crayfish; stir in palm oil; cook a few minutes until merged.",
       "Stir in ogiri until dissolved.",
       "Optional: stir in smooth cocoyam paste to thicken; add blended peppers and simmer, stirring often.",
-      "Fold in ugba and uziza last; do not overcook—ugba should retain texture. Serve with pounded yam, fufu, or eba.",
+      "Fold in ugba and uziza last; do not overcook. Ugba should retain texture. Serve with pounded yam, fufu, or eba.",
     ],
     instructions_ig: [
       "See okporoko na anụ.",
@@ -691,7 +691,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
     name_en: "Oha Leaf Soup",
     name_ig: "Ofe Oha",
     ingredients_en: [
-      "1 kg oha leaves (Pterocarpus mildraedii), hand-torn — never cut with a knife",
+      "1 kg oha leaves (Pterocarpus mildraedii), hand-torn, never cut with a knife",
       "500 g cocoyam (Edenatu variety preferred)",
       "250 ml red palm oil",
       "1 kg beef, cut into bite-sized chunks",
@@ -733,7 +733,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
       "Tinye oha a dọkpụrụ aka; see obere.",
     ],
     cultural_notes_en:
-      "Oha leaves are traditionally torn by hand—cultural belief holds that metal blades alter the leaf's medicinal potency. Associated with homecoming, new beginnings (Omu), and special occasions.",
+      "Oha leaves are traditionally torn by hand. Cultural belief holds that metal blades alter the leaf's medicinal potency. Associated with homecoming, new beginnings (Omu), and special occasions.",
     cultural_notes_ig: "A na-adọkpụ oha site n'aka, ọ bụghị mma ịjị mma bee ya.",
     cook_minutes: 70,
     servings: 10,
@@ -772,7 +772,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
     instructions_en: [
       "Boil peeled yam until very soft; pound while hot to a smooth elastic paste (or blend with minimal hot water).",
       "Boil 6 cups water with crayfish, pepper, and cubes; drop in small lumps of yam paste and let them melt until broth is velvety.",
-      "When ~80% dissolved and thickened, gently add catfish on medium-low heat; avoid vigorous stirring—shake the pot or nudge with a wooden spatula. Simmer 10–15 minutes.",
+      "When ~80% dissolved and thickened, gently add catfish on medium-low heat; avoid vigorous stirring. Shake the pot or nudge with a wooden spatula. Simmer 10–15 minutes.",
       "Hand-tear utazi into the pot; adjust salt; simmer ~3 minutes for herbal aroma. Serve hot with pounded yam, fufu, or eba.",
     ],
     instructions_ig: [
@@ -782,7 +782,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
       "Tinye utazi a dọkpụrụ aka; dozie nnu.",
     ],
     cultural_notes_en:
-      "Unique for containing no palm oil—its pale colour earns the name 'White Soup'. Revered as a healing dish for new mothers (Omugwo) and for honoring titled chiefs and special guests.",
+      "Unique for containing no palm oil. Its pale colour earns the name 'White Soup'. Revered as a healing dish for new mothers (Omugwo) and for honoring titled chiefs and special guests.",
     cultural_notes_ig: "Ofe ọcha a na-eri na Delta Igbo na Anambra; ọ na-enyere omugwo aka.",
     cook_minutes: 55,
     servings: 8,
@@ -826,7 +826,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
     ],
     instructions_en: [
       "Soften stockfish and dry fish with a little water; clean snails thoroughly with lime, salt, or alum.",
-      "Grind uziza seeds and uda separately; grind crayfish coarsely; soak ground spices in water, squeeze vigorously, and sieve—keep the flavored spice water only.",
+      "Grind uziza seeds and uda separately; grind crayfish coarsely; soak ground spices in water, squeeze vigorously, and sieve. Keep the flavored spice water only.",
       "Boil sieved spice water with shokirisho ~15 minutes to allow thickening; remove shokirisho solids.",
       "Add proteins and simmer ~15 minutes; season with crayfish, dry pepper, ogiri, and cubes; cook ~10 minutes.",
       "Add sliced uziza leaves; after only ~5–10 seconds remove pot from heat to preserve volatile oils and colour. Serve with pounded yam or fufu.",
@@ -941,7 +941,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
       "Nnu",
     ],
     instructions_en: [
-      "Grind achi seeds to a very fine powder—smoothness determines soup texture.",
+      "Grind achi seeds to a very fine powder. Smoothness determines soup texture.",
       "Boil stockfish and dry fish in 4 L water ~30 minutes until stockfish softens; add snails, cubes, and salt; continue until snails are tender.",
       "Add palm oil and let incorporate ~2 minutes; stir in pepper, crayfish, and achi vigorously to avoid lumps; cook ~10 minutes until the soup coats the back of a spoon.",
       "Dissolve ogiri in warm broth before adding; boil ~5 minutes to develop the fermented aroma.",
@@ -955,7 +955,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
       "Tinye ugu ikpeazụ.",
     ],
     cultural_notes_en:
-      "Brachystegia eurycoma seeds thicken instantly on contact with hot liquid—historically prized as a faster alternative to the labor-intensive pounding of cocoyam.",
+      "Brachystegia eurycoma seeds thicken instantly on contact with hot liquid. Historically prized as a faster alternative to the labor-intensive pounding of cocoyam.",
     cultural_notes_ig: "Achi na-emezi ofe ngwa ngwa na-abụghị ihe ike dị ka ede.",
     cook_minutes: 65,
     servings: 10,
@@ -1004,7 +1004,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
       "Nnu, Maggi",
     ],
     instructions_en: [
-      "Boil palm fruits until soft; pound in a mortar, wash pulp with 4 L warm water, sieve into a clean pot—this is your banga base.",
+      "Boil palm fruits until soft; pound in a mortar, wash pulp with 4 L warm water, sieve into a clean pot. This is your banga base.",
       "Thoroughly wash all leaves (scent, utazi, uziza, curry, njanja); grind together with onions, pepper, crayfish, and a drop of red oil until a smooth dark paste forms.",
       "Season beef, stockfish, and dry fish with salt and cubes; steam in their own juices until tender.",
       "Bring banga water to a vigorous boil ~5 minutes; add steamed proteins and cook together ~10 minutes.",
@@ -1024,7 +1024,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
     servings: 10,
     difficulty: "hard",
     nutrition: { calories: 350, protein: 24, fiber: 8 },
-    health_tags: ["Herb-rich", "Medicinal tradition", "Saturates from palm—portion aware"],
+    health_tags: ["Herb-rich", "Medicinal tradition", "Saturates from palm (portion aware)"],
     image_hint: "black-soup",
     final_image: recipeFinalImage("ofe-ojii"),
   },
@@ -1136,7 +1136,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
       "Dozie nnu; nye ya ọkụ.",
     ],
     cultural_notes_en:
-      "A cultural staple for welcoming honored guests and marking title-taking ceremonies; also a standard restorative meal during Omugwo postpartum care—ehuru and utazi are believed to aid digestion and provide warmth.",
+      "A cultural staple for welcoming honored guests and marking title-taking ceremonies; also a standard restorative meal during Omugwo postpartum care. Ehuru and utazi are believed to aid digestion and provide warmth.",
     cultural_notes_ig: "E na-esi ya maka ọbịabịa dị mkpa na omugwo.",
     cook_minutes: 65,
     servings: 10,
@@ -1225,7 +1225,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
       "If using goat meat: steam with salt, one cube, and a little onion until ~70% tender. (If using catfish: wash thoroughly; add later at step 3.)",
       "Add peeled yam chunks to the pot; pour in enough water to submerge (~1.5–2 L); cover and boil on medium-high heat.",
       "When water boils and yams begin softening, add crayfish, remaining cube, and crushed pepper. (Add catfish now if using.)",
-      "Allow yam edges to slough off naturally—the released starch thickens the broth. Mash one or two chunks against the side if needed.",
+      "Allow yam edges to slough off naturally. The released starch thickens the broth. Mash one or two chunks against the side if needed.",
       "Stir in shredded utazi or scent leaves; simmer just ~60 seconds to wilt. Serve hot in deep bowls; broth is meant to be drunk after the solids.",
     ],
     instructions_ig: [
@@ -1377,9 +1377,9 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
     instructions_en: [
       "Peel and cube plantains uniformly; soak dry fish in hot salt water, clean, debone, and break into chunks.",
       "Place plantains in pot; add water to barely cover; bring to a rolling boil 2–5 minutes until starch starts to cloud the water.",
-      "Add dry fish chunks, palm oil, crayfish, onions, and cubes. Do not stir immediately—let oil emulsify into the water.",
+      "Add dry fish chunks, palm oil, crayfish, onions, and cubes. Do not stir immediately. Let oil emulsify into the water.",
       "Cover and simmer ~5–10 minutes until plantains soften and sauce thickens.",
-      "Add scent leaves and a pinch of salt; simmer a final ~3 minutes. Serve warm—porridge thickens further on standing. Serves ~3.",
+      "Add scent leaves and a pinch of salt; simmer a final ~3 minutes. Serve warm. Porridge thickens further on standing. Serves ~3.",
     ],
     instructions_ig: [
       "Kụọ unere; sacha azụ.",
@@ -1389,7 +1389,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
       "Tinye nchanwu ikpeazụ.",
     ],
     cultural_notes_en:
-      "A farmer's one-pot meal; unripe plantain is specifically chosen over ripe for its complex carbohydrates and lower sugar—traditionally recommended for those managing blood sugar.",
+      "A farmer's one-pot meal; unripe plantain is specifically chosen over ripe for its complex carbohydrates and lower sugar. Traditionally recommended for those managing blood sugar.",
     cultural_notes_ig: "E na-ahọrọ unere akịdị maka ọ dị mma maka ọbara sukari.",
     cook_minutes: 35,
     servings: 3,
@@ -1475,10 +1475,10 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
       "Nnu",
     ],
     instructions_en: [
-      "Peel cocoyam, wash thoroughly in cold water; cut into medium chunks—not too small or they dissolve completely.",
+      "Peel cocoyam, wash thoroughly in cold water; cut into medium chunks, not too small or they dissolve completely.",
       "Place in pot; add water to almost cover; boil on medium-high ~8–10 minutes until firm-tender.",
       "Add palm oil, crayfish, dry pepper, and salt; boil together ~3–5 minutes to cook out raw oil taste.",
-      "Add scent leaf and utazi; stir with wooden spatula—stirring releases starch and thickens the liquid into porridge.",
+      "Add scent leaf and utazi; stir with wooden spatula. Stirring releases starch and thickens the liquid into porridge.",
       "Simmer a final ~3 minutes. Adjust salt; serve hot in a wide bowl. Serves ~5.",
     ],
     instructions_ig: [
@@ -1589,7 +1589,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
     instructions_en: [
       "Pick through beans; wash well. Optional: parboil ~10 minutes, drain, and start with fresh water.",
       "Boil beans in fresh water 60–90 minutes until easily mashed between fingers; keep enough liquid in the pot.",
-      "Add cubed unripe plantains; cook ~10 minutes—the starch from the plantain thickens the bean broth.",
+      "Add cubed unripe plantains; cook ~10 minutes. The starch from the plantain thickens the bean broth.",
       "Add ground crayfish, pepper/ginger/garlic paste, sliced onions, and palm oil; stir gently; simmer ~5–7 minutes.",
       "Add shredded scent leaves and salt; stir vigorously to create a creamy texture; simmer ~5 minutes on low heat. Serve warm.",
     ],
@@ -1601,7 +1601,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
       "Tinye nchanwu; kwakọta.",
     ],
     cultural_notes_en:
-      "Represents the agricultural synergy of Igboland; beans supply protein and unripe plantain supplies iron and complex carbohydrates—a deliberately heavy, sustaining meal for farmers and laborers.",
+      "Represents the agricultural synergy of Igboland; beans supply protein and unripe plantain supplies iron and complex carbohydrates. A deliberately heavy, sustaining meal for farmers and laborers.",
     cultural_notes_ig: "Agwa na unere akịdị bụ nri dị arọ maka ndị ọrụ.",
     cook_minutes: 105,
     servings: 5,
@@ -1642,11 +1642,11 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
       "Nnu",
     ],
     instructions_en: [
-      "Clean fio-fio; boil water ~20 minutes; add fio-fio and soak ~20 minutes; drain—this reduces gas. Boil again in fresh salted water ~3 hours, topping up as needed, until soft.",
+      "Clean fio-fio; boil water ~20 minutes; add fio-fio and soak ~20 minutes; drain. This reduces gas. Boil again in fresh salted water ~3 hours, topping up as needed, until soft.",
       "Add cubed yam; cook ~20 minutes until tender; drain any excess water.",
       "In a frying pan, heat palm oil; add onions, pepper, crayfish, ugba, utazi, and cubes; sauté ~5 minutes.",
       "Pour hot sauce over cooked fio-fio and yam; mix thoroughly until every pea and yam chunk is coated.",
-      "Taste; adjust salt; serve warm—traditionally in a wooden bowl.",
+      "Taste; adjust salt; serve warm. Traditionally in a wooden bowl.",
     ],
     instructions_ig: [
       "Sacha fio-fio; see ya iri iri.",
@@ -1702,7 +1702,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
       "Grind and sieve bambara nuts to a smooth flour.",
       "Grind pepper and crayfish; slice onions and scent leaves; soak dry fish in warm salted water, debone.",
       "Combine flour with palm oil and salt; rub oil into flour until uniform with no white streaks.",
-      "Slowly add warm water, stirring to prevent lumps—batter should be fluid enough to pour but thick enough to hold 'surprises' in suspension.",
+      "Slowly add warm water, stirring to prevent lumps. Batter should be fluid enough to pour but thick enough to hold 'surprises' in suspension.",
       "Fold in pepper, crayfish, onions, ugba, scent leaves, and fish; stir thoroughly.",
       "Wrap in wilted plantain leaves or nylon; secure with string. Steam over boiling water ~1 hour 30 minutes, refilling water as needed. Check firmness. Serve hot. Serves ~15.",
     ],
@@ -1715,7 +1715,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
       "Chịkọta ya; see na akwụkwọ ogede ~1hr 30min.",
     ],
     cultural_notes_en:
-      "A cultural icon of Enugu State; made from Bambara nut (Vigna subterranea), it was the ultimate traveler's and farmer's food—dense, portable, and true to its ancient roots.",
+      "A cultural icon of Enugu State; made from Bambara nut (Vigna subterranea), it was the ultimate traveler's and farmer's food. Dense, portable, and true to its ancient roots.",
     cultural_notes_ig: "Okpa bụ nri ama ama nke Enugu; e ji ya eme njem.",
     cook_minutes: 105,
     servings: 15,
@@ -1754,7 +1754,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
       "Nnu",
     ],
     instructions_en: [
-      "Wash ukwa thoroughly in a sieve-bowl—removing all sand is critical. Cover with water (2–3 inches above seeds); add optional potash; boil 45–60 minutes until soft but not mushy.",
+      "Wash ukwa thoroughly in a sieve-bowl. Removing all sand is critical. Cover with water (2–3 inches above seeds); add optional potash; boil 45–60 minutes until soft but not mushy.",
       "Add dry fish and crayfish; simmer ~10 minutes to release oils into the broth.",
       "Add onion, pounded pepper, and ugba; crumble in cubes; stir gently.",
       "Add salt; simmer ~5–10 minutes until liquid thickens into a rich sauce.",
@@ -1918,7 +1918,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
       "Wash goat head pieces; place in pot with sliced onion, cubes, and salt; add water to cover and cook until very tender but not falling off the bone. Separate meat from stock; reserve some concentrated stock.",
       "Dissolve potash in a little water; strain. Pour palm oil into a clean pot or large bowl; slowly add potash water, stirring in one direction until oil turns to a thick creamy yellow paste (ncha).",
       "Add crayfish, pounded pepper, and a little concentrated stock; stir well. If brain is included, mash into the sauce for extra richness.",
-      "Add cooked goat head pieces; place on very low heat ~2–3 minutes to warm through and absorb flavours—do not over-cook.",
+      "Add cooked goat head pieces; place on very low heat ~2–3 minutes to warm through and absorb flavours. Do not over-cook.",
       "Dish into wooden mortars (Ikwa bowls); garnish with utazi shreds and raw onion rings. Best with palm wine or chilled malt.",
     ],
     instructions_ig: [
@@ -1984,7 +1984,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
       "See na ụdị mmiri na ọkụ ọ dị.",
     ],
     cultural_notes_en:
-      "Though originating from the Jolof Empire, Igbo Jollof became the quintessential party rice—a symbol of celebration at weddings (Igba Nkwu) and naming ceremonies. The iconic smoky bottom (achieved over firewood) is a point of pride.",
+      "Though originating from the Jolof Empire, Igbo Jollof became the quintessential party rice. A symbol of celebration at weddings (Igba Nkwu) and naming ceremonies. The iconic smoky bottom (achieved over firewood) is a point of pride.",
     cultural_notes_ig: "Osikapa jollof bụ nri emume Igbo kachasị ama ama.",
     cook_minutes: 65,
     servings: 8,
@@ -2035,7 +2035,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
       "Jikọta ji na ahịhịa.",
     ],
     cultural_notes_en:
-      "A 'tossed' harvest dish—the yam pieces remain distinct, unlike mashed pottage. Traditionally prepared during harvest when pumpkin leaves were abundant, representing the intersection of the king crop and the backyard garden.",
+      "A 'tossed' harvest dish. The yam pieces remain distinct, unlike mashed pottage. Traditionally prepared during harvest when pumpkin leaves were abundant, representing the intersection of the king crop and the backyard garden.",
     cultural_notes_ig: "Ọ bụghị ji ọwụwa dị ka porridge; ji a na-aga n'ụzọ ya.",
     cook_minutes: 40,
     servings: 5,
@@ -2078,7 +2078,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
     instructions_en: [
       "Soak beans ~10 minutes; rub to loosen skins; rinse repeatedly until beans are white and clean.",
       "Blend peeled beans with tatashe and onions using minimal water until completely smooth.",
-      "Pour batter into a large bowl; incorporate vegetable oil, crayfish, salt, and crumbled cubes; stir slowly in one direction to aerate—this makes the pudding fluffy.",
+      "Pour batter into a large bowl; incorporate vegetable oil, crayfish, salt, and crumbled cubes; stir slowly in one direction to aerate. This makes the pudding fluffy.",
       "Slowly add warm water until consistency resembles thick pancake batter.",
       "Fill leaf cones or greased containers; add an egg slice to each; seal tightly.",
       "Steam over boiling water on a rack ~45–60 minutes. Test with a toothpick. Serves ~8.",
@@ -2114,7 +2114,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
       "3 Scotch bonnet peppers (adjust for heat)",
       "Salt to taste",
       "Vegetable oil for deep frying",
-      "Water (minimal—for blending only)",
+      "Water (minimal, for blending only)",
     ],
     ingredients_ig: [
       "Agwa 4 cups",
@@ -2126,10 +2126,10 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
     ],
     instructions_en: [
       "Soak beans ~10–20 minutes; rub between palms to descale skins; rinse until beans are clean and white.",
-      "Blend beans with onions and peppers using minimum water—the paste must be very thick.",
+      "Blend beans with onions and peppers using minimum water. The paste must be very thick.",
       "Pour into a large bowl; whisk or stir vigorously in circular motion ~5–10 minutes to incorporate air bubbles for fluffiness.",
-      "Add salt just before frying (not earlier—salt deflates the bubbles).",
-      "Heat oil on medium-high. Test: a drop of paste should sizzle and float immediately. Scoop paste and drop gently into oil; fry in batches—do not crowd the pan.",
+      "Add salt just before frying (not earlier. Salt deflates the bubbles).",
+      "Heat oil on medium-high. Test: a drop of paste should sizzle and float immediately. Scoop paste and drop gently into oil; fry in batches. Do not crowd the pan.",
       "Fry until golden brown on both sides; drain on paper towels. Serve hot with ogi (pap) or agidi.",
     ],
     instructions_ig: [
@@ -2147,7 +2147,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
     servings: 4,
     difficulty: "medium",
     nutrition: { calories: 260, protein: 14, fiber: 6 },
-    health_tags: ["Plant protein", "Fried—portion aware"],
+    health_tags: ["Plant protein", "Fried (portion aware)"],
     image_hint: "akara",
     final_image: recipeFinalImage("akara"),
   },
@@ -2170,7 +2170,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
     instructions_en: [
       "Sort maize; parboil 15 minutes; sieve hot water. Soak in fresh water overnight (or up to 2 days), changing water every 24 hours for fermentation.",
       "Rinse fermented corn; grind to a very fine slurry; sieve through muslin cloth into a large bowl, removing all chaff.",
-      "Let starch settle at the bottom; decant clear water on top; squeeze remaining moisture out through muslin—you now have raw akamu/agidi paste.",
+      "Let starch settle at the bottom; decant clear water on top; squeeze remaining moisture out through muslin. You now have raw akamu/agidi paste.",
       "Mix paste with a little clean water until milk-like. Cook on medium heat, stirring continuously for ~10 minutes as it thickens from opaque white to glossy off-white.",
       "Wilt plantain leaves over a flame; pour hot paste into leaves or greased tins; fold and seal; cool at room temperature until firm. Serve with tomato stew, beans, or akara.",
     ],
@@ -2215,9 +2215,9 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
       "Akwụkwọ ogede ma ọ bụ etere",
     ],
     instructions_en: [
-      "Clean maize; wash thoroughly. Half-grind with mortar/pestle or instruct a mill to 'break' not fully grind—coarse gritty pieces are the goal.",
+      "Clean maize; wash thoroughly. Half-grind with mortar/pestle or instruct a mill to 'break' not fully grind. Coarse gritty pieces are the goal.",
       "Wilt leaves over a low flame to make them flexible.",
-      "Mix half-ground maize with palm oil, dry pepper, and salt; add warm water gradually until a thick scoopable paste forms—it should be slightly over-seasoned as steaming reduces intensity.",
+      "Mix half-ground maize with palm oil, dry pepper, and salt; add warm water gradually until a thick scoopable paste forms. It should be slightly over-seasoned as steaming reduces intensity.",
       "Wrap portions in wilted leaves; fold and secure.",
       "Line pot with spare leaf stalks; add ~2 inches of water; arrange wraps; steam ~60 minutes. Check firmness; rest 10 minutes before serving. Serves ~10.",
     ],
@@ -2258,7 +2258,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
     instructions_en: [
       "Sort corn; wash; soak 3 days, changing water every 24 hours to ferment.",
       "Wash fermented corn; grind to an extremely fine slurry; sieve through muslin cloth to extract smooth starch.",
-      "Let starch settle; decant top water; squeeze out moisture through muslin—this is raw Akamu.",
+      "Let starch settle; decant top water; squeeze out moisture through muslin. This is raw Akamu.",
       "To serve: thin desired amount with a little room-temperature water until smooth; slowly pour boiling water in a circular motion until it thickens and changes colour.",
       "Add sugar and milk to taste. Serve hot with akara, fried plantain, or Moi-Moi.",
     ],
@@ -2304,7 +2304,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
     ],
     instructions_en: [
       "Whisk flour, sugar, salt, and yeast together in a large bowl.",
-      "Gradually pour in warm water; mix by hand to a stretchy batter—thicker than pancake batter, thinner than bread dough.",
+      "Gradually pour in warm water; mix by hand to a stretchy batter. Thicker than pancake batter, thinner than bread dough.",
       "Cover tightly; leave in a warm draft-free place ~1 hour until batter doubles and shows air bubbles.",
       "Heat oil on medium. Test: a drop of batter should sizzle and rise immediately.",
       "Squeeze batter between thumb and index finger to form spheres; drop into hot oil. Fry in batches, turning until rich golden brown. Drain on paper towels. Serve warm.",
@@ -2323,7 +2323,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
     servings: 5,
     difficulty: "easy",
     nutrition: { calories: 280, protein: 5, fiber: 1 },
-    health_tags: ["Fried—portion aware", "Celebration snack"],
+    health_tags: ["Fried (portion aware)", "Celebration snack"],
     image_hint: "puff-puff",
     final_image: recipeFinalImage("puff-puff"),
   },
@@ -2372,7 +2372,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
     servings: 6,
     difficulty: "medium",
     nutrition: { calories: 340, protein: 7, fiber: 1 },
-    health_tags: ["Long shelf life", "Fried—portion aware"],
+    health_tags: ["Long shelf life", "Fried (portion aware)"],
     image_hint: "chin-chin",
     final_image: recipeFinalImage("chin-chin"),
   },
@@ -2401,7 +2401,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
     ],
     instructions_en: [
       "Sift flour; add sugar, salt, and yeast; whisk until evenly distributed.",
-      "Make a well; add lukewarm water (not boiling—it kills the yeast); mix until a thick slightly-sticky dough forms.",
+      "Make a well; add lukewarm water (not boiling. It kills the yeast); mix until a thick slightly-sticky dough forms.",
       "Cover; proof in a warm place ~1 hour until doubled.",
       "Heat oil on medium. Test: a small piece of dough should sizzle and rise to the top slowly.",
       "Grease palms; scoop dough and roll into golf-ball-sized spheres; drop gently into oil; fry ~5–7 minutes, turning occasionally, until deep golden. Drain on paper towels.",
@@ -2420,7 +2420,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
     servings: 5,
     difficulty: "easy",
     nutrition: { calories: 290, protein: 6, fiber: 1 },
-    health_tags: ["Fried—portion aware", "Street food staple"],
+    health_tags: ["Fried (portion aware)", "Street food staple"],
     image_hint: "buns",
     final_image: recipeFinalImage("buns"),
   },
@@ -2470,7 +2470,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
     servings: 8,
     difficulty: "medium",
     nutrition: { calories: 300, protein: 6, fiber: 1 },
-    health_tags: ["Celebration snack", "Fried—portion aware"],
+    health_tags: ["Celebration snack", "Fried (portion aware)"],
     image_hint: "doughnuts",
     final_image: recipeFinalImage("doughnuts"),
   },
@@ -2582,7 +2582,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
     servings: 8,
     difficulty: "hard",
     nutrition: { calories: 380, protein: 18, fiber: 2 },
-    health_tags: ["Baked—not fried", "Celebration small chops"],
+    health_tags: ["Baked, not fried", "Celebration small chops"],
     image_hint: "meat-pie",
     final_image: recipeFinalImage("meat-pie"),
   },
@@ -2633,7 +2633,7 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
     servings: 5,
     difficulty: "medium",
     nutrition: { calories: 320, protein: 12, fiber: 1 },
-    health_tags: ["Protein from egg", "Fried—portion aware"],
+    health_tags: ["Protein from egg", "Fried (portion aware)"],
     image_hint: "egg-roll",
     final_image: recipeFinalImage("egg-roll"),
   },
@@ -2667,10 +2667,10 @@ const recipeEntries: Omit<Recipe, "ingredient_image">[] = [
     ],
     instructions_en: [
       "Parboil corn ~20 minutes (not fully cooked); sieve and cool.",
-      "Blend drained corn with peeled ripe plantains, peppers, crayfish, and onions to a smooth thick paste (do not add excess water—plantain moisture helps).",
+      "Blend drained corn with peeled ripe plantains, peppers, crayfish, and onions to a smooth thick paste (do not add excess water. Plantain moisture helps).",
       "Transfer to a bowl; stir in palm oil until colour is uniform.",
       "Debone bonga fish; break into small chunks; fold into batter.",
-      "Add cubes and salt; taste—should be slightly over-seasoned as steaming reduces intensity.",
+      "Add cubes and salt; taste. Should be slightly over-seasoned as steaming reduces intensity.",
       "Wrap in wilted Etere or plantain leaves; steam ~1 hour. Check firmness. Serve warm as a heavy breakfast or hearty lunch.",
     ],
     instructions_ig: [

@@ -1,15 +1,16 @@
 export const palette = {
-  forest: "#1B4332",
-  forestLight: "#2D6A4F",
-  cream: "#F8F5F0",
-  gold: "#D4A574",
-  goldMuted: "#C9A227",
-  text: "#1A1A1A",
-  textMuted: "#4A4A4A",
-  border: "#E0D8CC",
-  card: "#FFFFFF",
-  accent: "#40916C",
+  forest: "#16382A",
+  forestLight: "#2F6A4C",
+  cream: "#F3EEE6",
+  gold: "#C9A36A",
+  goldMuted: "#B8924A",
+  text: "#14201A",
+  textMuted: "#5C6560",
+  border: "#E4D9CB",
+  card: "#FFFCF8",
+  accent: "#2F6A4C",
   danger: "#9B2226",
+  overlay: "rgba(20, 32, 26, 0.45)",
 };
 
 export const highContrastPalette = {
@@ -24,6 +25,7 @@ export const highContrastPalette = {
   card: "#FFFFFF",
   accent: "#006400",
   danger: "#8B0000",
+  overlay: "rgba(0, 0, 0, 0.55)",
 };
 
 export type FontScaleKey = "normal" | "large" | "xlarge";
@@ -35,3 +37,19 @@ export const fontScaleMultipliers: Record<FontScaleKey, number> = {
 };
 
 export const minTouchTarget = 48;
+
+export const radii = {
+  sm: 12,
+  md: 16,
+  lg: 22,
+  xl: 28,
+  pill: 999,
+};
+
+export const cardShadow = {
+  shadowColor: "#14201A",
+  shadowOffset: { width: 0, height: 10 },
+  shadowOpacity: 0.08,
+  shadowRadius: 20,
+  elevation: 4,
+};

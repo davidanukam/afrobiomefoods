@@ -1,6 +1,8 @@
 import { router, Stack, type Href } from "expo-router";
-import { View, StyleSheet, Switch, Pressable } from "react-native";
+import { View, StyleSheet, Switch } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Card } from "@/components/Card";
+import { Chip } from "@/components/Chip";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { ThemedText } from "@/components/ThemedText";
 import type { FontScaleKey } from "@/constants/theme";
@@ -29,51 +31,49 @@ export default function AccessibilityScreen() {
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]}>
-      <Stack.Screen options={{ headerShown: true, title: t(language, "accessibilityTitle") }} />
+      <Stack.Screen options={{ headerShown: true, title: t(language, "accessibilityTitle"), headerShadowVisible: false }} />
       <View style={styles.inner}>
-        <ThemedText variant="subtitle">{t(language, "textSize")}</ThemedText>
-        <View style={styles.sizeRow}>
-          {sizes.map(({ key, labelKey }) => (
-            <Pressable
-              key={key}
-              accessibilityRole="button"
-              onPress={() => setFontScale(key)}
-              style={[
-                styles.sizeChip,
-                {
-                  borderColor: fontScale === key ? colors.forest : colors.border,
-                  backgroundColor: fontScale === key ? colors.gold + "55" : colors.card,
-                },
-              ]}
-            >
-              <ThemedText variant="label">{t(language, labelKey)}</ThemedText>
-            </Pressable>
-          ))}
-        </View>
+        <Card style={{ gap: 14 }}>
+          <ThemedText variant="subtitle">{t(language, "textSize")}</ThemedText>
+          <View style={styles.sizeRow}>
+            {sizes.map(({ key, labelKey }) => (
+              <Chip
+                key={key}
+                label={t(language, labelKey)}
+                active={fontScale === key}
+                onPress={() => setFontScale(key)}
+              />
+            ))}
+          </View>
+        </Card>
 
-        <View style={styles.toggleRow}>
-          <ThemedText variant="body" style={{ flex: 1 }}>
-            {t(language, "highContrast")}
-          </ThemedText>
-          <Switch
-            accessibilityLabel={t(language, "highContrast")}
-            value={highContrast}
-            onValueChange={setHighContrast}
-            trackColor={{ true: colors.forestLight, false: colors.border }}
-          />
-        </View>
+        <Card>
+          <View style={styles.toggleRow}>
+            <ThemedText variant="body" style={{ flex: 1 }}>
+              {t(language, "highContrast")}
+            </ThemedText>
+            <Switch
+              accessibilityLabel={t(language, "highContrast")}
+              value={highContrast}
+              onValueChange={setHighContrast}
+              trackColor={{ true: colors.forestLight, false: colors.border }}
+            />
+          </View>
+        </Card>
 
-        <View style={styles.toggleRow}>
-          <ThemedText variant="body" style={{ flex: 1 }}>
-            {t(language, "audioNavigation")}
-          </ThemedText>
-          <Switch
-            accessibilityLabel={t(language, "audioNavigation")}
-            value={audioGuidance}
-            onValueChange={setAudioGuidance}
-            trackColor={{ true: colors.forestLight, false: colors.border }}
-          />
-        </View>
+        <Card>
+          <View style={styles.toggleRow}>
+            <ThemedText variant="body" style={{ flex: 1 }}>
+              {t(language, "audioNavigation")}
+            </ThemedText>
+            <Switch
+              accessibilityLabel={t(language, "audioNavigation")}
+              value={audioGuidance}
+              onValueChange={setAudioGuidance}
+              trackColor={{ true: colors.forestLight, false: colors.border }}
+            />
+          </View>
+        </Card>
 
         <View style={styles.spacer} />
 
@@ -85,16 +85,8 @@ export default function AccessibilityScreen() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1 },
-  inner: { flex: 1, padding: 24, gap: 20 },
+  inner: { flex: 1, padding: 24, gap: 16 },
   sizeRow: { flexDirection: "row", flexWrap: "wrap", gap: 10 },
-  sizeChip: {
-    minHeight: minTouchTarget,
-    paddingHorizontal: 16,
-    borderRadius: 12,
-    borderWidth: 2,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   toggleRow: {
     flexDirection: "row",
     alignItems: "center",

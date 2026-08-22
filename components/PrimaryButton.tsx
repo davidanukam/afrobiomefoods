@@ -1,6 +1,6 @@
 import type { PressableProps } from "react-native";
 import { Pressable, StyleSheet } from "react-native";
-import { minTouchTarget } from "@/constants/theme";
+import { minTouchTarget, radii } from "@/constants/theme";
 import { useAppSettings } from "@/context/AppSettingsContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { ThemedText } from "@/components/ThemedText";
@@ -26,8 +26,8 @@ export function PrimaryButton({ title, variant = "filled", disabled, onPress, ..
         styles.base,
         variant === "filled"
           ? { backgroundColor: colors.forest, borderColor: colors.forest }
-          : { backgroundColor: "transparent", borderColor: colors.forest, borderWidth: 2 },
-        pressed && { opacity: 0.85 },
+          : { backgroundColor: "transparent", borderColor: colors.forest, borderWidth: 1.5 },
+        pressed && { opacity: 0.88, transform: [{ scale: 0.99 }] },
         disabled && { opacity: 0.45 },
       ]}
       {...rest}
@@ -45,9 +45,9 @@ export function PrimaryButton({ title, variant = "filled", disabled, onPress, ..
 
 const styles = StyleSheet.create({
   base: {
-    minHeight: minTouchTarget,
-    paddingHorizontal: 20,
-    borderRadius: 12,
+    minHeight: minTouchTarget + 4,
+    paddingHorizontal: 22,
+    borderRadius: radii.pill,
     alignItems: "center",
     justifyContent: "center",
   },

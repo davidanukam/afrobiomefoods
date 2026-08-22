@@ -3,6 +3,7 @@ import * as Linking from "expo-linking";
 import { useEffect } from "react";
 import { ActivityIndicator, Alert, Platform, Pressable, StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
+import { radii } from "@/constants/theme";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { getSupabaseClient, isSupabaseConfigured } from "@/lib/supabase/client";
 
@@ -125,8 +126,8 @@ function GoogleSignInNative(props: Props) {
 const styles = StyleSheet.create({
   btn: {
     minHeight: 52,
-    borderRadius: 12,
-    borderWidth: 2,
+    borderRadius: radii.pill,
+    borderWidth: 1.5,
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 16,

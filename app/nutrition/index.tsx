@@ -1,9 +1,11 @@
 import { Stack } from "expo-router";
 import * as Speech from "expo-speech";
 import { useCallback } from "react";
-import { ScrollView, View, StyleSheet, Pressable } from "react-native";
+import { ScrollView, StyleSheet, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Card } from "@/components/Card";
 import { ThemedText } from "@/components/ThemedText";
+import { radii } from "@/constants/theme";
 import { useAppSettings } from "@/context/AppSettingsContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { t } from "@/lib/i18n";
@@ -25,8 +27,8 @@ export default function NutritionHubScreen() {
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["bottom", "left", "right"]}>
-      <Stack.Screen options={{ title: t(language, "nutrition") }} />
-      <ScrollView contentContainerStyle={styles.scroll}>
+      <Stack.Screen options={{ title: t(language, "nutrition"), headerShadowVisible: false }} />
+      <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
         <ThemedText variant="subtitle">{t(language, "conditionGuides")}</ThemedText>
         {conditionTopics.map((topic) => {
           const title = localized(language, {
@@ -45,7 +47,7 @@ export default function NutritionHubScreen() {
             fr: topic.tips_fr,
           });
           return (
-            <View key={topic.id} style={[styles.card, { borderColor: colors.border, backgroundColor: colors.card }]}>
+            <Card key={topic.id}>
               <ThemedText variant="subtitle">{title}</ThemedText>
               <ThemedText variant="body" style={{ marginTop: 8 }}>
                 {summary}
@@ -63,7 +65,7 @@ export default function NutritionHubScreen() {
                   {t(language, "listenTTS")}
                 </ThemedText>
               </Pressable>
-            </View>
+            </Card>
           );
         })}
 
@@ -75,7 +77,7 @@ export default function NutritionHubScreen() {
           const uses = localized(language, { en: ing.uses_en, ig: ing.uses_ig, fr: ing.uses_fr });
           const sci = localized(language, { en: ing.science_en, ig: ing.science_ig, fr: ing.science_fr });
           return (
-            <View key={ing.id} style={[styles.card, { borderColor: colors.border, backgroundColor: colors.card }]}>
+            <Card key={ing.id}>
               <ThemedText variant="subtitle">{title}</ThemedText>
               <ThemedText variant="body" style={{ marginTop: 8 }}>
                 {uses}
@@ -83,7 +85,7 @@ export default function NutritionHubScreen() {
               <ThemedText variant="caption" color="muted" style={{ marginTop: 8 }}>
                 {sci}
               </ThemedText>
-            </View>
+            </Card>
           );
         })}
 
@@ -91,7 +93,7 @@ export default function NutritionHubScreen() {
           {t(language, "mythVsFact")}
         </ThemedText>
         {mythFacts.map((mf, idx) => (
-          <View key={idx} style={[styles.card, { borderColor: colors.border, backgroundColor: colors.card }]}>
+          <Card key={idx}>
             <ThemedText variant="caption" color="muted">
               {t(language, "myth")}
             </ThemedText>
@@ -104,7 +106,7 @@ export default function NutritionHubScreen() {
             <ThemedText variant="body" style={{ marginTop: 4 }}>
               {localized(language, { en: mf.fact_en, ig: mf.fact_ig, fr: mf.fact_fr })}
             </ThemedText>
-          </View>
+          </Card>
         ))}
       </ScrollView>
     </SafeAreaView>
@@ -113,7 +115,6 @@ export default function NutritionHubScreen() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1 },
-  scroll: { padding: 20, gap: 14, paddingBottom: 32 },
-  card: { borderRadius: 16, borderWidth: 1, padding: 16 },
-  audio: { marginTop: 12, minHeight: 48, borderRadius: 12, alignItems: "center", justifyContent: "center" },
+  scroll: { padding: 20, gap: 14, paddingBottom: 36 },
+  audio: { marginTop: 12, minHeight: 48, borderRadius: radii.pill, alignItems: "center", justifyContent: "center" },
 });

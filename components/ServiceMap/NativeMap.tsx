@@ -196,9 +196,9 @@ const styles = StyleSheet.create({
   mapWrap: {
     height: 240,
     marginHorizontal: 20,
-    borderRadius: 16,
+    borderRadius: 22,
     overflow: "hidden",
-    backgroundColor: "#F8F5F0",
+    backgroundColor: "#F3EEE6",
   },
   webview: { flex: 1, backgroundColor: "transparent" },
   fallback: { borderWidth: 1, paddingHorizontal: 12, paddingVertical: 8, justifyContent: "center" },

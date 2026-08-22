@@ -1,6 +1,7 @@
 import { router, type Href } from "expo-router";
 import { View, StyleSheet, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Chip } from "@/components/Chip";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { ThemedText } from "@/components/ThemedText";
 import { useAppSettings } from "@/context/AppSettingsContext";
@@ -20,11 +21,11 @@ export default function LanguageScreen() {
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]}>
       <View style={styles.inner}>
+        <ThemedText variant="eyebrow" color="muted" style={styles.center}>
+          {t(language, "appSubtitle")}
+        </ThemedText>
         <ThemedText variant="title" style={styles.center}>
           {t(language, "appTitle")}
-        </ThemedText>
-        <ThemedText variant="body" color="muted" style={[styles.center, styles.sub]}>
-          {t(language, "appSubtitle")}
         </ThemedText>
 
         <ThemedText variant="subtitle" style={styles.section}>
@@ -33,22 +34,7 @@ export default function LanguageScreen() {
 
         <View style={styles.row}>
           {LANG_OPTIONS.map(({ id, label }) => (
-            <Pressable
-              key={id}
-              accessibilityRole="button"
-              onPress={() => pick(id)}
-              style={[
-                styles.langCard,
-                {
-                  borderColor: language === id ? colors.forest : colors.border,
-                  backgroundColor: colors.card,
-                },
-              ]}
-            >
-              <ThemedText variant="label" style={{ textAlign: "center" }}>
-                {label}
-              </ThemedText>
-            </Pressable>
+            <Chip key={id} flex label={label} active={language === id} onPress={() => pick(id)} />
           ))}
         </View>
 
@@ -68,19 +54,7 @@ const styles = StyleSheet.create({
   safe: { flex: 1 },
   inner: { flex: 1, padding: 24, gap: 16 },
   center: { textAlign: "center" },
-  sub: { marginTop: 4 },
   section: { marginTop: 16 },
-  row: { flexDirection: "row", flexWrap: "wrap", gap: 12 },
-  langCard: {
-    flexGrow: 1,
-    flexBasis: "30%",
-    minWidth: 96,
-    minHeight: 72,
-    borderWidth: 2,
-    borderRadius: 14,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 8,
-  },
+  row: { flexDirection: "row", flexWrap: "wrap", gap: 10 },
   spacer: { flex: 1 },
 });

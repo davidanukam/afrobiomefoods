@@ -412,7 +412,7 @@ const styles = StyleSheet.create({
   list: { gap: 8 },
   pills: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
   pill: { borderWidth: 1, borderRadius: 999, paddingHorizontal: 12, minHeight: 34, justifyContent: "center" },
-  item: { borderWidth: 1, borderRadius: 10, paddingHorizontal: 12, minHeight: 42, justifyContent: "center" },
-  input: { borderWidth: 1, borderRadius: 10, minHeight: 44, paddingHorizontal: 12, fontSize: 16 },
-  textArea: { borderWidth: 1, borderRadius: 10, minHeight: 100, paddingHorizontal: 12, paddingVertical: 10, fontSize: 14 },
+  item: { borderWidth: 1, borderRadius: 16, paddingHorizontal: 12, minHeight: 42, justifyContent: "center" },
+  input: { borderWidth: 1, borderRadius: 16, minHeight: 44, paddingHorizontal: 12, fontSize: 16 },
+  textArea: { borderWidth: 1, borderRadius: 16, minHeight: 100, paddingHorizontal: 12, paddingVertical: 10, fontSize: 14 },
 });

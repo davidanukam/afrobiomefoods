@@ -2,7 +2,9 @@ import { Image } from "expo-image";
 import { router, type Href } from "expo-router";
 import { FlatList, Pressable, View, StyleSheet, TextInput } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Chip } from "@/components/Chip";
 import { ThemedText } from "@/components/ThemedText";
+import { cardShadow, radii } from "@/constants/theme";
 import { useAppSettings } from "@/context/AppSettingsContext";
 import { useRemoteRecipes } from "@/hooks/useRemoteRecipes";
 import { useThemeColors } from "@/hooks/useThemeColors";
@@ -28,7 +30,7 @@ const chips: {
 
 export default function RecipeCategoriesScreen() {
   const colors = useThemeColors();
-  const { language } = useAppSettings();
+  const { language, highContrast } = useAppSettings();
   const { recipes } = useRemoteRecipes();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<RecipeCategory | "all">("all");
@@ -45,9 +47,7 @@ export default function RecipeCategoriesScreen() {
           r.health_tags.some((h) => h.toLowerCase().includes(q));
         return matchesCat && matchesQuery;
       })
-      .sort((a, b) =>
-        recipeDisplayName(a, language).localeCompare(recipeDisplayName(b, language)),
-      );
+      .sort((a, b) => recipeDisplayName(a, language).localeCompare(recipeDisplayName(b, language)));
   }, [category, language, query, recipes]);
 
   return (
@@ -58,7 +58,15 @@ export default function RecipeCategoriesScreen() {
           onChangeText={setQuery}
           placeholder={t(language, "search")}
           placeholderTextColor={colors.textMuted}
-          style={[styles.search, { borderColor: colors.border, color: colors.text, backgroundColor: colors.card }]}
+          style={[
+            styles.search,
+            {
+              color: colors.text,
+              backgroundColor: colors.card,
+              borderColor: highContrast ? colors.border : "transparent",
+              borderWidth: highContrast ? 2 : 0,
+            },
+          ]}
           accessibilityLabel={t(language, "search")}
         />
 
@@ -67,7 +75,7 @@ export default function RecipeCategoriesScreen() {
           data={chips}
           keyExtractor={(item) => item.id}
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ gap: 8, paddingVertical: 12 }}
+          contentContainerStyle={{ gap: 8, paddingVertical: 14 }}
           renderItem={({ item }) => {
             const active = category === item.id;
             let label: string;
@@ -77,53 +85,33 @@ export default function RecipeCategoriesScreen() {
               const cat = recipeCategories.find((c) => c.id === item.id)!;
               label = recipeCategoryLabel(cat, language);
             }
-            return (
-              <Pressable
-                onPress={() => setCategory(item.id)}
-                style={[
-                  styles.chip,
-                  {
-                    borderColor: active ? colors.forest : colors.border,
-                    backgroundColor: active ? colors.gold + "44" : colors.card,
-                  },
-                ]}
-              >
-                <ThemedText variant="caption">{label}</ThemedText>
-              </Pressable>
-            );
+            return <Chip label={label} active={active} onPress={() => setCategory(item.id)} />;
           }}
         />
-
-        <ThemedText variant="subtitle" style={{ marginBottom: 8 }}>
-          {t(language, "categories")}
-        </ThemedText>
       </View>
 
       <FlatList
         data={filtered}
         keyExtractor={(item) => item.recipe_id}
-        contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 24, gap: 12 }}
-        ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
+        contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 28, gap: 14 }}
+        ItemSeparatorComponent={() => <View style={{ height: 14 }} />}
         renderItem={({ item }) => {
           const name = recipeDisplayName(item, language);
           return (
             <Pressable
               onPress={() => router.push(`/recipes/${item.recipe_id}` as Href)}
-              style={[styles.card, { borderColor: colors.border, backgroundColor: colors.card }]}
+              style={[
+                styles.card,
+                { backgroundColor: colors.card, borderColor: colors.border, borderWidth: highContrast ? 2 : 0 },
+                !highContrast && cardShadow,
+              ]}
             >
-              <View style={styles.cardRow}>
-                <Image
-                  source={item.final_image}
-                  style={[styles.thumb, { borderColor: colors.border }]}
-                  contentFit="cover"
-                  accessibilityLabel={name}
-                />
-                <View style={styles.cardText}>
-                  <ThemedText variant="subtitle">{name}</ThemedText>
-                  <ThemedText variant="caption" color="muted" style={{ marginTop: 6 }}>
-                    ⏱ {item.cook_minutes} min · {item.health_tags[0] ?? ""}
-                  </ThemedText>
-                </View>
+              <Image source={item.final_image} style={styles.thumb} contentFit="cover" accessibilityLabel={name} />
+              <View style={styles.cardText}>
+                <ThemedText variant="subtitle">{name}</ThemedText>
+                <ThemedText variant="caption" color="muted" style={{ marginTop: 6 }}>
+                  {item.cook_minutes} min · {item.health_tags[0] ?? ""}
+                </ThemedText>
               </View>
             </Pressable>
           );
@@ -142,24 +130,20 @@ const styles = StyleSheet.create({
   safe: { flex: 1 },
   pad: { paddingHorizontal: 20, paddingTop: 8 },
   search: {
-    borderWidth: 2,
-    borderRadius: 12,
-    paddingHorizontal: 14,
+    borderRadius: radii.pill,
+    paddingHorizontal: 18,
     minHeight: 48,
-    fontSize: 18,
-  },
-  chip: {
-    paddingHorizontal: 14,
-    paddingVertical: 10,
-    borderRadius: 999,
-    borderWidth: 2,
+    fontSize: 17,
   },
   card: {
-    borderRadius: 16,
-    borderWidth: 1,
-    padding: 16,
+    borderRadius: radii.lg,
+    overflow: "hidden",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 14,
+    padding: 10,
+    paddingRight: 16,
   },
-  cardRow: { flexDirection: "row", gap: 14, alignItems: "center" },
-  thumb: { width: 72, height: 72, borderRadius: 12, borderWidth: 1 },
+  thumb: { width: 92, height: 92, borderRadius: radii.md },
   cardText: { flex: 1, minWidth: 0 },
 });

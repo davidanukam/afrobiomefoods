@@ -48,7 +48,9 @@
             "enablePngCrunchInReleaseBuilds": false
           }
         }
-      ]
+      ],
+      "expo-font",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": false

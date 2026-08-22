@@ -1,4 +1,4 @@
-# Google Play listing copy — Igbo Food Heritage
+# Google Play listing copy: Igbo Food Heritage
 
 Guideline-compliant (no “#1”, “free”, “download now”, etc.).  
 **Short description:** max 80 characters. **Long description:** max 4,000 characters (HTML).
@@ -24,7 +24,7 @@ Discover Igbo heritage recipes, guided cooking, events, and community.
 Character count: ~2,450 (well under 4,000).
 
 ```html
-<b>Igbo Food Heritage</b> brings traditional Igbo cooking, nutrition, and culture to your phone—with thoughtful accessibility for every generation.
+<b>Igbo Food Heritage</b> brings traditional Igbo cooking, nutrition, and culture to your phone. With thoughtful accessibility for every generation.
 
 Whether you are reconnecting with home, teaching a child a family dish, or exploring Nigerian cuisine for the first time, the app helps you cook with confidence: clear ingredients, step-by-step guidance, and the stories behind each meal.
 
@@ -61,7 +61,7 @@ Whether you are reconnecting with home, teaching a child a family dish, or explo
 <br />
 
 <b>◉ Events & local services</b><br />
-▪ Workshops, festivals, and gatherings—virtual and in person<br />
+▪ Workshops, festivals, and gatherings. Virtual and in person<br />
 ▪ Find community kitchens, markets, and cultural centers on a map or list<br />
 ▪ Call listed services directly from the app when you need directions or hours<br />
 

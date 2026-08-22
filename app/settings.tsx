@@ -1,6 +1,8 @@
 import { Stack, router, type Href } from "expo-router";
-import { View, StyleSheet, Switch, Pressable } from "react-native";
+import { View, StyleSheet, Switch, Pressable, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Card } from "@/components/Card";
+import { Chip } from "@/components/Chip";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { ThemedText } from "@/components/ThemedText";
 import type { FontScaleKey } from "@/constants/theme";
@@ -41,16 +43,16 @@ export default function SettingsScreen() {
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["bottom", "left", "right"]}>
-      <Stack.Screen options={{ title: t(language, "settings") }} />
-      <View style={styles.inner}>
+      <Stack.Screen options={{ title: t(language, "settings"), headerShadowVisible: false }} />
+      <ScrollView contentContainerStyle={styles.inner} showsVerticalScrollIndicator={false}>
         {supabaseEnabled ? (
-          <View style={{ gap: 8, marginBottom: 8 }}>
-            <ThemedText variant="subtitle">{t(language, "account")}</ThemedText>
+          <Card style={{ gap: 10 }}>
+            <ThemedText variant="eyebrow" color="muted">
+              {t(language, "account")}
+            </ThemedText>
             {user ? (
               <>
-                <ThemedText variant="body" color="muted">
-                  {user.email ?? user.id}
-                </ThemedText>
+                <ThemedText variant="subtitle">{user.email ?? user.id}</ThemedText>
                 {isAdmin ? (
                   <ThemedText variant="label" color="accent">
                     {t(language, "admin")}
@@ -68,85 +70,65 @@ export default function SettingsScreen() {
                     onPress={() => router.push("/admin/recipes" as Href)}
                   />
                 ) : null}
-                <PrimaryButton
-                  title={t(language, "signOut")}
-                  variant="outline"
-                  onPress={() => void signOutUser()}
-                />
+                <PrimaryButton title={t(language, "signOut")} variant="outline" onPress={() => void signOutUser()} />
               </>
             ) : (
               <ThemedText variant="body" color="muted">
                 {t(language, "guestNotSignedIn")}
               </ThemedText>
             )}
-          </View>
+          </Card>
         ) : null}
 
-        <ThemedText variant="subtitle">{t(language, "language")}</ThemedText>
-        <View style={styles.row}>
-          {LANG_OPTIONS.map(({ id, label }) => (
-            <Pressable
-              key={id}
-              onPress={() => setLanguage(id)}
-              style={[
-                styles.chip,
-                {
-                  borderColor: language === id ? colors.forest : colors.border,
-                  backgroundColor: language === id ? colors.gold + "44" : colors.card,
-                },
-              ]}
-            >
-              <ThemedText variant="label">{label}</ThemedText>
-            </Pressable>
-          ))}
-          <Pressable onPress={cycleLang} style={[styles.chip, { borderColor: colors.border, backgroundColor: colors.card }]}>
-            <ThemedText variant="caption">{t(language, "toggle")}</ThemedText>
-          </Pressable>
-        </View>
-
-        <ThemedText variant="subtitle" style={{ marginTop: 12 }}>
-          {t(language, "fontSize")}
-        </ThemedText>
-        <View style={styles.sizeRow}>
-          {sizes.map(({ key, labelKey }) => (
-            <Pressable
-              key={key}
-              onPress={() => setFontScale(key)}
-              style={[
-                styles.sizeChip,
-                {
-                  borderColor: fontScale === key ? colors.forest : colors.border,
-                  backgroundColor: fontScale === key ? colors.gold + "44" : colors.card,
-                },
-              ]}
-            >
-              <ThemedText variant="label">{t(language, labelKey)}</ThemedText>
-            </Pressable>
-          ))}
-        </View>
-
-        <View style={styles.toggleRow}>
-          <ThemedText variant="body" style={{ flex: 1 }}>
-            {t(language, "highContrast")}
+        <Card style={{ gap: 12 }}>
+          <ThemedText variant="eyebrow" color="muted">
+            {t(language, "language")}
           </ThemedText>
-          <Switch value={highContrast} onValueChange={setHighContrast} trackColor={{ true: colors.forestLight, false: colors.border }} />
-        </View>
+          <View style={styles.row}>
+            {LANG_OPTIONS.map(({ id, label }) => (
+              <Chip key={id} label={label} active={language === id} onPress={() => setLanguage(id)} />
+            ))}
+            <Chip label={t(language, "toggle")} onPress={cycleLang} />
+          </View>
+        </Card>
 
-        <View style={styles.toggleRow}>
-          <ThemedText variant="body" style={{ flex: 1 }}>
-            {t(language, "audioNavigation")}
+        <Card style={{ gap: 12 }}>
+          <ThemedText variant="eyebrow" color="muted">
+            {t(language, "fontSize")}
           </ThemedText>
-          <Switch value={audioGuidance} onValueChange={setAudioGuidance} trackColor={{ true: colors.forestLight, false: colors.border }} />
-        </View>
+          <View style={styles.row}>
+            {sizes.map(({ key, labelKey }) => (
+              <Chip key={key} label={t(language, labelKey)} active={fontScale === key} onPress={() => setFontScale(key)} />
+            ))}
+          </View>
+          <View style={styles.toggleRow}>
+            <ThemedText variant="body" style={{ flex: 1 }}>
+              {t(language, "highContrast")}
+            </ThemedText>
+            <Switch
+              value={highContrast}
+              onValueChange={setHighContrast}
+              trackColor={{ true: colors.forestLight, false: colors.border }}
+            />
+          </View>
+          <View style={styles.toggleRow}>
+            <ThemedText variant="body" style={{ flex: 1 }}>
+              {t(language, "audioNavigation")}
+            </ThemedText>
+            <Switch
+              value={audioGuidance}
+              onValueChange={setAudioGuidance}
+              trackColor={{ true: colors.forestLight, false: colors.border }}
+            />
+          </View>
+        </Card>
 
-        <ThemedText variant="caption" color="muted" style={{ marginTop: 8 }}>
+        <ThemedText variant="caption" color="muted">
           {t(language, "notifications")}
         </ThemedText>
         <ThemedText variant="caption" color="muted">
           {t(language, "privacy")}
         </ThemedText>
-
-        <View style={styles.spacer} />
 
         <PrimaryButton
           title={t(language, "replayOnboarding")}
@@ -156,32 +138,14 @@ export default function SettingsScreen() {
             router.replace("/onboarding" as Href);
           }}
         />
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   safe: { flex: 1 },
-  inner: { flex: 1, padding: 20, gap: 12 },
+  inner: { padding: 20, gap: 16, paddingBottom: 36 },
   row: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
-  chip: {
-    minHeight: minTouchTarget - 4,
-    paddingHorizontal: 14,
-    borderRadius: 12,
-    borderWidth: 2,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  sizeRow: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
-  sizeChip: {
-    minHeight: minTouchTarget,
-    paddingHorizontal: 14,
-    borderRadius: 12,
-    borderWidth: 2,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   toggleRow: { flexDirection: "row", alignItems: "center", minHeight: minTouchTarget, gap: 12 },
-  spacer: { flex: 1 },
 });

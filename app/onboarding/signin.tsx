@@ -8,9 +8,9 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
-  Pressable,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Chip } from "@/components/Chip";
 import { GoogleSignInButton } from "@/components/GoogleSignInButton";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { ThemedText } from "@/components/ThemedText";
@@ -96,32 +96,8 @@ export default function SignInScreen() {
           ) : null}
 
           <View style={styles.toggleRow}>
-            <Pressable
-              accessibilityRole="button"
-              onPress={() => setMode("login")}
-              style={[
-                styles.modeChip,
-                {
-                  borderColor: mode === "login" ? colors.forest : colors.border,
-                  backgroundColor: mode === "login" ? colors.gold + "44" : colors.card,
-                },
-              ]}
-            >
-              <ThemedText variant="label">{t(language, "signIn")}</ThemedText>
-            </Pressable>
-            <Pressable
-              accessibilityRole="button"
-              onPress={() => setMode("register")}
-              style={[
-                styles.modeChip,
-                {
-                  borderColor: mode === "register" ? colors.forest : colors.border,
-                  backgroundColor: mode === "register" ? colors.gold + "44" : colors.card,
-                },
-              ]}
-            >
-              <ThemedText variant="label">{t(language, "register")}</ThemedText>
-            </Pressable>
+            <Chip flex label={t(language, "signIn")} active={mode === "login"} onPress={() => setMode("login")} />
+            <Chip flex label={t(language, "register")} active={mode === "register"} onPress={() => setMode("register")} />
           </View>
 
           <ThemedText variant="caption" color="muted">
@@ -135,7 +111,7 @@ export default function SignInScreen() {
             autoComplete="email"
             placeholder="you@example.com"
             placeholderTextColor={colors.textMuted}
-            style={[styles.input, { borderColor: colors.border, color: colors.text, backgroundColor: colors.card }]}
+            style={[styles.input, { color: colors.text, backgroundColor: colors.card }]}
           />
 
           <ThemedText variant="caption" color="muted">
@@ -147,7 +123,7 @@ export default function SignInScreen() {
             secureTextEntry
             placeholder="••••••••"
             placeholderTextColor={colors.textMuted}
-            style={[styles.input, { borderColor: colors.border, color: colors.text, backgroundColor: colors.card }]}
+            style={[styles.input, { color: colors.text, backgroundColor: colors.card }]}
           />
 
           {mode === "register" ? (
@@ -161,7 +137,7 @@ export default function SignInScreen() {
                 secureTextEntry
                 placeholder="••••••••"
                 placeholderTextColor={colors.textMuted}
-                style={[styles.input, { borderColor: colors.border, color: colors.text, backgroundColor: colors.card }]}
+                style={[styles.input, { color: colors.text, backgroundColor: colors.card }]}
               />
             </>
           ) : null}
@@ -203,20 +179,12 @@ const styles = StyleSheet.create({
   scroll: { padding: 24, gap: 10, paddingBottom: 40 },
   center: { textAlign: "center" },
   input: {
-    borderWidth: 2,
-    borderRadius: 12,
-    paddingHorizontal: 14,
-    minHeight: 48,
+    borderWidth: 0,
+    borderRadius: 18,
+    paddingHorizontal: 16,
+    minHeight: 52,
     fontSize: 17,
   },
   toggleRow: { flexDirection: "row", gap: 10, marginVertical: 8 },
-  modeChip: {
-    flex: 1,
-    minHeight: 48,
-    borderRadius: 12,
-    borderWidth: 2,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  divider: { height: 1, backgroundColor: "#ccc", opacity: 0.3, marginVertical: 16 },
+  divider: { height: 1, backgroundColor: "#E4D9CB", opacity: 0.8, marginVertical: 16 },
 });

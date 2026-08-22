@@ -1,4 +1,4 @@
-# Afro Biome Foods — future work & reference
+# Afro Biome Foods: future work and reference
 
 _Last updated: 2026-05-14 (from full codebase pass). Update this file when you ship features or change architecture._
 
@@ -35,8 +35,8 @@ This note captures **follow-ups, gaps, and “Phase 2” style hints** found in 
 |-------|--------|--------|
 | **Env vars** | `lib/supabase/client.ts` | Needs `EXPO_PUBLIC_SUPABASE_URL` + `EXPO_PUBLIC_SUPABASE_KEY`. Missing → guest/offline behavior across hooks. |
 | **Admin flag** | `context/AuthContext.tsx`, migration comment | Admin is **`app_metadata.admin === true`** in Supabase Dashboard (not a DB column on users). |
-| **Google sign-in** | `components/GoogleSignInButton.tsx` | Native path mentions `EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID`; web uses Supabase redirect — configure provider + redirect URLs in Supabase. |
-| **Auth storage** | `lib/supabase/client.ts` | `safeStorage` wraps AsyncStorage with **in-memory fallback** if the native module fails — good for dev; document for production expectations. |
+| **Google sign-in** | `components/GoogleSignInButton.tsx` | Native path mentions `EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID`; web uses Supabase redirect. Configure provider + redirect URLs in Supabase. |
+| **Auth storage** | `lib/supabase/client.ts` | `safeStorage` wraps AsyncStorage with **in-memory fallback** if the native module fails. Good for dev; document for production expectations. |
 
 ---
 
@@ -45,9 +45,9 @@ This note captures **follow-ups, gaps, and “Phase 2” style hints** found in 
 | Topic | Where | Notes |
 |-------|--------|--------|
 | **Share without Supabase** | `app/(tabs)/community/share.tsx` | Shows **demo** alert and goes back; no local queue. |
-| **Voice stories** | Same file + `lib/i18n.ts` | **“Voice capture arrives in Phase 2 with consent flows.”** — needs recording, storage, consent copy, and likely moderation. |
-| **Community list hook** | `hooks/useRemoteCommunity.ts` | Loads `community_posts` when configured; `mapCommunityRow` expects **loose doc fields** — verify shape matches SQL columns (`title`, `content`, `author_uid`, …) vs what `mapCommunityRow` reads (`content_en`, `authorName`, etc.). Adjust mapper or add a DB view if posts look wrong when wired. |
-| **Pills on community home** | `app/(tabs)/community/index.tsx` | Story / voice / recipe swap labels are **decorative** only — wire filters or deep links when behavior exists. |
+| **Voice stories** | Same file + `lib/i18n.ts` | **“Voice capture arrives in Phase 2 with consent flows.”**. Needs recording, storage, consent copy, and likely moderation. |
+| **Community list hook** | `hooks/useRemoteCommunity.ts` | Loads `community_posts` when configured; `mapCommunityRow` expects **loose doc fields**. Verify shape matches SQL columns (`title`, `content`, `author_uid`, …) vs what `mapCommunityRow` reads (`content_en`, `authorName`, etc.). Adjust mapper or add a DB view if posts look wrong when wired. |
+| **Pills on community home** | `app/(tabs)/community/index.tsx` | Story / voice / recipe swap labels are **decorative** only. Wire filters or deep links when behavior exists. |
 
 ---
 
@@ -56,7 +56,7 @@ This note captures **follow-ups, gaps, and “Phase 2” style hints** found in 
 | Topic | Where | Notes |
 |-------|--------|--------|
 | **Event registration** | `app/(tabs)/events/index.tsx` | Copy mentions **calendar sync & push in Phase 2**. |
-| **Classes** | `app/classes/index.tsx` | **Placeholder lessons** — connect Zoom / WebRTC / hosted video + auth when backend exists. |
+| **Classes** | `app/classes/index.tsx` | **Placeholder lessons**. Connect Zoom / WebRTC / hosted video + auth when backend exists. |
 
 ---
 
@@ -65,8 +65,8 @@ This note captures **follow-ups, gaps, and “Phase 2” style hints** found in 
 | Topic | Where | Notes |
 |-------|--------|--------|
 | **Featured recipe image** | `app/(tabs)/home.tsx` | Uses **Unsplash** URL, not `recipe.final_image`. Consider using local `featured.final_image` or a curated hero per season. |
-| **Featured recipe choice** | Same | Uses `recipes[0]` — with alphabetical list elsewhere, home may not match “featured” intent; pick by tag, date, or CMS field. |
-| **Welcome title** | `app/(tabs)/home.tsx` | Greeting block is **commented out**; `name` variable was removed after lint — restore if you want personalized welcome. |
+| **Featured recipe choice** | Same | Uses `recipes[0]`. With alphabetical list elsewhere, home may not match “featured” intent; pick by tag, date, or CMS field. |
+| **Welcome title** | `app/(tabs)/home.tsx` | Greeting block is **commented out**; `name` variable was removed after lint. Restore if you want personalized welcome. |
 
 ---
 
@@ -74,7 +74,7 @@ This note captures **follow-ups, gaps, and “Phase 2” style hints** found in 
 
 | Topic | Where | Notes |
 |-------|--------|--------|
-| **Web map** | `app/(tabs)/services/index.tsx` + `components/ServiceMap/` | Message: interactive maps **best on native** — improve web (static map image, embed, or MapLibre) if web is a target. |
+| **Web map** | `app/(tabs)/services/index.tsx` + `components/ServiceMap/` | Message: interactive maps **best on native**. Improve web (static map image, embed, or MapLibre) if web is a target. |
 | **Remote services** | `hooks/useRemoteServices.ts` | Same pattern as events: Supabase optional, fallback `data/services.ts`. |
 
 ---
@@ -84,7 +84,7 @@ This note captures **follow-ups, gaps, and “Phase 2” style hints** found in 
 | Topic | Where | Notes |
 |-------|--------|--------|
 | **Content source** | `data/nutrition.ts`, `app/nutrition/index.tsx` | Static cards + TTS. Later: CMS, clinician review dates, or links to sources. |
-| **TTS only** | Nutrition + recipe screens | No pre-recorded **audio_en / audio_ig** playback yet despite optional fields on `Recipe` — `lib/i18n` `demoAudio` string still applies on recipe detail. |
+| **TTS only** | Nutrition + recipe screens | No pre-recorded **audio_en / audio_ig** playback yet despite optional fields on `Recipe`. `lib/i18n` `demoAudio` string still applies on recipe detail. |
 
 ---
 
@@ -92,9 +92,9 @@ This note captures **follow-ups, gaps, and “Phase 2” style hints** found in 
 
 | Topic | Where | Notes |
 |-------|--------|--------|
-| **Read-aloud** | `app/(tabs)/recipes/[id].tsx` | Uses `expo-speech` for ingredients + steps — good baseline; optional: SSML, pause controls, Igbo voice selection. |
-| **Cooking mode** | `app/(tabs)/recipes/cooking/[id].tsx` | Uses **`getRecipeById` only** (not `useRemoteRecipes`) — consistent while recipes are local-only; if remote returns, ensure same source of truth. |
-| **Timers / hands-free** | Cooking screen | Step navigation only — add timers, keep-awake, or haptics per step later. |
+| **Read-aloud** | `app/(tabs)/recipes/[id].tsx` | Uses `expo-speech` for ingredients + steps. Good baseline; optional: SSML, pause controls, Igbo voice selection. |
+| **Cooking mode** | `app/(tabs)/recipes/cooking/[id].tsx` | Uses **`getRecipeById` only** (not `useRemoteRecipes`). Consistent while recipes are local-only; if remote returns, ensure same source of truth. |
+| **Timers / hands-free** | Cooking screen | Step navigation only. Add timers, keep-awake, or haptics per step later. |
 
 ---
 
@@ -103,8 +103,8 @@ This note captures **follow-ups, gaps, and “Phase 2” style hints** found in 
 | Topic | Where | Notes |
 |-------|--------|--------|
 | **“Notifications (coming soon)”** | `lib/i18n.ts` | Wire Expo notifications or a preferences API when ready. |
-| **Onboarding** | `app/onboarding/*` | PIN / accessibility flows exist — keep in sync with any new auth requirements. |
-| **Settings** | `app/settings.tsx` | Admin entry to `/admin/recipes` when `isAdmin` — ensure production routing is protected (you may add middleware or hide route for non-admin builds). |
+| **Onboarding** | `app/onboarding/*` | PIN / accessibility flows exist. Keep in sync with any new auth requirements. |
+| **Settings** | `app/settings.tsx` | Admin entry to `/admin/recipes` when `isAdmin`. Ensure production routing is protected (you may add middleware or hide route for non-admin builds). |
 
 ---
 
@@ -113,7 +113,7 @@ This note captures **follow-ups, gaps, and “Phase 2” style hints** found in 
 | File | Purpose |
 |------|---------|
 | `supabase/migrations/20260502000000_initial_remote_schema.sql` | `recipes` / `events` / `services` JSON `doc` tables; `community_posts` relational; RLS; Realtime publication. |
-| `supabase/migrations/20260507101500_seed_recipes.sql` | Adds `source_id`, small seed — **out of date vs app recipes**. |
+| `supabase/migrations/20260507101500_seed_recipes.sql` | Adds `source_id`, small seed. **out of date vs app recipes**. |
 
 **Later:** RLS review for `community_posts` (public read, own-row write), indexes on `created_at`, backups, and Edge Functions if you add server-side validation.
 
@@ -123,9 +123,9 @@ This note captures **follow-ups, gaps, and “Phase 2” style hints** found in 
 
 | Item | Notes |
 |------|--------|
-| **Automated tests** | No `*.test.ts` / Jest suite found — add smoke tests for mappers, `recipeFinalImage` keys vs `recipes.map(r => r.recipe_id)`, and critical navigation. |
+| **Automated tests** | No `*.test.ts` / Jest suite found. Add smoke tests for mappers, `recipeFinalImage` keys vs `recipes.map(r => r.recipe_id)`, and critical navigation. |
 | **CI** | Run `npx expo lint` and `npx tsc --noEmit` in CI when you add a pipeline. |
-| **Duplicate path spellings** | Repo may show both `app/(tabs)/` and `app\(tabs)\` on Windows — same files; avoid duplicating edits. |
+| **Duplicate path spellings** | Repo may show both `app/(tabs)/` and `app\(tabs)\` on Windows. Same files; avoid duplicating edits. |
 | **`.env.local`** | Document required keys in README for new devs (`EXPO_PUBLIC_*`). |
 
 ---

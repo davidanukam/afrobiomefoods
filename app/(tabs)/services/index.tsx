@@ -5,7 +5,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 // Platform entry: ServiceMap/index.web.tsx | index.native.tsx (see service-map.d.ts for TS)
 // eslint-disable-next-line import/no-unresolved -- folder uses platform-specific index.*.tsx
 import { ServiceMap } from "@/components/ServiceMap";
+import { Card } from "@/components/Card";
+import { Chip } from "@/components/Chip";
 import { ThemedText } from "@/components/ThemedText";
+import { radii } from "@/constants/theme";
 import { useAppSettings } from "@/context/AppSettingsContext";
 import { useRemoteServices } from "@/hooks/useRemoteServices";
 import { useThemeColors } from "@/hooks/useThemeColors";
@@ -46,24 +49,8 @@ export default function ServicesScreen() {
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["bottom", "left", "right"]}>
       <View style={styles.toggleRow}>
-        <Pressable
-          onPress={() => setMode("list")}
-          style={[
-            styles.toggle,
-            { borderColor: mode === "list" ? colors.forest : colors.border, backgroundColor: colors.card },
-          ]}
-        >
-          <ThemedText variant="label">{t(language, "listView")}</ThemedText>
-        </Pressable>
-        <Pressable
-          onPress={() => setMode("map")}
-          style={[
-            styles.toggle,
-            { borderColor: mode === "map" ? colors.forest : colors.border, backgroundColor: colors.card },
-          ]}
-        >
-          <ThemedText variant="label">{t(language, "mapView")}</ThemedText>
-        </Pressable>
+        <Chip flex label={t(language, "listView")} active={mode === "list"} onPress={() => setMode("list")} />
+        <Chip flex label={t(language, "mapView")} active={mode === "map"} onPress={() => setMode("map")} />
       </View>
 
       <ThemedText variant="subtitle" style={{ paddingHorizontal: 20, marginBottom: 8 }}>
@@ -87,7 +74,7 @@ export default function ServicesScreen() {
         contentContainerStyle={{ padding: 20, paddingTop: mode === "list" ? 0 : 12, gap: 12, paddingBottom: 32 }}
         ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
         renderItem={({ item }) => (
-          <View style={[styles.card, { borderColor: colors.border, backgroundColor: colors.card }]}>
+          <Card>
             <ThemedText variant="subtitle">{item.name}</ThemedText>
             <ThemedText variant="caption" color="muted" style={{ marginTop: 6 }}>
               {item.distance_km.toFixed(1)} km · {item.hours_en}
@@ -104,7 +91,7 @@ export default function ServicesScreen() {
                 {t(language, "call")} {item.contact}
               </ThemedText>
             </Pressable>
-          </View>
+          </Card>
         )}
       />
     </SafeAreaView>
@@ -113,8 +100,6 @@ export default function ServicesScreen() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1 },
-  toggleRow: { flexDirection: "row", gap: 12, paddingHorizontal: 20, paddingVertical: 12 },
-  toggle: { flex: 1, minHeight: 48, borderRadius: 12, borderWidth: 2, alignItems: "center", justifyContent: "center" },
-  card: { borderRadius: 16, borderWidth: 1, padding: 16 },
-  call: { marginTop: 12, minHeight: 48, borderRadius: 12, alignItems: "center", justifyContent: "center" },
+  toggleRow: { flexDirection: "row", gap: 10, paddingHorizontal: 20, paddingVertical: 12 },
+  call: { marginTop: 14, minHeight: 48, borderRadius: radii.pill, alignItems: "center", justifyContent: "center" },
 });

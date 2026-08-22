@@ -5,6 +5,7 @@ import { useCallback, useMemo, useState } from "react";
 import { View, StyleSheet, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ThemedText } from "@/components/ThemedText";
+import { cardShadow } from "@/constants/theme";
 import { useAppSettings } from "@/context/AppSettingsContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { getRecipeById, recipeCopy, recipeDisplayName } from "@/data/recipes";
@@ -57,7 +58,7 @@ export default function CookingModeScreen() {
           {t(language, "stepOf", { current: index + 1, total: steps.length })}
         </ThemedText>
 
-        <View style={[styles.stepCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+        <View style={[styles.stepCard, { backgroundColor: colors.card }, cardShadow]}>
           <ThemedText variant="body" style={{ marginTop: 8 }}>
             {current}
           </ThemedText>
@@ -101,7 +102,7 @@ export default function CookingModeScreen() {
 const styles = StyleSheet.create({
   safe: { flex: 1 },
   inner: { flex: 1, padding: 20 },
-  stepCard: { marginTop: 16, borderRadius: 16, borderWidth: 1, padding: 16 },
+  stepCard: { marginTop: 16, borderRadius: 22, padding: 22 },
   controls: { marginTop: 24, gap: 12 },
-  btn: { minHeight: 52, borderRadius: 12, alignItems: "center", justifyContent: "center" },
+  btn: { minHeight: 52, borderRadius: 999, alignItems: "center", justifyContent: "center" },
 });

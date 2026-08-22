@@ -13,5 +13,5 @@ export function ServiceMap({ webMessage, webBorderColor }: ServiceMapProps) {
 }
 
 const styles = StyleSheet.create({
-  mapFallback: { marginHorizontal: 20, borderRadius: 16, borderWidth: 1, minHeight: 200, justifyContent: "center" },
+  mapFallback: { marginHorizontal: 20, borderRadius: 22, borderWidth: 0, minHeight: 200, justifyContent: "center", backgroundColor: "#FFFCF8" },
 });

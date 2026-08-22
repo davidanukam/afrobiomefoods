@@ -14,7 +14,8 @@ export default function RootLayout() {
         <Stack
           screenOptions={{
             headerBackTitle: "Back",
-            headerTitleStyle: { fontSize: 18 },
+            headerTitleStyle: { fontSize: 20, fontWeight: "800" },
+            headerShadowVisible: false,
           }}
         >
           <Stack.Screen name="index" options={{ headerShown: false }} />

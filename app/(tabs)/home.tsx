@@ -10,142 +10,177 @@ import { useThemeColors } from "@/hooks/useThemeColors";
 import { t } from "@/lib/i18n";
 import { localeTag } from "@/lib/locale";
 import { localized } from "@/lib/localized";
+import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { router, type Href } from "expo-router";
+import type { ComponentProps } from "react";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { radii } from "@/constants/theme";
 
 /** One random featured recipe index per app launch (JS session); not reshuffled when revisiting Home. */
 let homeSessionFeaturedRecipeIndex: number | null = null;
 
 function getSessionFeaturedRecipe(recipes: Recipe[], fallback: Recipe): Recipe {
-    const n = recipes.length;
-    if (n === 0) return fallback;
-    if (homeSessionFeaturedRecipeIndex === null) {
-        homeSessionFeaturedRecipeIndex = Math.floor(Math.random() * n);
-    }
-    const idx = Math.min(homeSessionFeaturedRecipeIndex, n - 1);
-    return recipes[idx]!;
+  const n = recipes.length;
+  if (n === 0) return fallback;
+  if (homeSessionFeaturedRecipeIndex === null) {
+    homeSessionFeaturedRecipeIndex = Math.floor(Math.random() * n);
+  }
+  const idx = Math.min(homeSessionFeaturedRecipeIndex, n - 1);
+  return recipes[idx]!;
 }
+
+type IconName = ComponentProps<typeof Ionicons>["name"];
 
 export default function HomeScreen() {
-    const colors = useThemeColors();
-    const { language } = useAppSettings();
-    const { recipes } = useRemoteRecipes();
-    const { events } = useRemoteEvents();
-    const featured = getSessionFeaturedRecipe(recipes, fallbackRecipes[0]);
-    const nextEvent = events[0] ?? fallbackEvents[0];
-    const featuredTitle = recipeDisplayName(featured, language);
+  const colors = useThemeColors();
+  const { language } = useAppSettings();
+  const { recipes } = useRemoteRecipes();
+  const { events } = useRemoteEvents();
+  const featured = getSessionFeaturedRecipe(recipes, fallbackRecipes[0]);
+  const nextEvent = events[0] ?? fallbackEvents[0];
+  const featuredTitle = recipeDisplayName(featured, language);
+  const eventDate = new Date(nextEvent.date);
 
-    return (
-        <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["left", "right"]}>
-            <ScrollView contentContainerStyle={styles.scroll}>
-                <Card style={styles.featured}>
-                    <Card style={{ justifyContent: "center", alignItems: "center" }}><ThemedText variant="subtitle">{t(language, "featuredRecipe")}</ThemedText></Card>
-                    <Image
-                        source={featured.final_image}
-                        style={styles.featuredImg}
-                        contentFit="cover"
-                        accessibilityLabel={featuredTitle}
-                    />
-                    <ThemedText variant="subtitle" style={{ marginTop: 8 }}>
-                        {featuredTitle}
-                    </ThemedText>
-                    <ThemedText variant="caption" color="muted">
-                        {t(language, "randomPickSession")}
-                    </ThemedText>
-                    <Pressable
-                        accessibilityRole="button"
-                        onPress={() => router.push(`/recipes/${featured.recipe_id}` as Href)}
-                        style={[styles.listen, { backgroundColor: colors.forestLight }]}
-                    >
-                        <ThemedText variant="label" color="inverse">
-                            {t(language, "listen")} →
-                        </ThemedText>
-                    </Pressable>
-                </Card>
+  const tiles: { label: string; href: Href; icon: IconName }[] = [
+    { label: t(language, "recipes"), href: "/recipes" as Href, icon: "book-outline" },
+    { label: t(language, "classes"), href: "/classes" as Href, icon: "school-outline" },
+    { label: t(language, "community"), href: "/community" as Href, icon: "people-outline" },
+    { label: t(language, "events"), href: "/events" as Href, icon: "calendar-outline" },
+    { label: t(language, "nutrition"), href: "/nutrition" as Href, icon: "leaf-outline" },
+    { label: t(language, "services"), href: "/services" as Href, icon: "location-outline" },
+  ];
 
-                <Card>
-                    <ThemedText variant="subtitle">{t(language, "healthTipToday")}</ThemedText>
-                    <ThemedText variant="body" style={{ marginTop: 8 }}>
-                        {t(language, "healthTipUtazi")}
-                    </ThemedText>
-                </Card>
+  return (
+    <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["left", "right"]}>
+      <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
+        <ThemedText variant="eyebrow" color="muted">
+          {t(language, "appSubtitle")}
+        </ThemedText>
+        <ThemedText variant="title" style={{ marginTop: 4, marginBottom: 8 }}>
+          {t(language, "appTitle")}
+        </ThemedText>
 
-                <Card>
-                    <ThemedText variant="subtitle">{t(language, "upcoming")}</ThemedText>
-                    <ThemedText variant="body" style={{ marginTop: 8 }}>
-                        {new Date(nextEvent.date).toLocaleDateString(localeTag(language), {
-                            month: "long",
-                            day: "numeric",
-                        })}
-                        {" · "}
-                        {localized(language, {
-                            en: nextEvent.title_en,
-                            ig: nextEvent.title_ig,
-                            fr: nextEvent.title_fr,
-                        })}
-                    </ThemedText>
-                    <Pressable
-                        accessibilityRole="button"
-                        onPress={() => router.push("/events" as Href)}
-                        style={{ marginTop: 12, alignSelf: "flex-start" }}
-                    >
-                        <ThemedText variant="label" color="accent">
-                            {t(language, "events")} →
-                        </ThemedText>
-                    </Pressable>
-                </Card>
+        <Pressable
+          accessibilityRole="button"
+          onPress={() => router.push(`/recipes/${featured.recipe_id}` as Href)}
+          style={styles.heroWrap}
+        >
+          <Image source={featured.final_image} style={styles.heroImg} contentFit="cover" accessibilityLabel={featuredTitle} />
+          <View style={[styles.heroScrim, { backgroundColor: colors.overlay }]} />
+          <View style={styles.heroCopy}>
+            <ThemedText variant="eyebrow" color="inverse">
+              {t(language, "featuredRecipe")}
+            </ThemedText>
+            <ThemedText variant="subtitle" color="inverse" style={{ marginTop: 6 }}>
+              {featuredTitle}
+            </ThemedText>
+            <ThemedText variant="caption" color="inverse" style={{ marginTop: 4, opacity: 0.9 }}>
+              {t(language, "randomPickSession")}
+            </ThemedText>
+          </View>
+        </Pressable>
 
-                <ThemedText variant="subtitle" style={{ marginTop: 8 }}>
-                    {t(language, "quickActions")}
-                </ThemedText>
-                <View style={styles.grid}>
-                    <QuickTile label={t(language, "recipes")} onPress={() => router.push("/recipes" as Href)} />
-                    <QuickTile label={t(language, "classes")} onPress={() => router.push("/classes" as Href)} />
-                    <QuickTile label={t(language, "community")} onPress={() => router.push("/community" as Href)} />
-                    <QuickTile label={t(language, "events")} onPress={() => router.push("/events" as Href)} />
-                    <QuickTile label={t(language, "nutrition")} onPress={() => router.push("/nutrition" as Href)} />
-                    <QuickTile label={t(language, "services")} onPress={() => router.push("/services" as Href)} />
-                </View>
-            </ScrollView>
-        </SafeAreaView>
-    );
+        <Card style={{ backgroundColor: colors.forest }}>
+          <ThemedText variant="eyebrow" color="inverse">
+            {t(language, "healthTipToday")}
+          </ThemedText>
+          <ThemedText variant="body" color="inverse" style={{ marginTop: 8 }}>
+            {t(language, "healthTipUtazi")}
+          </ThemedText>
+        </Card>
+
+        <Pressable onPress={() => router.push("/events" as Href)} accessibilityRole="button">
+          <Card style={styles.eventCard}>
+            <View style={[styles.dateBadge, { backgroundColor: colors.forest }]}>
+              <ThemedText variant="caption" color="inverse">
+                {eventDate.toLocaleDateString(localeTag(language), { month: "short" }).toUpperCase()}
+              </ThemedText>
+              <ThemedText variant="subtitle" color="inverse">
+                {eventDate.getDate()}
+              </ThemedText>
+            </View>
+            <View style={{ flex: 1 }}>
+              <ThemedText variant="eyebrow" color="muted">
+                {t(language, "upcoming")}
+              </ThemedText>
+              <ThemedText variant="subtitle" style={{ marginTop: 4 }}>
+                {localized(language, {
+                  en: nextEvent.title_en,
+                  ig: nextEvent.title_ig,
+                  fr: nextEvent.title_fr,
+                })}
+              </ThemedText>
+              <ThemedText variant="caption" color="accent" style={{ marginTop: 6 }}>
+                {t(language, "events")}
+              </ThemedText>
+            </View>
+          </Card>
+        </Pressable>
+
+        <ThemedText variant="subtitle" style={{ marginTop: 4 }}>
+          {t(language, "quickActions")}
+        </ThemedText>
+        <View style={styles.grid}>
+          {tiles.map((tile) => (
+            <QuickTile key={tile.label} {...tile} onPress={() => router.push(tile.href)} />
+          ))}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
 }
 
-function QuickTile({ label, onPress }: { label: string; onPress: () => void }) {
-    const colors = useThemeColors();
-    return (
-        <Pressable
-            onPress={onPress}
-            accessibilityRole="button"
-            style={({ pressed }) => [
-                styles.tile,
-                { backgroundColor: colors.card, borderColor: colors.border },
-                pressed && { opacity: 0.9 },
-            ]}
-        >
-            <ThemedText variant="label" style={{ textAlign: "center" }}>
-                {label}
-            </ThemedText>
-        </Pressable>
-    );
+function QuickTile({
+  label,
+  icon,
+  onPress,
+}: {
+  label: string;
+  icon: IconName;
+  onPress: () => void;
+}) {
+  const colors = useThemeColors();
+  return (
+    <Pressable
+      onPress={onPress}
+      accessibilityRole="button"
+      style={({ pressed }) => [{ width: "47%" }, pressed && { opacity: 0.9 }]}
+    >
+      <Card style={styles.tile}>
+        <View style={[styles.tileIcon, { backgroundColor: colors.cream }]}>
+          <Ionicons name={icon} size={22} color={colors.forest} />
+        </View>
+        <ThemedText variant="label" style={{ textAlign: "center" }}>
+          {label}
+        </ThemedText>
+      </Card>
+    </Pressable>
+  );
 }
 
 const styles = StyleSheet.create({
-    safe: { flex: 1 },
-    scroll: { padding: 20, paddingBottom: 32, gap: 16 },
-    featured: { gap: 4 },
-    featuredImg: { width: "100%", height: 180, borderRadius: 12, marginTop: 8 },
-    listen: { marginTop: 12, paddingVertical: 12, borderRadius: 12, alignItems: "center" },
-    grid: { flexDirection: "row", flexWrap: "wrap", gap: 12 },
-    tile: {
-        width: "47%",
-        minHeight: 72,
-        borderRadius: 14,
-        borderWidth: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        padding: 10,
-    },
+  safe: { flex: 1 },
+  scroll: { padding: 20, paddingBottom: 36, gap: 16 },
+  heroWrap: { height: 240, borderRadius: radii.xl, overflow: "hidden" },
+  heroImg: { ...StyleSheet.absoluteFillObject },
+  heroScrim: { ...StyleSheet.absoluteFillObject },
+  heroCopy: { position: "absolute", left: 18, right: 18, bottom: 18 },
+  eventCard: { flexDirection: "row", gap: 14, alignItems: "center" },
+  dateBadge: {
+    width: 64,
+    borderRadius: radii.md,
+    paddingVertical: 10,
+    alignItems: "center",
+  },
+  grid: { flexDirection: "row", flexWrap: "wrap", gap: 12 },
+  tile: { minHeight: 108, width: "100%", alignItems: "center", gap: 10, paddingVertical: 16 },
+  tileIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: radii.pill,
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });

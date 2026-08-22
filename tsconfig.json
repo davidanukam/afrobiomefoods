@@ -12,5 +12,6 @@
     "**/*.ts",
     "**/*.tsx",
     "**/*.d.ts"
-  ]
+  ],
+  "exclude": ["design-archive", "node_modules"]
 }

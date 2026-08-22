@@ -4,16 +4,26 @@ import { useAppSettings } from "@/context/AppSettingsContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
 
 type Props = TextProps & {
-  variant?: "title" | "subtitle" | "body" | "caption" | "label";
+  variant?: "title" | "subtitle" | "body" | "caption" | "label" | "eyebrow";
   color?: "primary" | "muted" | "inverse" | "accent";
 };
 
 const baseSizes = {
-  title: 26,
+  title: 30,
   subtitle: 20,
-  body: 18,
-  caption: 16,
-  label: 17,
+  body: 17,
+  caption: 14,
+  label: 16,
+  eyebrow: 12,
+};
+
+const weights: Record<NonNullable<Props["variant"]>, "400" | "600" | "700" | "800"> = {
+  title: "800",
+  subtitle: "700",
+  body: "400",
+  caption: "400",
+  label: "700",
+  eyebrow: "700",
 };
 
 export function ThemedText({ variant = "body", color = "primary", style, ...rest }: Props) {
@@ -33,7 +43,17 @@ export function ThemedText({ variant = "body", color = "primary", style, ...rest
   return (
     <Text
       allowFontScaling
-      style={[{ color: colorVal, fontSize: size, lineHeight: Math.round(size * 1.35) }, style]}
+      style={[
+        {
+          color: colorVal,
+          fontSize: size,
+          lineHeight: Math.round(size * (variant === "title" ? 1.2 : 1.4)),
+          fontWeight: weights[variant],
+          letterSpacing: variant === "eyebrow" ? 0.8 : variant === "title" ? -0.4 : 0,
+          textTransform: variant === "eyebrow" ? "uppercase" : "none",
+        },
+        style,
+      ]}
       {...rest}
     />
   );

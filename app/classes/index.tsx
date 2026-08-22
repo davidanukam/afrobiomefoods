@@ -1,7 +1,9 @@
 import { Stack } from "expo-router";
-import { ScrollView, View, StyleSheet, Pressable, Alert } from "react-native";
+import { ScrollView, StyleSheet, Pressable, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ThemedText } from "@/components/ThemedText";
+import { Card } from "@/components/Card";
+import { radii } from "@/constants/theme";
 import { useAppSettings } from "@/context/AppSettingsContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { t } from "@/lib/i18n";
@@ -50,7 +52,7 @@ export default function ClassesScreen() {
         </ThemedText>
 
         {lessons.map((lesson) => (
-          <View key={lesson.id} style={[styles.card, { borderColor: colors.border, backgroundColor: colors.card }]}>
+          <Card key={lesson.id}>
             <ThemedText variant="subtitle">
               {localized(language, { en: lesson.title_en, ig: lesson.title_ig, fr: lesson.title_fr })}
             </ThemedText>
@@ -65,7 +67,7 @@ export default function ClassesScreen() {
                 {t(language, "playPreview")}
               </ThemedText>
             </Pressable>
-          </View>
+          </Card>
         ))}
       </ScrollView>
     </SafeAreaView>
@@ -74,7 +76,6 @@ export default function ClassesScreen() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1 },
-  scroll: { padding: 20, gap: 14, paddingBottom: 32 },
-  card: { borderRadius: 16, borderWidth: 1, padding: 16, gap: 8 },
-  btn: { marginTop: 8, minHeight: 48, borderRadius: 12, borderWidth: 2, alignItems: "center", justifyContent: "center" },
+  scroll: { padding: 20, gap: 14, paddingBottom: 36 },
+  btn: { marginTop: 8, minHeight: 48, borderRadius: radii.pill, borderWidth: 1.5, alignItems: "center", justifyContent: "center" },
 });

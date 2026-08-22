@@ -20,26 +20,32 @@ export default function TabsLayout() {
     <Tabs
       screenOptions={{
         headerShown: true,
+        headerShadowVisible: false,
         tabBarActiveTintColor: colors.forest,
         tabBarInactiveTintColor: colors.textMuted,
-        tabBarLabelStyle: { fontSize: 11, fontWeight: "600" },
+        tabBarLabelStyle: { fontSize: 11, fontWeight: "700" },
         tabBarStyle: {
-          minHeight: 58,
-          paddingBottom: 8,
+          minHeight: 64,
+          paddingBottom: 10,
           paddingTop: 8,
           backgroundColor: colors.card,
-          borderTopColor: colors.border,
+          borderTopWidth: 0,
+          elevation: 12,
+          shadowColor: "#14201A",
+          shadowOpacity: 0.08,
+          shadowRadius: 16,
+          shadowOffset: { width: 0, height: -4 },
         },
         headerStyle: { backgroundColor: colors.cream },
         headerTintColor: colors.forest,
-        headerTitleStyle: { fontSize: 20, fontWeight: "700" },
+        headerTitleStyle: { fontSize: 22, fontWeight: "800" },
       }}
     >
       <Tabs.Screen
         name="home"
         options={{
           title: t(language, "home"),
-          tabBarIcon: ({ color, size }) => tabIcon("home", color, size),
+          tabBarIcon: ({ color, size }) => tabIcon("home", String(color), size),
           headerRight: () => (
             <Pressable
               onPress={() => router.push("/settings" as Href)}
@@ -52,11 +58,7 @@ export default function TabsLayout() {
                 justifyContent: "center",
               }}
             >
-              <Ionicons
-                name="settings-outline"
-                size={26}
-                color={colors.forest}
-              />
+              <Ionicons name="settings-outline" size={24} color={colors.forest} />
             </Pressable>
           ),
         }}
@@ -66,7 +68,7 @@ export default function TabsLayout() {
         options={{
           title: t(language, "recipes"),
           headerShown: false,
-          tabBarIcon: ({ color, size }) => tabIcon("book", color, size),
+          tabBarIcon: ({ color, size }) => tabIcon("book", String(color), size),
         }}
       />
       <Tabs.Screen
@@ -74,7 +76,7 @@ export default function TabsLayout() {
         options={{
           title: t(language, "community"),
           headerShown: false,
-          tabBarIcon: ({ color, size }) => tabIcon("people", color, size),
+          tabBarIcon: ({ color, size }) => tabIcon("people", String(color), size),
         }}
       />
       <Tabs.Screen
@@ -82,7 +84,7 @@ export default function TabsLayout() {
         options={{
           title: t(language, "events"),
           headerShown: false,
-          tabBarIcon: ({ color, size }) => tabIcon("calendar", color, size),
+          tabBarIcon: ({ color, size }) => tabIcon("calendar", String(color), size),
         }}
       />
       <Tabs.Screen
@@ -90,7 +92,7 @@ export default function TabsLayout() {
         options={{
           title: t(language, "services"),
           headerShown: false,
-          tabBarIcon: ({ color, size }) => tabIcon("location", color, size),
+          tabBarIcon: ({ color, size }) => tabIcon("location", String(color), size),
         }}
       />
     </Tabs>

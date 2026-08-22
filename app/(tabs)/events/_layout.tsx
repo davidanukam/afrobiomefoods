@@ -12,7 +12,8 @@ export default function EventsStackLayout() {
       screenOptions={{
         headerStyle: { backgroundColor: colors.cream },
         headerTintColor: colors.forest,
-        headerTitleStyle: { fontSize: 20, fontWeight: "700" },
+        headerTitleStyle: { fontSize: 22, fontWeight: "800" },
+        headerShadowVisible: false,
         contentStyle: { backgroundColor: colors.cream },
       }}
     >

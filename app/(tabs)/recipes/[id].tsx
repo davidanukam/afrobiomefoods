@@ -87,21 +87,20 @@ export default function RecipeDetailScreen() {
                 options={{
                     title,
                     headerBackTitle: t(language, "recipes"),
-                    headerLeft: (props) => (
+                    headerLeft: () => (
                         <HeaderBackButton
-                            {...props}
                             onPress={goBackToRecipes}
                             accessibilityLabel={t(language, "back")}
                         />
                     ),
                 }}
             />
-            <ScrollView contentContainerStyle={styles.scroll}>
+            <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
                 <Image
                     source={recipe.ingredient_image}
-                    style={[styles.dishPhoto, { borderColor: colors.border }]}
+                    style={styles.dishPhoto}
                     contentFit="cover"
-                    accessibilityLabel={`${title} — ${t(language, "ingredientPhoto")}`}
+                    accessibilityLabel={`${title}, ${t(language, "ingredientPhoto")}`}
                 />
 
                 <View style={styles.row}>
@@ -171,11 +170,9 @@ export default function RecipeDetailScreen() {
 
                 <Image
                     source={recipe.final_image}
-                    style={[styles.dishPhoto, {
-                        borderColor: colors.border, marginTop: 10
-                    }]}
+                    style={[styles.dishPhoto, { marginTop: 10 }]}
                     contentFit="cover"
-                    accessibilityLabel={`${title} — ${t(language, "finishedDishPhoto")}`}
+                    accessibilityLabel={`${title}, ${t(language, "finishedDishPhoto")}`}
                 />
 
                 <View style={styles.actions}>
@@ -210,20 +207,19 @@ export default function RecipeDetailScreen() {
 
 const styles = StyleSheet.create({
     safe: { flex: 1 },
-    scroll: { padding: 20 },
+    scroll: { padding: 20, paddingBottom: 36 },
     dishPhoto: {
         width: "100%",
         aspectRatio: 4 / 3,
-        borderRadius: 14,
-        borderWidth: 1,
+        borderRadius: 22,
         marginBottom: 16,
     },
-    row: { flexDirection: "row", gap: 12, flexWrap: "wrap" },
+    row: { flexDirection: "row", gap: 10, flexWrap: "wrap" },
     audioBtn: {
         flexGrow: 1,
         flexBasis: "30%",
         minHeight: 52,
-        borderRadius: 12,
+        borderRadius: 999,
         alignItems: "center",
         justifyContent: "center",
         paddingHorizontal: 8,
@@ -232,8 +228,8 @@ const styles = StyleSheet.create({
     secondary: {
         flex: 1,
         minHeight: 48,
-        borderRadius: 12,
-        borderWidth: 2,
+        borderRadius: 999,
+        borderWidth: 1.5,
         alignItems: "center",
         justifyContent: "center",
     },

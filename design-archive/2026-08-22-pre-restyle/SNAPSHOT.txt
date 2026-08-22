@@ -1,0 +1,9 @@
+Igbo Food Heritage UI snapshot
+Saved: 22 August 2026, before the modern restyle.
+
+This folder copies the screens, shared components, and theme that defined the previous look:
+- Cream canvas, forest-green accents, 16px bordered cards
+- Heavy 2px chip borders, 12px button radius
+- Accessibility: 48px touch targets and scalable type (kept in the restyle)
+
+To restore a page, copy the matching file back from this folder.

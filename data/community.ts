@@ -21,8 +21,8 @@ export const communityPosts: CommunityPost[] = [
   {
     post_id: "p2",
     author: "Nna O.",
-    content_en: "We add a little utazi to abacha—it wakes up the bowl without extra salt.",
-    content_ig: "Anyị na-etinye obere utazi na abacha—ọ na-eme ya ụtọ na-enweghị nnu karịa.",
+    content_en: "We add a little utazi to abacha. It wakes up the bowl without extra salt.",
+    content_ig: "Anyị na-etinye obere utazi na abacha. Ọ na-eme ya ụtọ na-enweghị nnu karịa.",
     language: "ig",
     timestamp: "2026-04-27T15:30:00",
     kind: "recipe",
