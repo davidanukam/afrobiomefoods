@@ -15,18 +15,27 @@ import { localeTag } from "@/lib/locale";
 import { localized } from "@/lib/localized";
 import { Ionicons } from "@expo/vector-icons";
 import { router, type Href } from "expo-router";
-import type { ComponentProps } from "react";
+import { useCallback, type ComponentProps } from "react";
 import { Image, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-/** One random featured recipe index per app launch (JS session); not reshuffled when revisiting Home. */
+/** One random featured recipe index per app launch; pull-to-refresh picks another. */
 let homeSessionFeaturedRecipeIndex: number | null = null;
+
+function pickFeaturedIndex(count: number, exclude?: number | null): number {
+  if (count <= 1) return 0;
+  let next = Math.floor(Math.random() * count);
+  if (exclude != null && next === exclude) {
+    next = (next + 1) % count;
+  }
+  return next;
+}
 
 function getSessionFeaturedRecipe(recipes: Recipe[], fallback: Recipe): Recipe {
   const n = recipes.length;
   if (n === 0) return fallback;
   if (homeSessionFeaturedRecipeIndex === null) {
-    homeSessionFeaturedRecipeIndex = Math.floor(Math.random() * n);
+    homeSessionFeaturedRecipeIndex = pickFeaturedIndex(n);
   }
   const idx = Math.min(homeSessionFeaturedRecipeIndex, n - 1);
   return recipes[idx]!;
@@ -39,9 +48,14 @@ export default function HomeScreen() {
   const { language } = useAppSettings();
   const { recipes, refresh: refreshRecipes } = useRemoteRecipes();
   const { events, refresh: refreshEvents } = useRemoteEvents();
-  const { refreshing, onRefresh } = usePullToRefresh(async () => {
+  const reloadHome = useCallback(async () => {
     await Promise.all([refreshRecipes(), refreshEvents()]);
-  });
+    homeSessionFeaturedRecipeIndex = pickFeaturedIndex(
+      fallbackRecipes.length,
+      homeSessionFeaturedRecipeIndex,
+    );
+  }, [refreshEvents, refreshRecipes]);
+  const { refreshing, onRefresh } = usePullToRefresh(reloadHome);
   const featured = getSessionFeaturedRecipe(recipes, fallbackRecipes[0]);
   const nextEvent = events[0] ?? fallbackEvents[0];
   const featuredTitle = recipeDisplayName(featured, language);
