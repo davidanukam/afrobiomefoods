@@ -3,6 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import * as WebBrowser from "expo-web-browser";
 import { AuthProvider } from "@/context/AuthContext";
 import { AppSettingsProvider } from "@/context/AppSettingsContext";
+import { palette } from "@/constants/theme";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -10,7 +11,7 @@ export default function RootLayout() {
   return (
     <AppSettingsProvider>
       <AuthProvider>
-        <StatusBar style="auto" />
+        <StatusBar style="dark" backgroundColor={palette.cream} />
         <Stack
           screenOptions={{
             headerBackTitle: "Back",

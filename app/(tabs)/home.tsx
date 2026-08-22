@@ -15,8 +15,8 @@ import { localeTag } from "@/lib/locale";
 import { localized } from "@/lib/localized";
 import { Ionicons } from "@expo/vector-icons";
 import { router, type Href } from "expo-router";
-import { useCallback, type ComponentProps } from "react";
-import { Image, Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { useCallback, useState, type ComponentProps } from "react";
+import { Dimensions, Image, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 /** One random featured recipe index per app launch; pull-to-refresh picks another. */
@@ -41,6 +41,9 @@ function getSessionFeaturedRecipe(recipes: Recipe[], fallback: Recipe): Recipe {
   return recipes[idx]!;
 }
 
+const HERO_HEIGHT = 240;
+const PAGE_GUTTER = 40;
+
 type IconName = ComponentProps<typeof Ionicons>["name"];
 
 export default function HomeScreen() {
@@ -48,6 +51,9 @@ export default function HomeScreen() {
   const { language } = useAppSettings();
   const { recipes, refresh: refreshRecipes } = useRemoteRecipes();
   const { events, refresh: refreshEvents } = useRemoteEvents();
+  const [heroWidth, setHeroWidth] = useState(() =>
+    Math.max(Dimensions.get("window").width - PAGE_GUTTER, 1),
+  );
   const reloadHome = useCallback(async () => {
     await Promise.all([refreshRecipes(), refreshEvents()]);
     homeSessionFeaturedRecipeIndex = pickFeaturedIndex(
@@ -109,12 +115,19 @@ export default function HomeScreen() {
           onPress={() =>
             router.push(`/recipes/${featured.recipe_id}?from=home` as Href)
           }
-          style={styles.heroWrap}
+          onLayout={(event) => {
+            const next = Math.round(event.nativeEvent.layout.width);
+            if (next > 0 && next !== heroWidth) {
+              setHeroWidth(next);
+            }
+          }}
+          style={[styles.heroWrap, { backgroundColor: colors.border }]}
         >
           <Image
             source={featured.final_image}
-            style={styles.heroImg}
+            style={{ width: heroWidth, height: HERO_HEIGHT }}
             resizeMode="cover"
+            resizeMethod="resize"
             fadeDuration={0}
             accessibilityLabel={featuredTitle}
           />
@@ -231,8 +244,7 @@ function QuickTile({
 const styles = StyleSheet.create({
   safe: { flex: 1 },
   scroll: { padding: 20, paddingBottom: 36, gap: 16 },
-  heroWrap: { height: 240, borderRadius: radii.xl, overflow: "hidden" },
-  heroImg: { ...StyleSheet.absoluteFillObject },
+  heroWrap: { height: HERO_HEIGHT, width: "100%", borderRadius: radii.xl, overflow: "hidden" },
   heroScrim: { ...StyleSheet.absoluteFillObject },
   heroCopy: { position: "absolute", left: 18, right: 18, bottom: 18 },
   eventCard: { flexDirection: "row", gap: 14, alignItems: "center" },

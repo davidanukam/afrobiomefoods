@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   safe: { flex: 1 },
   pad: { gap: 14, paddingBottom: 14 },
   pills: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
-  tag: { borderRadius: 999, paddingHorizontal: 12, paddingVertical: 8 },
+  tag: { borderRadius: 999, paddingHorizontal: 10, paddingVertical: 8 },
   postHead: { flexDirection: "row", alignItems: "center", gap: 12 },
   avatar: {
     width: 40,
