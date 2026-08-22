@@ -45,7 +45,7 @@ export default function ClassesScreen() {
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["bottom", "left", "right"]}>
-      <Stack.Screen options={{ title: t(language, "classes") }} />
+      <Stack.Screen options={{ title: "" }} />
       <ScrollView contentContainerStyle={styles.scroll}>
         <ThemedText variant="body" color="muted">
           {t(language, "classesPlaceholder")}

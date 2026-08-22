@@ -27,7 +27,7 @@ export default function NutritionHubScreen() {
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["bottom", "left", "right"]}>
-      <Stack.Screen options={{ title: t(language, "nutrition"), headerShadowVisible: false }} />
+      <Stack.Screen options={{ title: "", headerShadowVisible: false }} />
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
         <ThemedText variant="subtitle">{t(language, "conditionGuides")}</ThemedText>
         {conditionTopics.map((topic) => {

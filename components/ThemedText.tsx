@@ -37,7 +37,7 @@ export function ThemedText({ variant = "body", color = "primary", style, ...rest
       : color === "muted"
         ? colors.textMuted
         : color === "inverse"
-          ? colors.cream
+          ? colors.inverse
           : colors.accent;
 
   return (

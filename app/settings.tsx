@@ -43,7 +43,7 @@ export default function SettingsScreen() {
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["bottom", "left", "right"]}>
-      <Stack.Screen options={{ title: t(language, "settings"), headerShadowVisible: false }} />
+      <Stack.Screen options={{ title: "" }} />
       <ScrollView contentContainerStyle={styles.inner} showsVerticalScrollIndicator={false}>
         {supabaseEnabled ? (
           <Card style={{ gap: 10 }}>

@@ -1,11 +1,8 @@
 import { Stack } from "expo-router";
-import { useAppSettings } from "@/context/AppSettingsContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
-import { t } from "@/lib/i18n";
 
 export default function RecipesStackLayout() {
   const colors = useThemeColors();
-  const { language } = useAppSettings();
 
   return (
     <Stack
@@ -17,9 +14,9 @@ export default function RecipesStackLayout() {
         contentStyle: { backgroundColor: colors.cream },
       }}
     >
-      <Stack.Screen name="index" options={{ title: t(language, "recipes") }} />
+      <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen name="[id]" options={{ title: "" }} />
-      <Stack.Screen name="cooking/[id]" options={{ title: t(language, "cookingMode") }} />
+      <Stack.Screen name="cooking/[id]" options={{ title: "" }} />
     </Stack>
   );
 }

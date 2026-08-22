@@ -16,7 +16,7 @@ export default function EventsScreen() {
   const { events } = useRemoteEvents();
 
   return (
-    <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["bottom", "left", "right"]}>
+    <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["top", "bottom", "left", "right"]}>
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
         <ThemedText variant="body" color="muted">
           {t(language, "eventsIntro")}

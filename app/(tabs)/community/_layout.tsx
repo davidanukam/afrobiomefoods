@@ -1,11 +1,8 @@
 import { Stack } from "expo-router";
-import { useAppSettings } from "@/context/AppSettingsContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
-import { t } from "@/lib/i18n";
 
 export default function CommunityStackLayout() {
   const colors = useThemeColors();
-  const { language } = useAppSettings();
 
   return (
     <Stack
@@ -17,8 +14,8 @@ export default function CommunityStackLayout() {
         contentStyle: { backgroundColor: colors.cream },
       }}
     >
-      <Stack.Screen name="index" options={{ title: t(language, "community") }} />
-      <Stack.Screen name="share" options={{ title: t(language, "shareStory") }} />
+      <Stack.Screen name="index" options={{ headerShown: false }} />
+      <Stack.Screen name="share" options={{ title: "" }} />
     </Stack>
   );
 }

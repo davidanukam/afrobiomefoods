@@ -1,6 +1,5 @@
-import { Image } from "expo-image";
 import { router, type Href } from "expo-router";
-import { FlatList, Pressable, View, StyleSheet, TextInput } from "react-native";
+import { FlatList, Image, Pressable, View, StyleSheet, TextInput } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Chip } from "@/components/Chip";
 import { ThemedText } from "@/components/ThemedText";
@@ -51,7 +50,7 @@ export default function RecipeCategoriesScreen() {
   }, [category, language, query, recipes]);
 
   return (
-    <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["bottom", "left", "right"]}>
+    <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["top", "bottom", "left", "right"]}>
       <View style={styles.pad}>
         <TextInput
           value={query}
@@ -106,7 +105,13 @@ export default function RecipeCategoriesScreen() {
                 !highContrast && cardShadow,
               ]}
             >
-              <Image source={item.final_image} style={styles.thumb} contentFit="cover" accessibilityLabel={name} />
+              <Image
+                source={item.final_image}
+                style={styles.thumb}
+                resizeMode="cover"
+                fadeDuration={0}
+                accessibilityLabel={name}
+              />
               <View style={styles.cardText}>
                 <ThemedText variant="subtitle">{name}</ThemedText>
                 <ThemedText variant="caption" color="muted" style={{ marginTop: 6 }}>

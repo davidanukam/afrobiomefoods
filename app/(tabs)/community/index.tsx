@@ -16,7 +16,7 @@ export default function CommunityScreen() {
   const { posts: communityPosts } = useRemoteCommunity();
 
   return (
-    <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["bottom", "left", "right"]}>
+    <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["top", "bottom", "left", "right"]}>
       <View style={styles.pad}>
         <ThemedText variant="body" color="muted">
           {t(language, "communityIntro")}

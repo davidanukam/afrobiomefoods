@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     borderRadius: 22,
     overflow: "hidden",
-    backgroundColor: "#F3EEE6",
+    backgroundColor: "#E4EBE3",
   },
   webview: { flex: 1, backgroundColor: "transparent" },
   fallback: { borderWidth: 1, paddingHorizontal: 12, paddingVertical: 8, justifyContent: "center" },

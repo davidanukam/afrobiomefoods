@@ -68,7 +68,7 @@ export default function ShareStoryScreen() {
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["bottom", "left", "right"]}>
-      <Stack.Screen options={{ title: t(language, "shareStory") }} />
+      <Stack.Screen options={{ title: "" }} />
       <View style={styles.inner}>
         <ThemedText variant="body" color="muted">
           {t(language, "holdToRecord")}

@@ -11,10 +11,9 @@ import { t } from "@/lib/i18n";
 import { localeTag } from "@/lib/locale";
 import { localized } from "@/lib/localized";
 import { Ionicons } from "@expo/vector-icons";
-import { Image } from "expo-image";
 import { router, type Href } from "expo-router";
 import type { ComponentProps } from "react";
-import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { Image, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { radii } from "@/constants/theme";
 
@@ -55,19 +54,18 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["left", "right"]}>
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
-        <ThemedText variant="eyebrow" color="muted">
-          {t(language, "appSubtitle")}
-        </ThemedText>
-        <ThemedText variant="title" style={{ marginTop: 4, marginBottom: 8 }}>
-          {t(language, "appTitle")}
-        </ThemedText>
-
         <Pressable
           accessibilityRole="button"
           onPress={() => router.push(`/recipes/${featured.recipe_id}` as Href)}
           style={styles.heroWrap}
         >
-          <Image source={featured.final_image} style={styles.heroImg} contentFit="cover" accessibilityLabel={featuredTitle} />
+          <Image
+            source={featured.final_image}
+            style={styles.heroImg}
+            resizeMode="cover"
+            fadeDuration={0}
+            accessibilityLabel={featuredTitle}
+          />
           <View style={[styles.heroScrim, { backgroundColor: colors.overlay }]} />
           <View style={styles.heroCopy}>
             <ThemedText variant="eyebrow" color="inverse">
@@ -75,9 +73,6 @@ export default function HomeScreen() {
             </ThemedText>
             <ThemedText variant="subtitle" color="inverse" style={{ marginTop: 6 }}>
               {featuredTitle}
-            </ThemedText>
-            <ThemedText variant="caption" color="inverse" style={{ marginTop: 4, opacity: 0.9 }}>
-              {t(language, "randomPickSession")}
             </ThemedText>
           </View>
         </Pressable>

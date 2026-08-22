@@ -51,9 +51,9 @@ export default function CookingModeScreen() {
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["bottom", "left", "right"]}>
-      <Stack.Screen options={{ title }} />
+      <Stack.Screen options={{ title: "" }} />
       <View style={styles.inner}>
-        <ThemedText variant="subtitle">{t(language, "cookingMode")}</ThemedText>
+        <ThemedText variant="subtitle">{title}</ThemedText>
         <ThemedText variant="caption" color="muted" style={{ marginTop: 6 }}>
           {t(language, "stepOf", { current: index + 1, total: steps.length })}
         </ThemedText>

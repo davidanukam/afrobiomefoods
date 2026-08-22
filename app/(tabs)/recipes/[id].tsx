@@ -1,14 +1,16 @@
 import { PrimaryButton } from "@/components/PrimaryButton";
+import { RecipePhoto } from "@/components/RecipePhoto";
 import { ThemedText } from "@/components/ThemedText";
 import { useAppSettings } from "@/context/AppSettingsContext";
 import { getRecipeById, recipeCopy } from "@/data/recipes";
+import { recipeFinalImage } from "@/data/recipeFinalImages";
+import { recipeIngredientImage } from "@/data/recipeIngredientImages";
 import { useRemoteRecipes } from "@/hooks/useRemoteRecipes";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { t, type Lang } from "@/lib/i18n";
 import { speechLang } from "@/lib/locale";
 import { HeaderBackButton } from "@react-navigation/elements";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { Image } from "expo-image";
 import { Stack, router, useLocalSearchParams, type Href } from "expo-router";
 import * as Speech from "expo-speech";
 import { useCallback, useMemo } from "react";
@@ -20,7 +22,7 @@ export default function RecipeDetailScreen() {
     const id = Array.isArray(rawId) ? rawId[0] : rawId;
     const navigation = useNavigation();
     const colors = useThemeColors();
-    const { language, scale } = useAppSettings();
+    const { language, scale, highContrast } = useAppSettings();
     const { getById } = useRemoteRecipes();
     const recipe = id ? getById(id) ?? getRecipeById(id) : undefined;
 
@@ -54,6 +56,8 @@ export default function RecipeDetailScreen() {
     }
 
     const { name: title, ingredients, instructions, cultural } = copy;
+    const ingredientPhoto = recipeIngredientImage(recipe.recipe_id);
+    const finishedPhoto = recipeFinalImage(recipe.recipe_id);
 
     const speak = (text: string, lang: Lang) => {
         Speech.stop();
@@ -85,7 +89,7 @@ export default function RecipeDetailScreen() {
         <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["bottom", "left", "right"]}>
             <Stack.Screen
                 options={{
-                    title,
+                    title: "",
                     headerBackTitle: t(language, "recipes"),
                     headerLeft: () => (
                         <HeaderBackButton
@@ -96,35 +100,51 @@ export default function RecipeDetailScreen() {
                 }}
             />
             <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
-                <Image
-                    source={recipe.ingredient_image}
-                    style={styles.dishPhoto}
-                    contentFit="cover"
+                <ThemedText variant="title" style={{ marginBottom: 12 }}>
+                    {title}
+                </ThemedText>
+                <RecipePhoto
+                    source={ingredientPhoto}
+                    fallback={finishedPhoto}
                     accessibilityLabel={`${title}, ${t(language, "ingredientPhoto")}`}
+                    style={{ marginBottom: 16 }}
                 />
 
+                <ThemedText variant="caption" color="muted" style={{ marginBottom: 8 }}>
+                    {t(language, "listen")}
+                </ThemedText>
                 <View style={styles.row}>
                     <Pressable
-                        style={[styles.audioBtn, { backgroundColor: colors.forest }]}
+                        style={[styles.audioBtn, { backgroundColor: highContrast ? colors.forest : colors.gold }]}
                         onPress={() => readAll("en")}
+                        accessibilityRole="button"
+                        accessibilityLabel={`${t(language, "listen")} ${t(language, "listenEn")}`}
                     >
-                        <ThemedText variant="label" color="inverse">
+                        <ThemedText
+                            variant="label"
+                            style={{ color: highContrast ? colors.inverse : colors.forest, textAlign: "center" }}
+                            numberOfLines={1}
+                        >
                             {t(language, "listenEn")}
                         </ThemedText>
                     </Pressable>
                     <Pressable
                         style={[styles.audioBtn, { backgroundColor: colors.forestLight }]}
                         onPress={() => readAll("ig")}
+                        accessibilityRole="button"
+                        accessibilityLabel={`${t(language, "listen")} ${t(language, "listenIg")}`}
                     >
-                        <ThemedText variant="label" color="inverse">
+                        <ThemedText variant="label" color="inverse" style={{ textAlign: "center" }} numberOfLines={1}>
                             {t(language, "listenIg")}
                         </ThemedText>
                     </Pressable>
                     <Pressable
-                        style={[styles.audioBtn, { backgroundColor: colors.forestLight }]}
+                        style={[styles.audioBtn, { backgroundColor: highContrast ? colors.forest : "#8C4A32" }]}
                         onPress={() => readAll("fr")}
+                        accessibilityRole="button"
+                        accessibilityLabel={`${t(language, "listen")} ${t(language, "listenFr")}`}
                     >
-                        <ThemedText variant="label" color="inverse">
+                        <ThemedText variant="label" color="inverse" style={{ textAlign: "center" }} numberOfLines={1}>
                             {t(language, "listenFr")}
                         </ThemedText>
                     </Pressable>
@@ -138,6 +158,13 @@ export default function RecipeDetailScreen() {
                         • {line}
                     </ThemedText>
                 ))}
+
+                <RecipePhoto
+                    source={finishedPhoto}
+                    fallback={ingredientPhoto}
+                    accessibilityLabel={`${title}, ${t(language, "finishedDishPhoto")}`}
+                    style={{ marginTop: 16 }}
+                />
 
                 <ThemedText variant="subtitle" style={{ marginTop: 16 }}>
                     {t(language, "instructions")}
@@ -167,13 +194,6 @@ export default function RecipeDetailScreen() {
                         • {tag}
                     </ThemedText>
                 ))}
-
-                <Image
-                    source={recipe.final_image}
-                    style={[styles.dishPhoto, { marginTop: 10 }]}
-                    contentFit="cover"
-                    accessibilityLabel={`${title}, ${t(language, "finishedDishPhoto")}`}
-                />
 
                 <View style={styles.actions}>
                     <PrimaryButton
@@ -208,21 +228,14 @@ export default function RecipeDetailScreen() {
 const styles = StyleSheet.create({
     safe: { flex: 1 },
     scroll: { padding: 20, paddingBottom: 36 },
-    dishPhoto: {
-        width: "100%",
-        aspectRatio: 4 / 3,
-        borderRadius: 22,
-        marginBottom: 16,
-    },
-    row: { flexDirection: "row", gap: 10, flexWrap: "wrap" },
+    row: { flexDirection: "row", gap: 8 },
     audioBtn: {
-        flexGrow: 1,
-        flexBasis: "30%",
-        minHeight: 52,
-        borderRadius: 999,
+        flex: 1,
+        minHeight: 48,
+        borderRadius: 14,
         alignItems: "center",
         justifyContent: "center",
-        paddingHorizontal: 8,
+        paddingHorizontal: 6,
     },
     actions: { marginTop: 24, gap: 12 },
     secondary: {

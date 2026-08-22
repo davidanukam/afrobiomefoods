@@ -1,6 +1,6 @@
 import type { Recipe, RecipeCategory } from "@/data/recipes";
-import { RECIPE_FINAL_IMAGE_PLACEHOLDER } from "@/data/recipeFinalImages";
-import { RECIPE_INGREDIENT_IMAGE_PLACEHOLDER } from "@/data/recipeIngredientImages";
+import { recipeFinalImage } from "@/data/recipeFinalImages";
+import { recipeIngredientImage } from "@/data/recipeIngredientImages";
 import type { EventItem } from "@/data/events";
 import type { ServiceItem, ServiceCategory } from "@/data/services";
 import type { CommunityPost } from "@/data/community";
@@ -69,8 +69,8 @@ export function mapRecipeDoc(id: string, data: LooseDoc): Recipe {
     audio_en: asString(data.audio_en) || undefined,
     audio_ig: asString(data.audio_ig) || undefined,
     image_hint: asString(data.image_hint) || "recipe",
-    final_image: RECIPE_FINAL_IMAGE_PLACEHOLDER,
-    ingredient_image: RECIPE_INGREDIENT_IMAGE_PLACEHOLDER,
+    final_image: recipeFinalImage(id),
+    ingredient_image: recipeIngredientImage(id),
   };
 }
 

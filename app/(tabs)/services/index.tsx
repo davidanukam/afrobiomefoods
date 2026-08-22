@@ -47,7 +47,7 @@ export default function ServicesScreen() {
   const webMapMessage = t(language, "mapWebHint");
 
   return (
-    <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["bottom", "left", "right"]}>
+    <SafeAreaView style={[styles.safe, { backgroundColor: colors.cream }]} edges={["top", "bottom", "left", "right"]}>
       <View style={styles.toggleRow}>
         <Chip flex label={t(language, "listView")} active={mode === "list"} onPress={() => setMode("list")} />
         <Chip flex label={t(language, "mapView")} active={mode === "map"} onPress={() => setMode("map")} />

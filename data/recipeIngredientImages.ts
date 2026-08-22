@@ -57,7 +57,7 @@ const RECIPE_INGREDIENT_IMAGE_SOURCES: Record<string, ImageSourcePropType> = {
 };
 
 /** Recipe ids that use the placeholder for the top (ingredient) image. */
-export const RECIPE_IDS_MISSING_INGREDIENT_IMAGE = ["ofe-onugbu"] as const;
+export const RECIPE_IDS_MISSING_INGREDIENT_IMAGE = [] as const;
 
 export function recipeIngredientImage(recipeId: string): ImageSourcePropType {
   return RECIPE_INGREDIENT_IMAGE_SOURCES[recipeId] ?? RECIPE_INGREDIENT_IMAGE_PLACEHOLDER;

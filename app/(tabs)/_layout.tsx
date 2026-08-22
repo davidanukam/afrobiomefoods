@@ -45,6 +45,7 @@ export default function TabsLayout() {
         name="home"
         options={{
           title: t(language, "home"),
+          headerTitle: t(language, "appTitle"),
           tabBarIcon: ({ color, size }) => tabIcon("home", String(color), size),
           headerRight: () => (
             <Pressable
