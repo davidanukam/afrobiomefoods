@@ -49,7 +49,9 @@
         {
           "android": {
             "minSdkVersion": 24,
-            "enablePngCrunchInReleaseBuilds": false
+            "enablePngCrunchInReleaseBuilds": false,
+            "enableMinifyInReleaseBuilds": true,
+            "extraProguardRules": "-keep class com.swmansion.reanimated.** { *; }\n-keep class com.swmansion.worklets.** { *; }\n-keep class com.facebook.react.turbomodule.** { *; }\n-keep class com.facebook.hermes.unicode.** { *; }\n-keep class com.facebook.jni.** { *; }\n-keepattributes SourceFile,LineNumberTable\n-keepclassmembers class * {\n    @android.webkit.JavascriptInterface <methods>;\n}\n"
           }
         }
       ],
