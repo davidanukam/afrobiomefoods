@@ -27,8 +27,9 @@ export function useRemoteServices() {
       return;
     }
     const mapped = data.map((row) => mapServiceDoc(row.id, (row.doc ?? {}) as Record<string, unknown>));
-    setList(mapped.length > 0 ? mapped : fallbackServices);
-    setFromRemote(true);
+    const usable = mapped.filter((item) => item.address.trim().length > 0);
+    setList(usable.length > 0 ? usable : fallbackServices);
+    setFromRemote(usable.length > 0);
     setLoading(false);
   }, []);
 

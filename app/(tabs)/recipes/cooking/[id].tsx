@@ -4,14 +4,11 @@ import { Stack, useLocalSearchParams } from "expo-router";
 import { useCallback, useMemo, useState } from "react";
 import { ScrollView, View, StyleSheet, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { AppRefreshControl } from "@/components/AppRefreshControl";
 import { ThemedText } from "@/components/ThemedText";
 import { cardShadow } from "@/constants/theme";
 import { useAppSettings } from "@/context/AppSettingsContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { getRecipeById, recipeCopy, recipeDisplayName } from "@/data/recipes";
-import { usePullToRefresh } from "@/hooks/usePullToRefresh";
-import { useRemoteRecipes } from "@/hooks/useRemoteRecipes";
 import { speechLang } from "@/lib/locale";
 import { t } from "@/lib/i18n";
 
@@ -20,8 +17,6 @@ export default function CookingModeScreen() {
   const id = Array.isArray(rawId) ? rawId[0] : rawId;
   const colors = useThemeColors();
   const { language } = useAppSettings();
-  const { refresh } = useRemoteRecipes();
-  const { refreshing, onRefresh } = usePullToRefresh(refresh);
   const recipe = id ? getRecipeById(id) : undefined;
   const steps = useMemo(() => {
     if (!recipe) return [];
@@ -61,7 +56,6 @@ export default function CookingModeScreen() {
         contentContainerStyle={styles.inner}
         showsVerticalScrollIndicator={false}
         alwaysBounceVertical
-        refreshControl={<AppRefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       >
         <ThemedText variant="subtitle">{title}</ThemedText>
         <ThemedText variant="caption" color="muted" style={{ marginTop: 6 }}>

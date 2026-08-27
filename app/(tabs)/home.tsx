@@ -1,25 +1,19 @@
-import { AppRefreshControl } from "@/components/AppRefreshControl";
 import { Card } from "@/components/Card";
 import { ThemedText } from "@/components/ThemedText";
 import { radii } from "@/constants/theme";
 import { useAppSettings } from "@/context/AppSettingsContext";
-import { events as fallbackEvents } from "@/data/events";
 import type { Recipe } from "@/data/recipes";
 import { recipes as fallbackRecipes, recipeDisplayName } from "@/data/recipes";
-import { usePullToRefresh } from "@/hooks/usePullToRefresh";
-import { useRemoteEvents } from "@/hooks/useRemoteEvents";
 import { useRemoteRecipes } from "@/hooks/useRemoteRecipes";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { t } from "@/lib/i18n";
-import { localeTag } from "@/lib/locale";
-import { localized } from "@/lib/localized";
 import { Ionicons } from "@expo/vector-icons";
 import { router, type Href } from "expo-router";
-import { useCallback, useState, type ComponentProps } from "react";
+import { useState, type ComponentProps } from "react";
 import { Dimensions, Image, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-/** One random featured recipe index per app launch; pull-to-refresh picks another. */
+/** One random featured recipe index per app launch. */
 let homeSessionFeaturedRecipeIndex: number | null = null;
 
 function pickFeaturedIndex(count: number, exclude?: number | null): number {
@@ -49,34 +43,18 @@ type IconName = ComponentProps<typeof Ionicons>["name"];
 export default function HomeScreen() {
   const colors = useThemeColors();
   const { language } = useAppSettings();
-  const { recipes, refresh: refreshRecipes } = useRemoteRecipes();
-  const { events, refresh: refreshEvents } = useRemoteEvents();
+  const { recipes } = useRemoteRecipes();
   const [heroWidth, setHeroWidth] = useState(() =>
     Math.max(Dimensions.get("window").width - PAGE_GUTTER, 1),
   );
-  const reloadHome = useCallback(async () => {
-    await Promise.all([refreshRecipes(), refreshEvents()]);
-    homeSessionFeaturedRecipeIndex = pickFeaturedIndex(
-      fallbackRecipes.length,
-      homeSessionFeaturedRecipeIndex,
-    );
-  }, [refreshEvents, refreshRecipes]);
-  const { refreshing, onRefresh } = usePullToRefresh(reloadHome);
   const featured = getSessionFeaturedRecipe(recipes, fallbackRecipes[0]);
-  const nextEvent = events[0] ?? fallbackEvents[0];
   const featuredTitle = recipeDisplayName(featured, language);
-  const eventDate = new Date(nextEvent.date);
 
   const tiles: { label: string; href: Href; icon: IconName }[] = [
     {
       label: t(language, "nutrition"),
       href: "/nutrition" as Href,
       icon: "leaf-outline",
-    },
-    {
-      label: t(language, "classes"),
-      href: "/classes" as Href,
-      icon: "school-outline",
     },
     {
       label: t(language, "recipes"),
@@ -87,11 +65,6 @@ export default function HomeScreen() {
       label: t(language, "community"),
       href: "/community" as Href,
       icon: "people-outline",
-    },
-    {
-      label: t(language, "events"),
-      href: "/events" as Href,
-      icon: "calendar-outline",
     },
     {
       label: t(language, "services"),
@@ -108,7 +81,6 @@ export default function HomeScreen() {
       <ScrollView
         contentContainerStyle={styles.scroll}
         showsVerticalScrollIndicator={false}
-        refreshControl={<AppRefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       >
         <Pressable
           accessibilityRole="button"
@@ -156,45 +128,6 @@ export default function HomeScreen() {
             {t(language, "healthTipUtazi")}
           </ThemedText>
         </Card>
-
-        <Pressable
-          onPress={() => router.push("/events" as Href)}
-          accessibilityRole="button"
-        >
-          <Card style={styles.eventCard}>
-            <View
-              style={[styles.dateBadge, { backgroundColor: colors.forest }]}
-            >
-              <ThemedText variant="caption" color="inverse">
-                {eventDate
-                  .toLocaleDateString(localeTag(language), { month: "short" })
-                  .toUpperCase()}
-              </ThemedText>
-              <ThemedText variant="subtitle" color="inverse">
-                {eventDate.getDate()}
-              </ThemedText>
-            </View>
-            <View style={{ flex: 1 }}>
-              <ThemedText variant="eyebrow" color="muted">
-                {t(language, "upcoming")}
-              </ThemedText>
-              <ThemedText variant="subtitle" style={{ marginTop: 4 }}>
-                {localized(language, {
-                  en: nextEvent.title_en,
-                  ig: nextEvent.title_ig,
-                  fr: nextEvent.title_fr,
-                })}
-              </ThemedText>
-              <ThemedText
-                variant="caption"
-                color="accent"
-                style={{ marginTop: 6 }}
-              >
-                {t(language, "events")}
-              </ThemedText>
-            </View>
-          </Card>
-        </Pressable>
 
         <ThemedText variant="subtitle" style={{ marginTop: 4 }}>
           {t(language, "quickActions")}
@@ -247,13 +180,6 @@ const styles = StyleSheet.create({
   heroWrap: { height: HERO_HEIGHT, width: "100%", borderRadius: radii.xl, overflow: "hidden" },
   heroScrim: { ...StyleSheet.absoluteFillObject },
   heroCopy: { position: "absolute", left: 18, right: 18, bottom: 18 },
-  eventCard: { flexDirection: "row", gap: 14, alignItems: "center" },
-  dateBadge: {
-    width: 64,
-    borderRadius: radii.md,
-    paddingVertical: 10,
-    alignItems: "center",
-  },
   grid: { flexDirection: "row", flexWrap: "wrap", gap: 12 },
   tile: {
     minHeight: 108,

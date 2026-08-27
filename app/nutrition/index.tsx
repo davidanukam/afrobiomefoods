@@ -3,12 +3,10 @@ import * as Speech from "expo-speech";
 import { useCallback } from "react";
 import { ScrollView, StyleSheet, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { AppRefreshControl } from "@/components/AppRefreshControl";
 import { Card } from "@/components/Card";
 import { ThemedText } from "@/components/ThemedText";
 import { radii } from "@/constants/theme";
 import { useAppSettings } from "@/context/AppSettingsContext";
-import { usePullToRefresh } from "@/hooks/usePullToRefresh";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { t } from "@/lib/i18n";
 import { localized, localizedList } from "@/lib/localized";
@@ -18,7 +16,6 @@ import { conditionTopics, ingredients, mythFacts } from "@/data/nutrition";
 export default function NutritionHubScreen() {
   const colors = useThemeColors();
   const { language } = useAppSettings();
-  const { refreshing, onRefresh } = usePullToRefresh();
 
   const summarize = useCallback(
     (text: string) => {
@@ -34,7 +31,6 @@ export default function NutritionHubScreen() {
       <ScrollView
         contentContainerStyle={styles.scroll}
         showsVerticalScrollIndicator={false}
-        refreshControl={<AppRefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       >
         <ThemedText variant="subtitle">{t(language, "conditionGuides")}</ThemedText>
         {conditionTopics.map((topic) => {

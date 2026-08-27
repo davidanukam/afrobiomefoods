@@ -1,7 +1,6 @@
 import { Stack, router, type Href } from "expo-router";
 import { View, StyleSheet, Switch, Pressable, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { AppRefreshControl } from "@/components/AppRefreshControl";
 import { Card } from "@/components/Card";
 import { Chip } from "@/components/Chip";
 import { PrimaryButton } from "@/components/PrimaryButton";
@@ -10,7 +9,6 @@ import type { FontScaleKey } from "@/constants/theme";
 import { minTouchTarget } from "@/constants/theme";
 import { useAuth } from "@/context/AuthContext";
 import { useAppSettings } from "@/context/AppSettingsContext";
-import { usePullToRefresh } from "@/hooks/usePullToRefresh";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { LANG_OPTIONS } from "@/lib/locale";
 import { t, type Lang } from "@/lib/i18n";
@@ -36,11 +34,6 @@ export default function SettingsScreen() {
     triggerHaptic,
   } = useAppSettings();
   const { user, isAdmin, supabaseEnabled, signOutUser, refreshClaims } = useAuth();
-  const { refreshing, onRefresh } = usePullToRefresh(async () => {
-    if (supabaseEnabled) {
-      await refreshClaims();
-    }
-  });
 
   const cycleLang = () => {
     triggerHaptic();
@@ -54,7 +47,6 @@ export default function SettingsScreen() {
       <ScrollView
         contentContainerStyle={styles.inner}
         showsVerticalScrollIndicator={false}
-        refreshControl={<AppRefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       >
         {supabaseEnabled ? (
           <Card style={{ gap: 10 }}>

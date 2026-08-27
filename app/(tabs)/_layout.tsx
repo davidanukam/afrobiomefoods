@@ -81,14 +81,6 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="events"
-        options={{
-          title: t(language, "events"),
-          headerShown: false,
-          tabBarIcon: ({ color, size }) => tabIcon("calendar", String(color), size),
-        }}
-      />
-      <Tabs.Screen
         name="services"
         options={{
           title: t(language, "services"),

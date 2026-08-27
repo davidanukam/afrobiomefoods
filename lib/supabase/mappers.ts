@@ -99,11 +99,14 @@ export function mapServiceDoc(id: string, data: LooseDoc): ServiceItem {
   return {
     service_id: id,
     name: asString(data.name),
-    category: (asString(data.category) as ServiceCategory) || "kitchen",
+    category: (asString(data.category) as ServiceCategory) || "market",
     lat: typeof data.lat === "number" ? data.lat : 0,
     lng: typeof data.lng === "number" ? data.lng : 0,
     distance_km: typeof data.distance_km === "number" ? data.distance_km : 0,
-    contact: asString(data.contact) || asString(data.contactInfo),
+    contact: asString(data.contact) || asString(data.contactInfo) || asString(data.phone),
+    address: asString(data.address),
+    email: asString(data.email) || undefined,
+    website: asString(data.website) || undefined,
     hours_en: asString(data.hours_en) || asString(data.hours) || "",
     accessibility_notes_en: asString(data.accessibility_notes_en) || asString(data.description),
   };

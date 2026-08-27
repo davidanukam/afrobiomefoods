@@ -2,7 +2,10 @@ import { useCallback, useState } from "react";
 
 const MIN_SPINNER_MS = 450;
 
-/** Pull-to-refresh state with a short minimum spinner so local reloads still feel like a refresh. */
+/**
+ * Pull-to-refresh state with a short minimum spinner so local reloads still feel like a refresh.
+ * Not attached to screens right now; keep this hook and `AppRefreshControl` for later.
+ */
 export function usePullToRefresh(load?: () => Promise<void> | void) {
   const [refreshing, setRefreshing] = useState(false);
 

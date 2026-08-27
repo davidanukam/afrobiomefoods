@@ -1,17 +1,42 @@
+import { createElement, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
-import { ThemedText } from "@/components/ThemedText";
+import { buildMapHtml } from "@/components/ServiceMap/buildMapHtml";
 import type { ServiceMapProps } from "@/components/ServiceMap/types";
 
-export function ServiceMap({ webMessage, webBorderColor }: ServiceMapProps) {
+export function ServiceMap({
+  region,
+  items,
+  accessibilityLabel,
+  webBorderColor,
+  openInMapsLabel = "Open in Maps",
+}: ServiceMapProps) {
+  const html = useMemo(
+    () => buildMapHtml(region, items, openInMapsLabel),
+    [region, items, openInMapsLabel],
+  );
+
   return (
-    <View style={[styles.mapFallback, { borderColor: webBorderColor }]}>
-      <ThemedText variant="body" color="muted" style={{ textAlign: "center", padding: 16 }}>
-        {webMessage}
-      </ThemedText>
+    <View
+      style={[styles.mapWrap, { borderColor: webBorderColor }]}
+      accessibilityLabel={accessibilityLabel}
+    >
+      {createElement("iframe", {
+        title: accessibilityLabel,
+        srcDoc: html,
+        style: iframeStyle,
+        sandbox: "allow-scripts allow-popups allow-popups-to-escape-sandbox allow-same-origin",
+      })}
     </View>
   );
 }
 
+const iframeStyle = { border: "0", width: "100%", height: "100%" };
+
 const styles = StyleSheet.create({
-  mapFallback: { marginHorizontal: 20, borderRadius: 22, borderWidth: 0, minHeight: 200, justifyContent: "center", backgroundColor: "#FFFCF8" },
+  mapWrap: {
+    height: 280,
+    borderRadius: 22,
+    overflow: "hidden",
+    backgroundColor: "#E4EBE3",
+  },
 });

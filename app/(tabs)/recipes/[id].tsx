@@ -1,4 +1,3 @@
-import { AppRefreshControl } from "@/components/AppRefreshControl";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { RecipePhoto } from "@/components/RecipePhoto";
 import { ThemedText } from "@/components/ThemedText";
@@ -6,7 +5,6 @@ import { useAppSettings } from "@/context/AppSettingsContext";
 import { getRecipeById, recipeCopy } from "@/data/recipes";
 import { recipeFinalImage } from "@/data/recipeFinalImages";
 import { recipeIngredientImage } from "@/data/recipeIngredientImages";
-import { usePullToRefresh } from "@/hooks/usePullToRefresh";
 import { useRemoteRecipes } from "@/hooks/useRemoteRecipes";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { t, type Lang } from "@/lib/i18n";
@@ -29,9 +27,8 @@ export default function RecipeDetailScreen() {
     const navigation = useNavigation();
     const colors = useThemeColors();
     const { language, scale, highContrast } = useAppSettings();
-    const { getById, refresh } = useRemoteRecipes();
+    const { getById } = useRemoteRecipes();
     const recipe = id ? getById(id) ?? getRecipeById(id) : undefined;
-    const { refreshing, onRefresh } = usePullToRefresh(refresh);
 
     const copy = useMemo(
         () => (recipe ? recipeCopy(recipe, language) : null),
@@ -126,7 +123,6 @@ export default function RecipeDetailScreen() {
             <ScrollView
                 contentContainerStyle={styles.scroll}
                 showsVerticalScrollIndicator={false}
-                refreshControl={<AppRefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
             >
                 <ThemedText variant="title" style={{ marginBottom: 12 }}>
                     {title}

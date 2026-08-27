@@ -1,12 +1,10 @@
 import { router, type Href } from "expo-router";
 import { FlatList, Image, Pressable, View, StyleSheet, TextInput } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { AppRefreshControl } from "@/components/AppRefreshControl";
 import { Chip } from "@/components/Chip";
 import { ThemedText } from "@/components/ThemedText";
 import { cardShadow, radii } from "@/constants/theme";
 import { useAppSettings } from "@/context/AppSettingsContext";
-import { usePullToRefresh } from "@/hooks/usePullToRefresh";
 import { useRemoteRecipes } from "@/hooks/useRemoteRecipes";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { t } from "@/lib/i18n";
@@ -32,8 +30,7 @@ const chips: {
 export default function RecipeCategoriesScreen() {
   const colors = useThemeColors();
   const { language, highContrast } = useAppSettings();
-  const { recipes, refresh } = useRemoteRecipes();
-  const { refreshing, onRefresh } = usePullToRefresh(refresh);
+  const { recipes } = useRemoteRecipes();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<RecipeCategory | "all">("all");
 
@@ -57,7 +54,6 @@ export default function RecipeCategoriesScreen() {
       <FlatList
         data={filtered}
         keyExtractor={(item) => item.recipe_id}
-        refreshControl={<AppRefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 28, gap: 14 }}
         ItemSeparatorComponent={() => <View style={{ height: 14 }} />}
